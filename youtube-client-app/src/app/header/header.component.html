@@ -1,1 +1,29 @@
-<p>header works!</p>
+<mat-toolbar color="primary" class="header">
+  <form (ngSubmit)="onSearch()">
+    <mat-icon class="logo-icon">video_library</mat-icon>
+
+    <mat-form-field appearance="fill" class="search-input">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" [value]="searchTerm" name="searchTerm" />
+    </mat-form-field>
+
+    <button mat-icon-button type="submit">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="toggleFilter()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </form>
+
+  <div class="login-info-block">
+    <span class="username">Your Name</span>
+    <mat-icon>account_circle</mat-icon>
+  </div>
+</mat-toolbar>
+
+<div *ngIf="filterIsActive" class="filtering-criteria-block">
+  <button>Sort by Date</button>
+  <button>Sort by Views</button>
+  <input type="text" placeholder="Filter by word or sentence" />
+</div>
