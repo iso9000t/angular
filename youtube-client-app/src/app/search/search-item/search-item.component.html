@@ -1,1 +1,30 @@
-<img [src]="item.snippet.thumbnails.default.url" alt="Thumbnail">
+<mat-card appVideoAgeBorder [publishedAt]="item.snippet.publishedAt">
+  <!-- Card image -->
+  <img mat-card-image [src]="item.snippet.thumbnails.medium.url" alt="Thumbnail">
+
+ 
+  <mat-card-content>
+    <!-- Card content: statistics and icons -->
+    <div class="statistics">
+      <div class="stat-item">
+        <mat-icon>visibility</mat-icon> {{ item.statistics.viewCount }}
+      </div>
+      <div class="stat-item">
+        <mat-icon>thumb_up</mat-icon> {{ item.statistics.likeCount }}
+      </div>
+      <div class="stat-item">
+        <mat-icon>thumb_down</mat-icon> {{ item.statistics.dislikeCount }}
+      </div>
+      <div class="stat-item">
+        <mat-icon>comment</mat-icon> {{ item.statistics.commentCount }}
+      </div>
+    </div>
+  </mat-card-content>
+
+   <!-- Card title -->
+  <mat-card-title>{{ item.snippet.title }}</mat-card-title>
+
+  <mat-card-actions>
+    <app-custom-button>More</app-custom-button>
+  </mat-card-actions>
+</mat-card>

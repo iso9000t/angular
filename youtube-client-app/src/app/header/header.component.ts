@@ -11,7 +11,6 @@ export class HeaderComponent {
 
     toggleFilter() {
         this.filterIsActive = !this.filterIsActive;
-        console.log(this.filterIsActive);// Check if it is active
     }
 
     onSearch() {

@@ -16,7 +16,6 @@ export class SearchResultsComponent implements OnInit {
     ngOnInit(): void {
         this.dataService.fetchData().subscribe((response) => {
             this.data = response;
-            console.log(this.data);
         });
     }
 }

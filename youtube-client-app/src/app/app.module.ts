@@ -2,6 +2,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
@@ -12,9 +13,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { CustomButtonComponent } from "./custom-button/custom-button.component";
 import { HeaderComponent } from "./header/header.component";
 import { SearchItemComponent } from "./search/search-item/search-item.component";
 import { SearchResultsComponent } from "./search/search-results/search-results.component";
+import { VideoAgeBorderDirective } from "./video-age-border.directive";
 
 @NgModule({
     declarations: [
@@ -22,7 +25,10 @@ import { SearchResultsComponent } from "./search/search-results/search-results.c
         HeaderComponent,
         SearchResultsComponent,
         SearchItemComponent,
+        VideoAgeBorderDirective,
     ],
+    providers: [],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -35,9 +41,9 @@ import { SearchResultsComponent } from "./search/search-results/search-results.c
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CustomButtonComponent,
+        MatCardModule,
     ],
-    providers: [],
-    bootstrap: [AppComponent],
 })
 export class AppModule {}
