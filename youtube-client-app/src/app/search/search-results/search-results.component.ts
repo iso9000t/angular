@@ -2,6 +2,7 @@ import {
     Component, Input, OnChanges, OnInit
 } from "@angular/core";
 import { DataService } from "src/app/services/data.service";
+import { SortOrder } from "src/enums/sort.enum";
 
 import { SearchResponse } from "../search-response.model";
 
@@ -15,12 +16,7 @@ export class SearchResultsComponent implements OnInit, OnChanges {
 
     @Input() filterKeyword = "";
 
-    @Input() sortOrder:
-    | "none"
-    | "dateAsc"
-    | "dateDesc"
-    | "viewsAsc"
-    | "viewsDesc" = "none";
+    @Input() sortOrder: SortOrder = SortOrder.NONE;
 
     constructor(private dataService: DataService) {}
 
@@ -41,7 +37,7 @@ export class SearchResultsComponent implements OnInit, OnChanges {
 
     sortData() {
         const sortedData = [...this.data.items];
-        if (this.sortOrder === "none") {
+        if (this.sortOrder === SortOrder.NONE) {
             return;
         }
         sortedData.sort((a, b) => {
@@ -51,13 +47,13 @@ export class SearchResultsComponent implements OnInit, OnChanges {
             const viewsB = +b.statistics.viewCount;
 
             switch (this.sortOrder) {
-                case "dateAsc":
+                case SortOrder.DATE_ASC:
                     return dateA - dateB;
-                case "dateDesc":
+                case SortOrder.DATE_DESC:
                     return dateB - dateA;
-                case "viewsAsc":
+                case SortOrder.VIEWS_ASC:
                     return viewsA - viewsB;
-                case "viewsDesc":
+                case SortOrder.VIEWS_DESC:
                     return viewsB - viewsA;
                 default:
                     return 0;

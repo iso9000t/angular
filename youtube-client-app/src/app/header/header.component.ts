@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { SortOrder } from "src/enums/sort.enum";
 
 @Component({
     selector: "app-header",
@@ -11,28 +12,28 @@ export class HeaderComponent {
     filterIsActive: boolean = false;
     showSearchResults: boolean = false;
 
-    sortOrder: "none" | "dateAsc" | "dateDesc" | "viewsAsc" | "viewsDesc" = "none";
+    sortOrder: SortOrder = SortOrder.NONE;
 
     sortByDate() {
-        if (this.sortOrder === "dateAsc") {
-            this.sortOrder = "dateDesc";
+        if (this.sortOrder === SortOrder.DATE_ASC) {
+            this.sortOrder = SortOrder.DATE_DESC;
         } else {
-            this.sortOrder = "dateAsc";
+            this.sortOrder = SortOrder.DATE_ASC;
         }
     }
 
     sortByViews() {
-        if (this.sortOrder === "viewsAsc") {
-            this.sortOrder = "viewsDesc";
+        if (this.sortOrder === SortOrder.VIEWS_ASC) {
+            this.sortOrder = SortOrder.VIEWS_DESC;
         } else {
-            this.sortOrder = "viewsAsc";
+            this.sortOrder = SortOrder.VIEWS_ASC;
         }
     }
 
     toggleFilter() {
         this.filterIsActive = !this.filterIsActive;
         if (!this.filterIsActive) {
-            this.sortOrder = "none";
+            this.sortOrder = SortOrder.NONE;
             this.filterKeyword = "";
         }
     }
