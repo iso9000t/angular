@@ -15,6 +15,7 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CustomButtonComponent } from "./custom-button/custom-button.component";
 import { HeaderComponent } from "./header/header.component";
+import { KeywordFilterPipe } from "./pipes/keyword-filter.pipe";
 import { SearchItemComponent } from "./search/search-item/search-item.component";
 import { SearchResultsComponent } from "./search/search-results/search-results.component";
 import { VideoAgeBorderDirective } from "./video-age-border.directive";
@@ -26,6 +27,7 @@ import { VideoAgeBorderDirective } from "./video-age-border.directive";
         SearchResultsComponent,
         SearchItemComponent,
         VideoAgeBorderDirective,
+        KeywordFilterPipe,
     ],
     providers: [],
     bootstrap: [AppComponent],

@@ -11,7 +11,7 @@
       <mat-icon>search</mat-icon>
     </button>
 
-    <button mat-icon-button (click)="toggleFilter()">
+    <button mat-icon-button type="button" (click)="toggleFilter()">
       <mat-icon>settings</mat-icon>
     </button>
   </form>
@@ -23,7 +23,8 @@
 </mat-toolbar>
 
 <div *ngIf="filterIsActive" class="filtering-criteria-block">
-  <button>Sort by Date</button>
-  <button>Sort by Views</button>
-  <input type="text" placeholder="Filter by word or sentence" />
+  <button (click)="sortByDate()">Sort by Date</button>
+  <button (click)="sortByViews()">Sort by Views</button>
+  <input type="text" [(ngModel)]="filterKeyword" placeholder="Filter by word or sentence" />
 </div>
+<app-search-results *ngIf="showSearchResults" [sortOrder]="sortOrder" [filterKeyword]="filterKeyword"></app-search-results>

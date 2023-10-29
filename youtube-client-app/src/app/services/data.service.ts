@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, Observable, throwError } from "rxjs";
+import { catchError, EMPTY, Observable } from "rxjs";
 
 import { SearchResponse } from "../search/search-response.model";
 
@@ -17,9 +17,7 @@ export class DataService {
             catchError((error) => {
             // eslint-disable-next-line no-console
                 console.error("An error occurred while fetching:", error);
-                return throwError(
-                    () => new Error("Something went wrong; please try again later.")
-                );
+                return EMPTY;
             })
         );
     }

@@ -1,2 +1,2 @@
-<app-search-item *ngFor="let item of data?.items" [item]="item">
+<app-search-item *ngFor="let item of data.items |  keywordFilter:filterKeyword" [item]="item">
 </app-search-item>

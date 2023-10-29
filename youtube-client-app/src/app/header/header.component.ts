@@ -7,14 +7,37 @@ import { Component } from "@angular/core";
 })
 export class HeaderComponent {
     searchTerm: string = "";
+    filterKeyword: string = "";
     filterIsActive: boolean = false;
+    showSearchResults: boolean = false;
+
+    sortOrder: "none" | "dateAsc" | "dateDesc" | "viewsAsc" | "viewsDesc" = "none";
+
+    sortByDate() {
+        if (this.sortOrder === "dateAsc") {
+            this.sortOrder = "dateDesc";
+        } else {
+            this.sortOrder = "dateAsc";
+        }
+    }
+
+    sortByViews() {
+        if (this.sortOrder === "viewsAsc") {
+            this.sortOrder = "viewsDesc";
+        } else {
+            this.sortOrder = "viewsAsc";
+        }
+    }
 
     toggleFilter() {
         this.filterIsActive = !this.filterIsActive;
+        if (!this.filterIsActive) {
+            this.sortOrder = "none";
+            this.filterKeyword = "";
+        }
     }
 
     onSearch() {
-        console.log("Searching for:", this.searchTerm);
-    // Add my search logic here
+        this.showSearchResults = true;
     }
 }
