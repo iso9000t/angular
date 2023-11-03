@@ -1,22 +1,22 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: "root",
 })
 export class ShowSearchResultsService {
-  private showSearchResultsSubject = new BehaviorSubject<boolean>(false);
-  readonly showSearchResults$ = this.showSearchResultsSubject.asObservable();
+    private showSearchResultsSubject = new BehaviorSubject<boolean>(false);
+    readonly showSearchResults$ = this.showSearchResultsSubject.asObservable();
 
-  set showSearchResults(value: boolean) {
-    this.showSearchResultsSubject.next(value);
-  }
+    set showSearchResults(value: boolean) {
+        this.showSearchResultsSubject.next(value);
+    }
 
-  get showSearchResults(): boolean {
-    return this.showSearchResultsSubject.value;
-  }
+    get showSearchResults(): boolean {
+        return this.showSearchResultsSubject.value;
+    }
 
-  onSearch() {
-    this.showSearchResults = true;
-  }
+    onSearch() {
+        this.showSearchResults = true;
+    }
 }

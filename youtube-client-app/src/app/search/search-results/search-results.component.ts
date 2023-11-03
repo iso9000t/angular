@@ -1,7 +1,9 @@
 import {
-    Component, Input, OnChanges, OnInit
+    Component, OnDestroy, OnInit
 } from "@angular/core";
+import { Subscription } from "rxjs";
 import { DataService } from "src/app/services/data.service";
+import { SortFilterService } from "src/app/services/sort-filter.service";
 import { SortOrder } from "src/enums/sort.enum";
 
 import { SearchResponse } from "../search-response.model";
@@ -11,30 +13,60 @@ import { SearchResponse } from "../search-response.model";
     templateUrl: "./search-results.component.html",
     styleUrls: ["./search-results.component.scss"],
 })
-export class SearchResultsComponent implements OnInit, OnChanges {
+export class SearchResultsComponent implements OnInit, OnDestroy {
     displayData: Partial<SearchResponse> = { items: [] };
     originalData: Partial<SearchResponse> = { items: [] };
 
-    @Input() filterKeyword = "";
+    filterKeyword: string = "";
+    private sortOrder: SortOrder = SortOrder.NONE;
+    private subscriptions: Subscription = new Subscription();
 
-    @Input() sortOrder: SortOrder = SortOrder.NONE;
-
-    constructor(private dataService: DataService) {}
+    constructor(
+        private dataService: DataService,
+        private sortFilterService: SortFilterService
+    ) {}
 
     ngOnInit(): void {
-        this.dataService.fetchData().subscribe((response) => {
-            this.originalData = response;
-            this.displayData = structuredClone(this.originalData);
-            this.sortData();
-        });
+        this.subscriptions.add(
+            this.dataService.fetchData().subscribe((response) => {
+                this.originalData = response;
+                this.displayData = structuredClone(this.originalData);
+                this.applyFilterAndSort();
+            })
+        );
+
+        // Subscribe to sortOrder changes
+        this.subscriptions.add(
+            this.sortFilterService.sortOrder$.subscribe((order) => {
+                this.sortOrder = order;
+                this.applyFilterAndSort();
+            })
+        );
+
+        // Subscribe to filterKeyword changes
+        this.subscriptions.add(
+            this.sortFilterService.filterKeyword$.subscribe((keyword) => {
+                this.filterKeyword = keyword;
+                this.applyFilterAndSort();
+            })
+        );
     }
 
-    ngOnChanges(): void {
-        this.displayData = structuredClone(this.originalData);
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
+    }
 
+    applyFilterAndSort() {
+        this.displayData = structuredClone(this.originalData);
+        this.filterData();
         this.sortData();
     }
-
+    filterData() {
+        if (!this.filterKeyword) return;
+        this.displayData.items = this.displayData.items?.filter((item) => item.snippet.title
+            .toLowerCase()
+            .includes(this.filterKeyword.toLowerCase()));
+    }
     sortData() {
         if (!this.displayData.items) {
             return;

@@ -15,7 +15,7 @@ export class DataService {
     fetchData(): Observable<SearchResponse> {
         return this.http.get<SearchResponse>(this.url).pipe(
             catchError((error) => {
-            // eslint-disable-next-line no-console
+                // eslint-disable-next-line no-console
                 console.error("An error occurred while fetching:", error);
                 return EMPTY;
             })

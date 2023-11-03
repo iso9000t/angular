@@ -25,14 +25,14 @@
 <div *ngIf="filterIsActive" class="filtering-criteria-block">
   <button (click)="sortByDate()">Sort by Date</button>
   <button (click)="sortByViews()">Sort by Views</button>
-  <input
-    type="text"
-    [(ngModel)]="filterKeyword"
-    placeholder="Filter by word or sentence"
-  />
+ <input
+  type="text"
+  [(ngModel)]="filterKeyword"
+  (ngModelChange)="onKeywordInput($event)"
+  placeholder="Filter by word or sentence"
+/>
+
 </div>
 <app-search-results
   *ngIf="showSearchResults"
-  [sortOrder]="sortOrder"
-  [filterKeyword]="filterKeyword"
 ></app-search-results>
