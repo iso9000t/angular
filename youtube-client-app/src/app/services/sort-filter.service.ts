@@ -13,7 +13,7 @@ export class SortFilterService {
   readonly filterIsActive$ = this.filterIsActiveSubject.asObservable();
 
   private sortOrderSubject = new BehaviorSubject<SortOrder>(SortOrder.NONE);
-  readonly sortOrderSubject$ = this.sortOrderSubject.asObservable();
+  readonly sortOrder$ = this.sortOrderSubject.asObservable();
 
   setFilterKeyword(keyword: string): void {
     this.filterKeywordSubject.next(keyword);
