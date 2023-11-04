@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { SearchItem } from "../../models/search-item.model";
 
+import { SearchItem } from "../../models/search-item.model";
 
 @Component({
     selector: "app-search-item",

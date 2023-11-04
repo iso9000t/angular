@@ -2,13 +2,11 @@ import {
     Component, OnDestroy, OnInit
 } from "@angular/core";
 import { Subscription } from "rxjs";
-
-import { SortFilterService } from "src/app/services/sort-filter.service";
+import { SortFilterService } from "src/app/core/services/sort-filter.service";
 import { SortOrder } from "src/enums/sort.enum";
 
 import { SearchResponse } from "../../models/search-response.model";
-import { YoutubeService } from "../../services/youtube.service";
-
+import { YoutubeService } from "../../services/youtube/youtube.service";
 
 @Component({
     selector: "app-search-results",
