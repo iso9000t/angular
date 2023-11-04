@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { SortFilterService } from "src/app/core/services/sort-filter.service";
-import { SortOrder } from "src/enums/sort.enum";
+import { SortOrder } from "src/app/youtube/enums/sort.enum";
 
 import { SearchResponse } from "../../models/search-response.model";
 import { YoutubeService } from "../../services/youtube/youtube.service";

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { SortOrder } from "src/enums/sort.enum";
+import { SortOrder } from "src/app/youtube/enums/sort.enum";
 
 @Injectable({
     providedIn: "root",
