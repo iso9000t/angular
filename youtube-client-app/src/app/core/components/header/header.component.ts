@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { SortOrder } from "src/enums/sort.enum";
 
-import { ShowSearchResultsService } from "../services/show-search-results.service";
-import { SortFilterService } from "../services/sort-filter.service";
+import { ShowSearchResultsService } from "../../../services/show-search-results.service";
+import { SortFilterService } from "../../../services/sort-filter.service";
 
 @Component({
     selector: "app-header",

@@ -1,51 +1,43 @@
-import { HttpClientModule } from "@angular/common/http";
+
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
+
+
 import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatToolbarModule } from "@angular/material/toolbar";
+
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { CustomButtonComponent } from "./custom-button/custom-button.component";
-import { HeaderComponent } from "./header/header.component";
-import { KeywordFilterPipe } from "./pipes/keyword-filter.pipe";
-import { SearchItemComponent } from "./search/search-item/search-item.component";
-import { SearchResultsComponent } from "./search/search-results/search-results.component";
+
+
+import { KeywordFilterPipe } from "./youtube/pipes/keyword-filter.pipe";
+import { SearchItemComponent } from "./youtube/components/search-item/search-item.component";
+import { SearchResultsComponent } from "./youtube/components/search-results/search-results.component";
 import { VideoAgeBorderDirective } from "./video-age-border.directive";
+import { CoreModule } from "./core/core.module"; 
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HeaderComponent,
-        SearchResultsComponent,
-        SearchItemComponent,
-        VideoAgeBorderDirective,
-        KeywordFilterPipe,
-    ],
-    providers: [],
-    bootstrap: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatSlideToggleModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        CustomButtonComponent,
-        MatCardModule,
-    ],
+  declarations: [
+    AppComponent,
+    
+   
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+   
+    SharedModule,
+    
+    
+    
+    
+    MatCardModule,
+    CoreModule
+  ],
 })
 export class AppModule {}

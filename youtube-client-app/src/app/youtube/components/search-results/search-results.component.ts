@@ -6,7 +6,7 @@ import { DataService } from "src/app/services/data.service";
 import { SortFilterService } from "src/app/services/sort-filter.service";
 import { SortOrder } from "src/enums/sort.enum";
 
-import { SearchResponse } from "../search-response.model";
+import { SearchResponse } from "../../models/search-response.model";
 
 @Component({
     selector: "app-search-results",
