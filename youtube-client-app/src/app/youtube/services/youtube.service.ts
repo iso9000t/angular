@@ -2,12 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, EMPTY, Observable } from "rxjs";
 
-import { SearchResponse } from "../youtube/models/search-response.model";
+import { SearchResponse } from "../models/search-response.model";
 
 @Injectable({
     providedIn: "root",
 })
-export class DataService {
+export class YoutubeService {
     readonly url = "https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/angular/response.json";
 
     constructor(private http: HttpClient) {}

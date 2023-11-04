@@ -2,11 +2,13 @@ import {
     Component, OnDestroy, OnInit
 } from "@angular/core";
 import { Subscription } from "rxjs";
-import { DataService } from "src/app/services/data.service";
+
 import { SortFilterService } from "src/app/services/sort-filter.service";
 import { SortOrder } from "src/enums/sort.enum";
 
 import { SearchResponse } from "../../models/search-response.model";
+import { YoutubeService } from "../../services/youtube.service";
+
 
 @Component({
     selector: "app-search-results",
@@ -22,7 +24,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription = new Subscription();
 
     constructor(
-        private dataService: DataService,
+        private dataService: YoutubeService,
         private sortFilterService: SortFilterService
     ) {}
 
