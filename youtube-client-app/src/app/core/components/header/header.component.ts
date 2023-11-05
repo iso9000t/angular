@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { ShowSearchResultsService } from "src/app/youtube/services/show-search-result/show-search-results.service";
+import { ShowSearchResultsService } from "src/app/core/services/show-search-result/show-search-results.service";
 import { SortOrder } from "src/app/youtube/enums/sort.enum";
+import { SortFilterService } from "../../services/sort-filter/sort-filter.service";
 
-import { SortFilterService } from "../../services/sort-filter.service";
+
 
 @Component({
     selector: "app-header",

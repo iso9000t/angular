@@ -2,7 +2,8 @@ import {
     Component, OnDestroy, OnInit
 } from "@angular/core";
 import { Subscription } from "rxjs";
-import { SortFilterService } from "src/app/core/services/sort-filter.service";
+import { SortFilterService } from "src/app/core/services/sort-filter/sort-filter.service";
+
 import { SortOrder } from "src/app/youtube/enums/sort.enum";
 
 import { SearchResponse } from "../../models/search-response.model";
