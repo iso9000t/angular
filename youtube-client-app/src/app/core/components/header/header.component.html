@@ -33,6 +33,7 @@
 />
 
 </div>
-<app-search-results
-  *ngIf="showSearchResults"
-></app-search-results>
+<div *ngIf="showSearchResults">
+  <router-outlet></router-outlet>
+</div>
+

@@ -3,8 +3,18 @@ import { RouterModule, Routes } from "@angular/router";
 import { HeaderComponent } from "./core/components/header/header.component";
 
 const routes: Routes = [
-    { path: 'main', component: HeaderComponent }
-/*  EXAMPLE:   { path: 'home', component: HomeComponent }, */
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  {
+    path: 'main',
+    component: HeaderComponent,
+    children: [
+      {
+        path: 'search-results',
+        loadChildren: () =>
+          import('./youtube/youtube.module').then((m) => m.YoutubeModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
