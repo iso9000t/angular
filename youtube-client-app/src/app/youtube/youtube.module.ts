@@ -7,6 +7,8 @@ import { SearchResultsComponent } from './components/search-results/search-resul
 import { VideoAgeBorderDirective } from './directives/video-age-border.directive';
 import { KeywordFilterPipe } from './pipes/keyword-filter.pipe';
 import { YoutubeRoutingModule } from './youtube-routing.module';
+import { DetailedInformationPageComponent } from './components/detailed-information-page/detailed-information-page.component';
+import { PageNotFoundComponent } from '../core/components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { YoutubeRoutingModule } from './youtube-routing.module';
     SearchItemComponent,
     VideoAgeBorderDirective,
     KeywordFilterPipe,
+    DetailedInformationPageComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,

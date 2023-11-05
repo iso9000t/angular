@@ -23,17 +23,17 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription = new Subscription();
 
     constructor(
-        private dataService: YoutubeService,
+        private youtubeService: YoutubeService,
         private sortFilterService: SortFilterService
     ) {}
 
     ngOnInit(): void {
         this.subscriptions.add(
-            this.dataService.fetchData().subscribe((response) => {
-                this.originalData = response;
-                this.displayData = structuredClone(this.originalData);
-                this.applyFilterAndSort();
-            })
+          this.youtubeService.fetchData().subscribe((response) => {
+            this.originalData = response;
+            this.displayData = structuredClone(this.originalData);
+            this.applyFilterAndSort();
+          })
         );
 
         // Subscribe to sortOrder changes

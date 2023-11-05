@@ -1,12 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { HeaderComponent } from "./core/components/header/header.component";
+import { PageNotFoundComponent } from "./core/components/page-not-found/page-not-found.component";
+import { MainPageComponent } from "./core/pages/main-page/main-page.component";
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   {
     path: 'main',
-    component: HeaderComponent,
+    component: MainPageComponent,
     children: [
       {
         path: 'search-results',
@@ -15,6 +17,8 @@ const routes: Routes = [
       },
     ],
   },
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({

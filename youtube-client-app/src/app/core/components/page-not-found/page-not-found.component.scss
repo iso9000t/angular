@@ -1,0 +1,48 @@
+.error-card {
+  max-width: 600px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.error-icon {
+  color: #ef5350; /* red 400 from Material colors */
+  font-size: 48px;
+  /* Ensure the icon aligns nicely with text */
+  vertical-align: middle;
+  /* If the icon still overflows, consider reducing the font-size */
+}
+.mat-icon {
+  -webkit-user-select: none;
+  user-select: none;
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 50px;
+  width: 48px;
+  overflow: hidden;
+}
+mat-card-title {
+  display: flex; /* Using flexbox for better alignment */
+  align-items: center; /* Center the items vertically */
+  justify-content: center; /* Center the items horizontally */
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+mat-card-content {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+mat-card-actions {
+  justify-content: center; /* Center the button */
+}
+
+button {
+  margin-top: 10px; /* Add some space above the button */
+}
+.mat-mdc-card-header {
+    display: flex;
+    padding: 16px 16px 0;
+    flex-direction: column;
+}

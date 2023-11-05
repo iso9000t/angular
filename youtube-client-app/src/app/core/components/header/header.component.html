@@ -4,7 +4,7 @@
 
     <mat-form-field appearance="fill" class="search-input">
       <mat-label>Search</mat-label>
-      <input matInput type="text"/>
+      <input matInput type="text" />
     </mat-form-field>
 
     <button mat-icon-button type="submit">
@@ -25,15 +25,10 @@
 <div *ngIf="filterIsActive" class="filtering-criteria-block">
   <button (click)="sortByDate()">Sort by Date</button>
   <button (click)="sortByViews()">Sort by Views</button>
- <input
-  type="text"
-  [(ngModel)]="filterKeyword"
-  (ngModelChange)="onKeywordInput($event)"
-  placeholder="Filter by word or sentence"
-/>
-
+  <input
+    type="text"
+    [(ngModel)]="filterKeyword"
+    (ngModelChange)="onKeywordInput($event)"
+    placeholder="Filter by word or sentence"
+  />
 </div>
-<div *ngIf="showSearchResults">
-  <router-outlet></router-outlet>
-</div>
-

@@ -25,6 +25,6 @@
   <mat-card-title>{{ item.snippet.title }}</mat-card-title>
 
   <mat-card-actions>
-    <app-custom-button>More</app-custom-button>
+    <app-custom-button (click)="onMoreButtonClick()" >More</app-custom-button>
   </mat-card-actions>
 </mat-card>

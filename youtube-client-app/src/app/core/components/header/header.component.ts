@@ -15,7 +15,7 @@ import { Router } from "@angular/router";
 export class HeaderComponent implements OnInit, OnDestroy {
   filterKeyword: string = '';
   filterIsActive: boolean = false;
-  showSearchResults: boolean = false;
+  showSearchResults: boolean = false;//delete
   sortOrder: SortOrder = SortOrder.NONE;
   private subscriptions: Subscription = new Subscription();
 
@@ -27,8 +27,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
     if (this.router.url === '/main/search-results') {
-      this.router.navigate(['/main']); // Redirect to 'main'
+      this.router.navigate(['/main']); 
     }
+    
     this.subscriptions =
       this.showSearchResultsService.showSearchResults$.subscribe(
         (isVisible) => {
