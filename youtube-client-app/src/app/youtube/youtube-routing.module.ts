@@ -6,7 +6,6 @@ import { SearchResultsComponent } from './components/search-results/search-resul
 const routes: Routes = [
   { path: '', component: SearchResultsComponent },
   { path: ':id', component: DetailedInformationPageComponent },
-  { path: '**', redirectTo: '/404' }, // Catch all other paths that don't match.
 ];
 
 @NgModule({
