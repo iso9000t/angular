@@ -3,7 +3,6 @@ import {
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { SortFilterService } from "src/app/core/services/sort-filter/sort-filter.service";
-
 import { SortOrder } from "src/app/youtube/enums/sort.enum";
 
 import { SearchResponse } from "../../models/search-response.model";
@@ -29,11 +28,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscriptions.add(
-          this.youtubeService.fetchData().subscribe((response) => {
-            this.originalData = response;
-            this.displayData = structuredClone(this.originalData);
-            this.applyFilterAndSort();
-          })
+            this.youtubeService.fetchData().subscribe((response) => {
+                this.originalData = response;
+                this.displayData = structuredClone(this.originalData);
+                this.applyFilterAndSort();
+            })
         );
 
         // Subscribe to sortOrder changes

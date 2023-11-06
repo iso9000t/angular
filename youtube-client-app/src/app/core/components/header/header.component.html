@@ -15,11 +15,16 @@
       <mat-icon>settings</mat-icon>
     </button>
   </form>
-
-  <div class="login-info-block">
-    <span class="username">Your Name</span>
+  
+ <div class="login-info-block">
+    <span class="username">{{username}}</span>
     <mat-icon>account_circle</mat-icon>
+    
+    <!-- Logout Button -->
+    <button mat-button (click)="logout()">Logout</button>
   </div>
+
+
 </mat-toolbar>
 
 <div *ngIf="filterIsActive" class="filtering-criteria-block">

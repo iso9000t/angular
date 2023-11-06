@@ -1,15 +1,17 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DetailedInformationPageComponent } from './components/detailed-information-page/detailed-information-page.component';
-import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+
+import { DetailedInformationPageComponent }
+    from "./components/detailed-information-page/detailed-information-page.component";
+import { SearchResultsComponent } from "./components/search-results/search-results.component";
 
 const routes: Routes = [
-  { path: '', component: SearchResultsComponent },
-  { path: ':id', component: DetailedInformationPageComponent },
+    { path: "", component: SearchResultsComponent },
+    { path: ":id", component: DetailedInformationPageComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class YoutubeRoutingModule {}
