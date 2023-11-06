@@ -5,11 +5,9 @@
 }
 
 .error-icon {
-  color: #ef5350; /* red 400 from Material colors */
+  color: #ef5350; 
   font-size: 48px;
-  /* Ensure the icon aligns nicely with text */
   vertical-align: middle;
-  /* If the icon still overflows, consider reducing the font-size */
 }
 .mat-icon {
   -webkit-user-select: none;
@@ -22,9 +20,9 @@
   overflow: hidden;
 }
 mat-card-title {
-  display: flex; /* Using flexbox for better alignment */
-  align-items: center; /* Center the items vertically */
-  justify-content: center; /* Center the items horizontally */
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
   font-size: 24px;
   margin-bottom: 20px;
 }
@@ -35,11 +33,11 @@ mat-card-content {
 }
 
 mat-card-actions {
-  justify-content: center; /* Center the button */
+  justify-content: center; 
 }
 
 button {
-  margin-top: 10px; /* Add some space above the button */
+  margin-top: 10px; 
 }
 .mat-mdc-card-header {
     display: flex;

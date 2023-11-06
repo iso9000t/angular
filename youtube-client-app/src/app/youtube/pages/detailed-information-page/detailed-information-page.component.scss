@@ -10,9 +10,8 @@
   align-items: center;
 }
 .back-button {
-  margin-top: 16px; /* Space above the button */
-  margin-bottom: 16px; /* Space below the button */
-  /* Add more styling as per your design requirements */
+  margin-top: 16px; 
+  margin-bottom: 16px; 
 }
 .video-detail-header {
   width: 100%;
@@ -31,10 +30,9 @@
     width: 76%;
 }
 .mat-card-image {
-  width: 100%; /* make the image responsive */
-  height: auto; /* maintain aspect ratio */
+  width: 100%; 
+  height: auto; 
   background-color: #000;
-  /* You can add a border or shadow if needed */
 }
 
 .video-detail-description {
@@ -78,6 +76,6 @@
   }
 
   .mat-card-image {
-    width: 40%; /* adjust image width on small screens */
+    width: 40%; 
   }
 }

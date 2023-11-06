@@ -35,7 +35,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             })
         );
 
-        // Subscribe to sortOrder changes
         this.subscriptions.add(
             this.sortFilterService.sortOrder$.subscribe((order) => {
                 this.sortOrder = order;
@@ -43,7 +42,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             })
         );
 
-        // Subscribe to filterKeyword changes
         this.subscriptions.add(
             this.sortFilterService.filterKeyword$.subscribe((keyword) => {
                 this.filterKeyword = keyword;

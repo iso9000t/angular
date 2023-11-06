@@ -15,7 +15,7 @@ import { SortFilterService } from "../../services/sort-filter/sort-filter.servic
 export class HeaderComponent implements OnInit, OnDestroy {
     filterKeyword: string = "";
     filterIsActive: boolean = false;
-    showSearchResults: boolean = false; // delete
+    showSearchResults: boolean = false;
     sortOrder: SortOrder = SortOrder.NONE;
     username: string = "No User Name";
     private subscriptions: Subscription = new Subscription();
