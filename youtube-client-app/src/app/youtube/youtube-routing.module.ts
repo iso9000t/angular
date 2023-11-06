@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { DetailedInformationPageComponent }
-    from "./components/detailed-information-page/detailed-information-page.component";
 import { SearchResultsComponent } from "./components/search-results/search-results.component";
+import { DetailedInformationPageComponent }
+    from "./pages/detailed-information-page/detailed-information-page.component";
 
 const routes: Routes = [
     { path: "", component: SearchResultsComponent },
