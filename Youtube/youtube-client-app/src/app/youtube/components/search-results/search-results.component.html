@@ -1,0 +1,13 @@
+<div class="pagination-controls">
+  <button (click)="goToPrevPage()">Previous</button>
+  <span>Page {{ displayPageIndex }}</span>
+  <button (click)="goToNextPage()">Next</button>
+</div>
+
+<div class="grid-container">
+  <app-custom-item *ngFor="let card of customCards"
+    [card]="card"></app-custom-item>
+  <app-search-item *ngFor="let item of displayData?.items ?? [] | keywordFilter : filterKeyword"
+    [item]="item">
+  </app-search-item>
+</div>

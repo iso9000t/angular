@@ -1,0 +1,27 @@
+<mat-card appVideoAgeBorder [publishedAt]="card.snippet.publishedAt">
+<img
+    mat-card-image
+    [src]="card.snippet.thumbnails.default.url"
+    alt="Thumbnail"
+  />
+
+  <mat-card-content>
+    <mat-card-title>{{ card.snippet.title }}</mat-card-title>
+
+    <div>{{ card.snippet.description }}</div>
+
+    <div>{{ card.snippet.publishedAt | date }}</div>
+  </mat-card-content>
+  <mat-card-actions class="custom-card-actions">
+    <a
+      mat-button
+      [href]="card.snippet.channelId"
+      target="_blank"
+      color="primary"
+      >Watch Video</a
+    >
+    <app-custom-button (click)="deleteCard(card.id.videoId)"
+      >Delete</app-custom-button
+    >
+  </mat-card-actions>
+</mat-card>

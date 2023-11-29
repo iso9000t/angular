@@ -1,0 +1,73 @@
+<mat-toolbar
+  [class.header-disabled]="isDisabled"
+  color="primary"
+  class="header"
+>
+ <nav class="navigation-links">
+  <a mat-button [routerLink]="['/admin']" routerLinkActive="active-link">Admin</a>
+  <a mat-button [routerLink]="['/favorite']" routerLinkActive="active-link">Favorites</a>
+  <a mat-button [routerLink]="['/main']" routerLinkActive="active-link">Main</a>
+</nav>
+
+  <form (ngSubmit)="onSearch()">
+    <mat-icon class="logo-icon">video_library</mat-icon>
+
+    <mat-form-field appearance="fill" class="search-input">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchQuery"
+        name="searchQuery"
+        (keyup)="updateSearchQuery(searchQuery)"
+        [disabled]="isSearchDisabled"
+      />
+    </mat-form-field>
+
+    <button
+      mat-icon-button
+      type="button"
+      (click)="toggleFilter()"
+      [disabled]="isDisabled"
+    >
+      <mat-icon>settings</mat-icon>
+    </button>
+  </form>
+
+  <div class="login-info-block">
+    <span class="username">{{ username }}</span>
+    <mat-icon>account_circle</mat-icon>
+
+    <button
+      mat-button
+      (click)="logout()"
+      *ngIf="!isDisabled"
+      [disabled]="isDisabled"
+      id="logout-button"
+    >
+      Logout
+    </button>
+    <button
+      mat-button
+      (click)="logout()"
+      *ngIf="isDisabled"
+      [disabled]="isDisabled"
+      id="login-button"
+    >
+    >
+      Login
+    </button>
+  </div>
+</mat-toolbar>
+
+<div *ngIf="filterIsActive" class="filtering-criteria-block">
+  <button (click)="sortByDate()" [disabled]="isDisabled">Sort by Date</button>
+  <button (click)="sortByViews()" [disabled]="isDisabled">Sort by Views</button>
+  <input
+    type="text"
+    [(ngModel)]="filterKeyword"
+    (ngModelChange)="onKeywordInput($event)"
+    placeholder="Filter by word or sentence"
+    [disabled]="isDisabled"
+  />
+</div>

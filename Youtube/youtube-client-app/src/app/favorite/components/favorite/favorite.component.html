@@ -1,0 +1,6 @@
+<div class="favorite-grid-container">
+  <app-favorite-item *ngFor="let item of favoriteVideos?.items"
+    [item]="item"
+    (favoriteToggled)="onFavoriteToggled($event)">
+  </app-favorite-item>
+</div>
