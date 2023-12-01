@@ -1,0 +1,52 @@
+<div class="centered-form-container">
+  <h1 class="form-header">PLEASE, SIGN UP</h1>
+  <form
+    [formGroup]="registrationForm"
+    (ngSubmit)="onSubmit()"
+    class="centered-form"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="registrationForm.get('name')?.hasError('required')">
+        Enter your name
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
+        Please enter a login email
+      </mat-error>
+      <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
+        The login email is invalid
+      </mat-error>
+      <mat-error *ngIf="registrationForm.get('email')?.hasError('emailTaken')">
+        This email address is already in use.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-error *ngIf="registrationForm.get('password')?.hasError('required')">
+        Password is required
+      </mat-error>
+      <mat-error
+        *ngIf="registrationForm.get('password')?.hasError('passwordStrength')"
+      >
+        Minimum 8 characters with an uppercase, a digit, and a special symbol
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      [disabled]="
+        registrationForm.invalid || isSubmitting
+      "
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>
