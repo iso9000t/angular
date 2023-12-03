@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   lastFailedPassword: string | null = null;
   notFoundErrorOccurred: boolean = false;
   loginForm!: FormGroup;
-  private formChangeSubscription!: Subscription;
+  private formChangeSubscription: Subscription = new Subscription();
+  
 
   constructor(
     private loginService: LoginService,
@@ -100,6 +101,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.snackBar.open('Logged in successfully', 'Close', {
             duration: 3000,
           });
+          console.log(responce);
         },
         error: (err) => {
           if (err.error.type === 'NotFoundException') {
