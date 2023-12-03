@@ -15,7 +15,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email" />
+      <input type="email" oninput="this.value = this.value.toLowerCase()" matInput formControlName="email" />
       <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
         Please enter a login email
       </mat-error>

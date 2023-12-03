@@ -3,7 +3,8 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="centered-form">
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input type="email" matInput formControlName="email" />
+      <input type="email" oninput="this.value = this.value.toLowerCase()" matInput formControlName="email" />
+
       <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
         >Enter your email</mat-error
       >

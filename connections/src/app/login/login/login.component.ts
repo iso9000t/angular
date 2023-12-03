@@ -7,6 +7,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { notFoundErrorValidator } from '../validators/not-found.validator';
 import { emailTakenValidator } from 'src/app/registration/validators/last-email.validator';
 import { Subscription } from 'rxjs';
+import { LoginData } from '../models/login.model';
+import { LoginResponse } from '../models/login.model';
 
 @Component({
   selector: 'app-login',
@@ -97,11 +99,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loginForm.valid) {
       this.isSubmitting = true;
       this.loginService.login(this.loginForm.value).subscribe({
-        next: (responce) => {
+        next: (response: LoginResponse) => {
           this.snackBar.open('Logged in successfully', 'Close', {
             duration: 3000,
           });
-          console.log(responce);
+          console.log('Token:', response.token);
+          console.log('UID:', response.uid);
         },
         error: (err) => {
           if (err.error.type === 'NotFoundException') {
