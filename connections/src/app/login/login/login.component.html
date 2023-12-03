@@ -1,0 +1,39 @@
+<div class="centered-form-container">
+  <h1 class="form-header">PLEASE, SIGN IN</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="centered-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="email" />
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
+        >Enter your email</mat-error
+      >
+      <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+        The login email is invalid
+      </mat-error>
+       <mat-error *ngIf="loginForm.get('email')?.hasError('notFoundError')">
+        Email and/or password doesn't exist in the system
+      </mat-error>
+     
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password" />
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')"
+        >Enter your password</mat-error
+      >
+      <mat-error
+        *ngIf="loginForm.get('password')?.hasError('passwordStrength')"
+      >
+        Minimum 8 characters with an uppercase, a digit, and a special symbol
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('notFoundError')">
+        Email and/or password doesn't exist in the system
+      </mat-error>
+    </mat-form-field>
+
+   <button [disabled]="loginForm.invalid || isSubmitting" type="submit">
+  Submit
+</button>
+
+  </form>
+</div>

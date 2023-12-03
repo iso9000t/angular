@@ -40,12 +40,7 @@
       </mat-error>
     </mat-form-field>
 
-    <button
-      [disabled]="
-        registrationForm.invalid || isSubmitting
-      "
-      type="submit"
-    >
+    <button [disabled]="registrationForm.invalid || isSubmitting" type="submit">
       Submit
     </button>
   </form>

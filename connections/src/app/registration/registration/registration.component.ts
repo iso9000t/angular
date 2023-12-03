@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../validators/password-validator';
 import { AuthService } from '../services/auth.service';
-import { RegistrationData } from './models/registration.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { emailTakenValidator } from '../validators/last-email.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -19,7 +19,8 @@ export class RegistrationComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   registrationForm: FormGroup = this.fb.group({
@@ -43,17 +44,17 @@ export class RegistrationComponent {
           this.snackBar.open('Registration successful', 'Close', {
             duration: 3000,
           });
+          this.router.navigate(['/signin'])
         },
         error: (err) => {
           if (err.error.type === 'PrimaryDuplicationException') {
             this.lastFailedEmail = this.registrationForm.value.email;
-            // After updating lastFailedEmail
             this.registrationForm
               .get('email')
               ?.setValidators([
                 Validators.required,
                 Validators.email,
-                emailTakenValidator(this.lastFailedEmail),
+                emailTakenValidator(this.lastFailedEmail)
               ]);
             this.registrationForm.get('email')?.updateValueAndValidity();
           }
@@ -67,7 +68,7 @@ export class RegistrationComponent {
           );
 
           console.log(
-            `Error messfae ${err.error.message}, Type: ${err.error.type}`
+            `Error message ${err.error.message}, Type: ${err.error.type}`
           );
         },
       });
