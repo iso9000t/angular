@@ -1,5 +1,5 @@
 <div class="centered-form-container">
-  <h1 class="form-header">PLEASE, SIGN UP</h1>
+  <h1 class="form-header">PLEASE, SIGN UP or <a [routerLink]="['/signin']"> sign in </a></h1>
   <form
     [formGroup]="registrationForm"
     (ngSubmit)="onSubmit()"

@@ -1,5 +1,5 @@
 <div class="centered-form-container">
-  <h1 class="form-header">PLEASE, SIGN IN</h1>
+  <h1 class="form-header">PLEASE, SIGN IN or <a [routerLink]="['/signup']" routerLinkActive="router-link-active">sign up</a> </h1>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="centered-form">
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
