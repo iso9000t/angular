@@ -102,6 +102,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           });
           console.log('Token:', response.token);
           console.log('UID:', response.uid);
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('uid', response.uid);
+          localStorage.setItem('email', this.loginForm.value.email);
+          console.log(`Local storage token: ${localStorage.getItem('token')}`);
+          console.log(`Local storage token: ${localStorage.getItem('uid')}`);
+          console.log(`Local storage token: ${localStorage.getItem('email')}`);
         },
         error: (err) => {
           if (err.error.type === 'NotFoundException') {
@@ -135,7 +141,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             }
           );
           console.log(
-            `Error messfae ${err.error.message}, Type: ${err.error.type}`
+            `Error message ${err.error.message}, Type: ${err.error.type}`
           );
         },
       });
