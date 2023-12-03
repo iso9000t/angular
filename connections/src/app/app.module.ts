@@ -14,6 +14,7 @@ import { DirtyErrorStateMatcher } from './shared/dirty-error-state-matcher';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './login/login/login.component';
+import { MainComponent } from './main/main/main.component';
 
 
 /* import { CommonModule } from '@angular/common';
@@ -31,7 +32,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar'; */
 
 @NgModule({
-  declarations: [AppComponent, RegistrationComponent, LoginComponent],
+  declarations: [AppComponent, RegistrationComponent, LoginComponent, MainComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

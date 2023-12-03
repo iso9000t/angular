@@ -7,10 +7,11 @@
   >
     <mat-form-field appearance="fill">
       <mat-label>First Name</mat-label>
-      <input matInput formControlName="name" />
+      <input matInput formControlName="name" maxlength="40"/>
       <mat-error *ngIf="registrationForm.get('name')?.hasError('required')">
         Enter your name
       </mat-error>
+      <mat-error *ngIf="registrationForm.get('name')?.hasError('invalidName')">Only letters or spaces are allowed</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">

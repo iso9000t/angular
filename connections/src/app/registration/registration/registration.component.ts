@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { emailTakenValidator } from '../validators/last-email.validator';
 import { Router } from '@angular/router';
+import { nameValidator } from '../validators/name.validator';
 
 @Component({
   selector: 'app-registration',
@@ -23,7 +24,10 @@ export class RegistrationComponent {
   ) {}
 
   registrationForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
+    name: ['', [
+      Validators.required,
+      nameValidator()
+    ]],
     email: [
       '',
       [
