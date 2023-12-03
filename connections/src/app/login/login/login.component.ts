@@ -5,9 +5,7 @@ import { passwordValidator } from 'src/app/registration/validators/password-vali
 import { LoginService } from '../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { notFoundErrorValidator } from '../validators/not-found.validator';
-import { emailTakenValidator } from 'src/app/registration/validators/last-email.validator';
 import { Subscription } from 'rxjs';
-import { LoginData } from '../models/login.model';
 import { LoginResponse } from '../models/login.model';
 
 @Component({
@@ -34,7 +32,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: new FormControl('', [
         Validators.required,
         Validators.email,
-        emailTakenValidator(this.lastFailedEmail),
         notFoundErrorValidator(this.notFoundErrorOccurred),
       ]),
       password: new FormControl('', [

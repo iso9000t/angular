@@ -1,14 +1,12 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function emailTakenValidator(
-  lastFailedEmail: string | null
-): ValidatorFn {
+export function emailTakenValidator(takenEmails: string[]): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const email = control.value;
     if (!email) {
       return null;
     }
 
-    return email === lastFailedEmail ? { emailTaken: true } : null;
+    return takenEmails.includes(email) ? { emailTaken: true } : null;
   };
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../validators/password-validator';
 import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,9 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
-
   isSubmitting: boolean = false;
-  lastFailedEmail: string | null = null;
+  takenEmails: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +29,7 @@ export class RegistrationComponent {
       [
         Validators.required,
         Validators.email,
-        emailTakenValidator(this.lastFailedEmail),
+        emailTakenValidator(this.takenEmails),
       ],
     ],
     password: ['', [Validators.required, passwordValidator()]],
@@ -44,17 +43,21 @@ export class RegistrationComponent {
           this.snackBar.open('Registration successful', 'Close', {
             duration: 3000,
           });
-          this.router.navigate(['/signin'])
+          this.router.navigate(['/signin']);
         },
         error: (err) => {
           if (err.error.type === 'PrimaryDuplicationException') {
-            this.lastFailedEmail = this.registrationForm.value.email;
+            const failedEmail = this.registrationForm.value.email;
+            if (!this.takenEmails.includes(failedEmail)) {
+              this.takenEmails.push(failedEmail);
+            }
+
             this.registrationForm
               .get('email')
               ?.setValidators([
                 Validators.required,
                 Validators.email,
-                emailTakenValidator(this.lastFailedEmail)
+                emailTakenValidator(this.takenEmails),
               ]);
             this.registrationForm.get('email')?.updateValueAndValidity();
           }
@@ -62,11 +65,8 @@ export class RegistrationComponent {
           this.snackBar.open(
             'Registration failed: ' + err.error.message,
             'Close',
-            {
-              duration: 3000,
-            }
+            { duration: 3000 }
           );
-
           console.log(
             `Error message ${err.error.message}, Type: ${err.error.type}`
           );
