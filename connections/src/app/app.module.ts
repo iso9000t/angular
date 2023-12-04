@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main/main.component';
+import { ProfileComponent } from './profile/profile/profile.component';
 
 
 /* import { CommonModule } from '@angular/common';
@@ -32,7 +33,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar'; */
 
 @NgModule({
-  declarations: [AppComponent, RegistrationComponent, LoginComponent, MainComponent],
+  declarations: [AppComponent, RegistrationComponent, LoginComponent, MainComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

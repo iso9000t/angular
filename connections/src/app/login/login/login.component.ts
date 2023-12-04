@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, importProvidersFrom, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { passwordValidator } from 'src/app/registration/validators/password-validator';
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { notFoundErrorValidator } from '../validators/not-found.validator';
 import { Subscription } from 'rxjs';
 import { LoginResponse } from '../models/login.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private loginService: LoginService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -108,6 +110,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           console.log(`Local storage token: ${localStorage.getItem('token')}`);
           console.log(`Local storage token: ${localStorage.getItem('uid')}`);
           console.log(`Local storage token: ${localStorage.getItem('email')}`);
+          this.router.navigate(['/main']);
         },
         error: (err) => {
           if (err.error.type === 'NotFoundException') {
