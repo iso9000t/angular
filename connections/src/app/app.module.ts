@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { DirtyErrorStateMatcher } from './shared/dirty-error-state-matcher';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main/main.component';
@@ -19,7 +19,7 @@ import { ProfileComponent } from './profile/profile/profile.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
+import { AuthInterceptor } from './login/interceptors/auth.interceptor';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -36,7 +36,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar'; */
 
 @NgModule({
-  declarations: [AppComponent, RegistrationComponent, LoginComponent, MainComponent, ProfileComponent],
+  declarations: [
+    AppComponent,
+    RegistrationComponent,
+    LoginComponent,
+    MainComponent,
+    ProfileComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -52,7 +58,10 @@ import { MatToolbarModule } from '@angular/material/toolbar'; */
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
-  providers: [{ provide: ErrorStateMatcher, useClass: DirtyErrorStateMatcher }],
+  providers: [
+    provideHttpClient(withInterceptors([AuthInterceptor])),
+    { provide: ErrorStateMatcher, useClass: DirtyErrorStateMatcher },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

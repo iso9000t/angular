@@ -13,13 +13,6 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   getProfile(): Observable<ProfileResponse> {
-    
-   const headers = new HttpHeaders({
-     'rs-uid': localStorage.getItem('uid') || '',
-     'rs-email': localStorage.getItem('email') || '',
-     Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-   });
-    
-    return this.http.get<ProfileResponse>(this.profileURL, {headers});
+    return this.http.get<ProfileResponse>(this.profileURL);
   }
 }
