@@ -8,9 +8,10 @@ import { LoginData, LoginResponse } from '../models/login.model';
   providedIn: 'root',
 })
 export class LoginService {
+  private loginURL = `${environment.apiUrl}/login`;
   constructor(private http: HttpClient) {}
 
   login(userData: LoginData): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.apiUrl}/login`, userData);
+    return this.http.post<LoginResponse>(this.loginURL, userData);
   }
 }
