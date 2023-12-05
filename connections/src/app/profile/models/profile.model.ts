@@ -8,3 +8,8 @@ export interface ProfileResponse {
   name: StringValue;
   uid: StringValue;
 }
+
+export interface ProfileError {
+  type: string;
+  message: string;
+}
