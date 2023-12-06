@@ -1,5 +1,25 @@
-<p>profile works!</p>
-<p> CreatedAt {{createdAt}}</p>
-<p> Email {{email}}</p>
-<p> Name {{name}}</p>
-<p> Uid {{uid}}</p>
+<div class="profile-container">
+    <h1 class="profile-title">Profile</h1>
+    <div class="profile-content" *ngIf="profile$ | async as profile">
+        <div class="profile-item">
+            <span class="profile-label">Your ID: </span>
+            <span class="profile-value">{{ profile.uid.S }}</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-label">Email: </span>
+            <span class="profile-value">{{ profile.email.S }}</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-label">Name: </span>
+            <span class="profile-value">{{ profile.name.S }}</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-label">Your accountis created at: </span>
+            <span class="profile-value">{{ profile.createdAt.S | date }}</span>
+        </div>
+    </div>
+
+    <div class="error-message" *ngIf="error$ | async as error">
+        <p>{{ error }}</p>
+    </div>
+</div>

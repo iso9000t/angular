@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileResponse } from '../models/profile.model';
-import { ProfileService } from '../service/profile.service';
+import { Store } from '@ngrx/store';
+import { loadProfile } from 'src/app/redux/actions/profile-fetch.action';
+import { selectProfile, selectProfileError } from 'src/app/redux/selectors/profile.selector';
 
 @Component({
   selector: 'app-profile',
@@ -9,24 +10,15 @@ import { ProfileService } from '../service/profile.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  createdAt: string = '';
-  email: string = '';
-  name: string = '';
-  uid: string = '';
-
-  constructor(private profileService: ProfileService, private router: Router) {}
+  profile$ = this.store.select(selectProfile);
+  error$ = this.store.select(selectProfileError);
+  
+  constructor(
+    private router: Router,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
-    this.profileService.getProfile().subscribe(
-      (profile: ProfileResponse) => {
-        this.createdAt = profile.createdAt.S;
-        this.email = profile.email.S;
-        this.name = profile.name.S;
-        this.uid = profile.uid.S;
-      },
-      (error) => {
-        console.error('Error fetching profile data:', error);
-      }
-    );
+    this.store.dispatch(loadProfile());
   }
 }

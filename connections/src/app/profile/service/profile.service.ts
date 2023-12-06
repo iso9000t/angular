@@ -13,6 +13,8 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   getProfile(): Observable<ProfileResponse> {
+    console.log('service used');
     return this.http.get<ProfileResponse>(this.profileURL);
+    
   }
 }

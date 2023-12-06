@@ -20,6 +20,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthInterceptor } from './login/interceptors/auth.interceptor';
+import { profileReducer } from './redux/reducers/profile-fetch.reducer';
+import { ProfileEffects } from './redux/effects/profile.effect';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -54,8 +56,8 @@ import { MatToolbarModule } from '@angular/material/toolbar'; */
     ReactiveFormsModule,
     HttpClientModule,
     MatSnackBarModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({ profile: profileReducer }),
+    EffectsModule.forRoot([ProfileEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
