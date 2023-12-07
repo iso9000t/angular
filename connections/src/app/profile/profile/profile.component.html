@@ -1,25 +1,60 @@
 <div class="profile-container">
-    <h1 class="profile-title">Profile</h1>
-    <div class="profile-content" *ngIf="profile$ | async as profile">
-        <div class="profile-item">
-            <span class="profile-label">Your ID: </span>
-            <span class="profile-value">{{ profile.uid.S }}</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-label">Email: </span>
-            <span class="profile-value">{{ profile.email.S }}</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-label">Name: </span>
-            <span class="profile-value">{{ profile.name.S }}</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-label">Your accountis created at: </span>
-            <span class="profile-value">{{ profile.createdAt.S | date }}</span>
-        </div>
-    </div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Profile</mat-card-title>
+    </mat-card-header>
 
-    <div class="error-message" *ngIf="error$ | async as error">
-        <p>{{ error }}</p>
-    </div>
+    <mat-card-content *ngIf="profile$ | async as profile">
+      <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+        <div class="profile-item">
+          <span class="profile-label">Your ID:</span>
+          <span class="profile-value">{{ profile.uid.S }}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Email:</span>
+          <span class="profile-value">{{ profile.email.S }}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Name:</span>
+          <div *ngIf="!isEditing" class="profile-name-editable">
+            <span class="profile-value">{{ profile.name.S }}</span>
+            <button
+              class="button"
+              color="primary"
+              mat-flat-button
+              (click)="onEdit(profile.name.S)"
+            >
+              Edit
+            </button>
+          </div>
+          <div *ngIf="isEditing" class="profile-name-editable">
+            <mat-form-field>
+              <input matInput formControlName="name" />
+              <mat-error *ngIf="profileForm.get('name')?.hasError('required')">
+                Enter your name
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  !profileForm.get('name')?.hasError('required') &&
+                  profileForm.get('name')?.hasError('invalidName')
+                "
+              >
+                Only letters or spaces
+              </mat-error>
+            </mat-form-field>
+            <button mat-flat-button type="submit" [disabled]="isLoading">
+              Save
+            </button>
+            <button mat-flat-button (click)="onCancel()" [disabled]="isLoading">
+              Cancel
+            </button>
+          </div>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Account Created At:</span>
+          <span class="profile-value">{{ profile.createdAt.S | date }}</span>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

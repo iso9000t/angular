@@ -10,15 +10,21 @@ export const initialState: ProfileState = {
 }
 
 export const profileReducer = createReducer(
-    initialState,
-    on(ProfileActions.loadProfileSuccess, (state: ProfileState, { profile }) => ({
-        ...state,
-        profile,
-        error: null
-    })),
-    on(ProfileActions.loadProfileFailure, (state: ProfileState, { error }) => ({
-        ...state,
-        profile: null,
-        error: error.message
-    }))
+  initialState,
+  on(ProfileActions.loadProfileSuccess, (state: ProfileState, { profile }) => ({
+    ...state,
+    profile,
+    error: null,
+  })),
+ on(ProfileActions.updateProfileFailure, (state, { error }) => ({
+    ...state,
+    error: error, // This should update the error in the state
+    // Decide if you want to keep or change the profile field
+    
+  })),
+  on(ProfileActions.updateProfileSuccess, (state, { updatedProfile }) => ({
+    ...state,
+    profile: updatedProfile,
+    error: null,
+  }))
 );

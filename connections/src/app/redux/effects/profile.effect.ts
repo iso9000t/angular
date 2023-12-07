@@ -5,7 +5,8 @@ import { EMPTY, of } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import * as ProfileActions from '../actions/profile-fetch.action';
 import { ProfileService } from '../../profile/service/profile.service';
-import { selectHasProfileData } from '../selectors/profile.selector';
+import { selectHasProfileData, selectProfile } from '../selectors/profile.selector';
+import { ProfileError } from 'src/app/profile/models/profile.model';
 
 @Injectable()
 export class ProfileEffects {
@@ -29,6 +30,34 @@ export class ProfileEffects {
           );
         }
         return EMPTY;
+      })
+    )
+  );
+
+  updateProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.updateProfile),
+      switchMap((action) => {
+        console.log('Dispatching updateProfile action:', action); // Log the action
+        return this.profileService.updateProfileName(action).pipe(
+          withLatestFrom(this.store.pipe(select(selectProfile))),
+          map(([response, currentProfile]) => {
+            if (!currentProfile) {
+              throw new Error('Current profile is null');
+            }
+            const updatedProfile = {
+              ...currentProfile,
+              name: { S: action.name },
+            };
+            return ProfileActions.updateProfileSuccess({ updatedProfile });
+          }),
+          catchError((error) => {
+            console.log('Caught error in updateProfile effect:', error.message); // Log the error
+            return of(
+              ProfileActions.updateProfileFailure({ error: error.message })
+            );
+          })
+        );
       })
     )
   );

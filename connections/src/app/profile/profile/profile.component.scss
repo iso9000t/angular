@@ -1,42 +1,59 @@
 .profile-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-}
-
-.profile-title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.profile-content {
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
 }
 
 .profile-item {
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .profile-label {
-    font-weight: bold;
-    color: #555;
-    margin-right: 0.5rem;
+  font-weight: bold;
+  margin-right: 10px;
+  width: 150px; /* Adjust the width as needed */
 }
 
 .profile-value {
-    font-size: 1rem;
-    color: #333;
+  flex-grow: 1;
+}
+
+.profile-name-editable {
+  display: flex;
+  align-items: center;
+}
+
+.mat-card-content {
+  padding-bottom: 0; /* Removes extra padding inside mat-card-content */
+}
+
+.mat-card-actions {
+  padding-top: 0; /* Removes extra padding above mat-card-actions */
 }
 
 .error-message {
-    color: red;
-    text-align: center;
-    margin-top: 1rem;
+  color: red;
+  margin-top: 20px;
+}
+
+.mat-mdc-card-header {
+    display: flex;
+    padding: 16px 16px 0;
+    justify-content: center;
+}
+
+.profile-name-editable[_ngcontent-ng-c3898012477] {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: 30px;
+}
+
+.profile-name-editable[_ngcontent-ng-c2230522847] {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
 }

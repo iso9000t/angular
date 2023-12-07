@@ -13,3 +13,7 @@ export interface ProfileError {
   type: string;
   message: string;
 }
+
+export interface NameData {
+  name: string;
+}
