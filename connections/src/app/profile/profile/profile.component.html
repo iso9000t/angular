@@ -1,7 +1,10 @@
-<div class="profile-container">
+<div *ngIf="profile$ | async" class="profile-container">
   <mat-card color="primary" class="card">
     <mat-card-header class="card-header">
       <mat-card-title>Profile</mat-card-title>
+      <button mat-raised-button (click)="onLogout()" class="logout-button">
+        Logout
+      </button>
     </mat-card-header>
 
     <mat-card-content class="card-content" *ngIf="profile$ | async as profile">
@@ -29,7 +32,7 @@
           </div>
           <div *ngIf="isEditing" class="profile-name-editable">
             <mat-form-field>
-              <input matInput formControlName="name" maxlength="40"/>
+              <input matInput formControlName="name" maxlength="40" />
               <mat-error *ngIf="profileForm.get('name')?.hasError('required')">
                 Enter your name
               </mat-error>
@@ -42,17 +45,23 @@
                 Only letters or spaces
               </mat-error>
             </mat-form-field>
-            <button mat-flat-button type="submit" [disabled]="isLoading">
-              Save
-            </button>
-            <button mat-flat-button (click)="onCancel()" [disabled]="isLoading">
-              Cancel
-            </button>
+            <div class="vertical-buttons">
+              <button mat-flat-button type="submit" [disabled]="isLoading">
+                Save
+              </button>
+              <button
+                mat-flat-button
+                (click)="onCancel()"
+                [disabled]="isLoading"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
         <div class="profile-item">
           <span class="profile-label">Account Created At:</span>
-          <span class="profile-value">{{ profile.createdAt.S | date }}</span>
+          <span class="profile-value">{{ profile.createdAt.S | unixToLocalDateTime }}</span>
         </div>
       </form>
     </mat-card-content>

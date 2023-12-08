@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private snackBar: MatSnackBar,
     private actions$: Actions
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(loadProfile());
@@ -78,5 +78,9 @@ export class ProfileComponent implements OnInit {
     this.isLoading = false;
     this.isEditing = false;
     this.profileForm.enable();
+  }
+
+  onLogout() {
+    console.log('logout clicked');
   }
 }
