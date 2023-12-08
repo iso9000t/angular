@@ -12,6 +12,7 @@ import { nameValidator } from 'src/app/registration/validators/name.validator';
 import { ProfileService } from '../service/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, ofType } from '@ngrx/effects';
+import { LoginService } from 'src/app/login/services/login.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,9 +33,10 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private store: Store,
     private profileService: ProfileService,
+    private loginService: LoginService,
     private snackBar: MatSnackBar,
     private actions$: Actions
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadProfile());
@@ -81,6 +83,36 @@ export class ProfileComponent implements OnInit {
   }
 
   onLogout() {
-    console.log('logout clicked');
+    this.loginService.logout().subscribe({
+      next: () => {
+        this.snackBar.open('Logout successful', 'Close', { duration: 6000 });
+        localStorage.clear(); // Clear local storage
+        // Optionally clear sessionStorage and cookies if used
+        this.clearCookies();
+        this.checkCookies();
+        this.router.navigate(['/signin']); // Redirect to login page
+      },
+      error: (error) => {
+        // Handle error, show toast message
+        this.snackBar.open('Logout failed: ' + error.message, 'Close', {
+          duration: 6000,
+        });
+      },
+    });
+  }
+
+  private clearCookies() {
+    const cookies = document.cookie.split(';');
+
+    for (let cookie of cookies) {
+      const eqPos = cookie.indexOf('=');
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie.trim();
+      document.cookie =
+        name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    }
+  }
+
+  private checkCookies() {
+    console.log('Cookies:', document.cookie);
   }
 }
