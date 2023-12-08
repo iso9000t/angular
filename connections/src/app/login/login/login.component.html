@@ -22,11 +22,6 @@
       <mat-error *ngIf="loginForm.get('password')?.hasError('required')"
         >Enter your password</mat-error
       >
-      <mat-error
-        *ngIf="loginForm.get('password')?.hasError('passwordStrength')"
-      >
-        Minimum 8 characters with an uppercase, a digit, and a special symbol
-      </mat-error>
       <mat-error *ngIf="loginForm.get('password')?.hasError('notFoundError')">
         Email and/or password doesn't exist in the system
       </mat-error>

@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       ]),
       password: new FormControl('', [
         Validators.required,
-        passwordValidator(),
         notFoundErrorValidator(this.notFoundErrorOccurred),
       ]),
     });
@@ -79,7 +78,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         .get('password')
         ?.setValidators([
           Validators.required,
-          passwordValidator(),
           notFoundErrorValidator(this.notFoundErrorOccurred),
         ]);
 
@@ -128,7 +126,6 @@ export class LoginComponent implements OnInit, OnDestroy {
               .get('password')
               ?.setValidators([
                 Validators.required,
-                passwordValidator(),
                 notFoundErrorValidator(this.notFoundErrorOccurred),
               ]);
             this.loginForm.get('email')?.updateValueAndValidity();

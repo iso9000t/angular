@@ -17,5 +17,5 @@ export const selectProfileError = createSelector(
 
 export const selectHasProfileData = createSelector(
   selectProfileFeature,
-  (profileState) => !!profileState.profile
+  (profileState) => Boolean(profileState.profile)
 );
