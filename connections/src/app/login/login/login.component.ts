@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   notFoundErrorOccurred: boolean = false;
   loginForm!: FormGroup;
   private formChangeSubscription: Subscription = new Subscription();
-  
 
   constructor(
     private loginService: LoginService,
@@ -42,17 +41,17 @@ export class LoginComponent implements OnInit, OnDestroy {
       ]),
     });
     if (this.loginForm) {
-      this.formChangeSubscription.add(this.loginForm
-        .get('email')!
-        .valueChanges.subscribe((value) => {
+      this.formChangeSubscription.add(
+        this.loginForm.get('email')!.valueChanges.subscribe((value) => {
           this.updateNotFoundFlag();
-        }));
+        })
+      );
 
-      this.formChangeSubscription.add(this.loginForm
-        .get('password')!
-        .valueChanges.subscribe((value) => {
+      this.formChangeSubscription.add(
+        this.loginForm.get('password')!.valueChanges.subscribe((value) => {
           this.updateNotFoundFlag();
-        }));
+        })
+      );
     }
   }
 
@@ -89,12 +88,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.formChangeSubscription.unsubscribe();  
+    this.formChangeSubscription.unsubscribe();
+  }
+
+  private toggleSubmitButtonAndForm() {
+    this.isSubmitting = !this.isSubmitting;
+    if (this.isSubmitting) {
+      this.loginForm.disable();
+    } else {
+      this.loginForm.enable();
+    }
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.isSubmitting = true;
+      this.toggleSubmitButtonAndForm();
       this.loginService.login(this.loginForm.value).subscribe({
         next: (response: LoginResponse) => {
           this.snackBar.open('Logged in successfully', 'Close', {
@@ -132,7 +140,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.loginForm.get('password')?.updateValueAndValidity();
             console.log('NotFoundException error returned');
           }
-          this.isSubmitting = false;
+          this.toggleSubmitButtonAndForm();
           this.snackBar.open(
             'Registration failed: ' + err.error.message,
             'Close',

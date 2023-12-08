@@ -24,10 +24,7 @@ export class RegistrationComponent {
   ) {}
 
   registrationForm: FormGroup = this.fb.group({
-    name: ['', [
-      Validators.required,
-      nameValidator()
-    ]],
+    name: ['', [Validators.required, nameValidator()]],
     email: [
       '',
       [
@@ -39,9 +36,18 @@ export class RegistrationComponent {
     password: ['', [Validators.required, passwordValidator()]],
   });
 
+  private toggleSubmitButtonAndForm() {
+    this.isSubmitting = !this.isSubmitting;
+    if (this.isSubmitting) {
+      this.registrationForm.disable();
+    } else {
+      this.registrationForm.enable();
+    }
+  }
+
   onSubmit() {
     if (this.registrationForm.valid) {
-      this.isSubmitting = true;
+      this.toggleSubmitButtonAndForm();
       this.authService.register(this.registrationForm.value).subscribe({
         next: (response) => {
           this.snackBar.open('Registration successful', 'Close', {
@@ -65,7 +71,7 @@ export class RegistrationComponent {
               ]);
             this.registrationForm.get('email')?.updateValueAndValidity();
           }
-          this.isSubmitting = false;
+          this.toggleSubmitButtonAndForm();
           this.snackBar.open(
             'Registration failed: ' + err.error.message,
             'Close',

@@ -1,7 +1,9 @@
 .profile-container {
   width: 100%;
   max-width: 600px;
-  margin: auto;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: larger;
 }
 
 .profile-item {
@@ -13,7 +15,7 @@
 .profile-label {
   font-weight: bold;
   margin-right: 10px;
-  width: 150px; /* Adjust the width as needed */
+ 
 }
 
 .profile-value {
@@ -56,4 +58,22 @@
     display: flex;
     align-items: center;
     column-gap: 20px;
+}
+
+.profile-value {
+  margin-right: 30px;
+}
+
+.card-header, .card-content, .card{
+  background-color: rgb(234, 239, 240);
+  border-radius: 10px;
+}
+
+.mdc-card {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    max-width: fit-content;
+    margin: 0 auto;
 }

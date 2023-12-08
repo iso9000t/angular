@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { loadProfile } from 'src/app/redux/actions/profile-fetch.action';
+import { loadProfile, updateProfileSuccess } from 'src/app/redux/actions/profile-fetch.action';
 import { updateProfile } from 'src/app/redux/actions/profile-fetch.action';
 import {
   selectProfile,
@@ -11,8 +11,7 @@ import {
 import { nameValidator } from 'src/app/registration/validators/name.validator';
 import { ProfileService } from '../service/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +32,8 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private store: Store,
     private profileService: ProfileService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private actions$: Actions
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +46,10 @@ export class ProfileComponent implements OnInit {
         });
       }
     });
+
+    this.actions$
+      .pipe(ofType(updateProfileSuccess))
+      .subscribe(() => this.handleUpdateSuccess());
   }
 
   onEdit(name: string) {
@@ -62,15 +66,17 @@ export class ProfileComponent implements OnInit {
   onSave() {
     if (this.profileForm.valid) {
       this.isLoading = true;
+      this.profileForm.disable();
       const newName = this.profileForm.value.name;
       this.store.dispatch(updateProfile({ name: newName }));
-
-      setTimeout(() => {
-        this.isLoading = false;
-        this.isEditing = false;
-      }, 2000);
     } else {
       this.profileForm.markAsTouched();
     }
+  }
+
+  handleUpdateSuccess() {
+    this.isLoading = false;
+    this.isEditing = false;
+    this.profileForm.enable();
   }
 }
