@@ -86,14 +86,13 @@ export class ProfileComponent implements OnInit {
     this.loginService.logout().subscribe({
       next: () => {
         this.snackBar.open('Logout successful', 'Close', { duration: 6000 });
-        localStorage.clear(); // Clear local storage
-        // Optionally clear sessionStorage and cookies if used
-        this.clearCookies();
+        localStorage.clear();
+        sessionStorage.clear();
+        this.clearCookies(); 
         this.checkCookies();
-        this.router.navigate(['/signin']); // Redirect to login page
+        this.router.navigate(['/signin']);
       },
       error: (error) => {
-        // Handle error, show toast message
         this.snackBar.open('Logout failed: ' + error.message, 'Close', {
           duration: 6000,
         });
