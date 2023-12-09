@@ -61,7 +61,7 @@
         </div>
         <div class="profile-item">
           <span class="profile-label">Account Created At:</span>
-          <span class="profile-value">{{ profile.createdAt.S | unixToLocalDateTime }}</span>
+          <span class="profile-value">{{ profile.createdAt.S | date: 'd MMM yyyy, HH:mm:ss' }}</span>
         </div>
       </form>
     </mat-card-content>

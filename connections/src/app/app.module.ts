@@ -23,7 +23,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthInterceptor } from './login/interceptors/auth.interceptor';
 import { profileReducer } from './redux/reducers/profile-fetch.reducer';
 import { ProfileEffects } from './redux/effects/profile.effect';
-import { UnixToLocalDateTimePipe } from './pipes/unix-to-local-date-time.pipe';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -46,7 +45,6 @@ import { MatToolbarModule } from '@angular/material/toolbar'; */
     LoginComponent,
     MainComponent,
     ProfileComponent,
-    UnixToLocalDateTimePipe,
   ],
   imports: [
     MatCardModule,
