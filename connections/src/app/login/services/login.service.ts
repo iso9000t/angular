@@ -20,4 +20,8 @@ export class LoginService {
   logout(): Observable<void> {
     return this.http.delete<void>(this.logoutURL);
   }
+
+  isAuthenticated(): boolean {
+    return Boolean(localStorage.getItem('token'));
+  }
 }

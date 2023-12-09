@@ -90,6 +90,7 @@ export class ProfileComponent implements OnInit {
         sessionStorage.clear();
         this.clearCookies(); 
         this.checkCookies();
+        console.log('isAuthenticated ', this.loginService.isAuthenticated());
         this.router.navigate(['/signin']);
       },
       error: (error) => {

@@ -116,7 +116,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           console.log(`Local storage token: ${localStorage.getItem('token')}`);
           console.log(`Local storage token: ${localStorage.getItem('uid')}`);
           console.log(`Local storage token: ${localStorage.getItem('email')}`);
-          this.router.navigate(['/main']);
+          console.log('isAuthenticated ', this.loginService.isAuthenticated());
+          this.router.navigate(['/']);
         },
         error: (err) => {
           if (err.error.type === 'NotFoundException') {
