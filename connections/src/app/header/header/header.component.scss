@@ -19,3 +19,15 @@ mat-toolbar {
 .active-link {
   background-color: rgba(0, 0, 0, 0.2);
 }
+.header {
+  background-color: #3c3978;
+  color: white;
+
+  a {
+    color: white;
+  }
+
+  .active-link {
+    border-bottom: 2px solid rgb(228, 11, 11); /* Active link styling */
+  }
+}
