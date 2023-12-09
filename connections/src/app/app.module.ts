@@ -24,7 +24,11 @@ import { AuthInterceptor } from './login/interceptors/auth.interceptor';
 import { profileReducer } from './redux/reducers/profile-fetch.reducer';
 import { ProfileEffects } from './redux/effects/profile.effect';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { HeaderComponent } from './header/header/header.component';
+import { HeaderMainPageComponent } from './main/pages/header-main-page/header-main-page.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { HeaderProfilePageComponent } from './registration/pages/header-profile-page/header-profile-page.component';
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,11 +37,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatToolbarModule } from '@angular/material/toolbar'; */
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
+
 
 @NgModule({
   declarations: [
@@ -46,6 +50,9 @@ import { MatToolbarModule } from '@angular/material/toolbar'; */
     LoginComponent,
     MainComponent,
     ProfileComponent,
+    HeaderComponent,
+    HeaderMainPageComponent,
+    HeaderProfilePageComponent,
   ],
   imports: [
     MatCardModule,
@@ -54,7 +61,9 @@ import { MatToolbarModule } from '@angular/material/toolbar'; */
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatToolbarModule,
     MatInputModule,
+    MatIconModule,
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,0 +1,21 @@
+mat-toolbar {
+  display: flex;
+  justify-content: center; /* Align items in the center */
+  align-items: center;
+}
+
+.toolbar-title {
+  font-weight: bold;
+  font-size: x-large;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); 
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.2);
+}

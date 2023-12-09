@@ -5,9 +5,10 @@ import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main/main.component';
 import { ProfileComponent } from './profile/profile/profile.component';
 import { authGuard, reverseAuthGuard } from './guards/auth.guard';
-
+import { HeaderMainPageComponent } from './main/pages/header-main-page/header-main-page.component';
+import { HeaderProfilePageComponent } from './registration/pages/header-profile-page/header-profile-page.component';
 const routes: Routes = [
-  { path: '', component: MainComponent, canActivate: [authGuard] },
+  { path: '', component: HeaderMainPageComponent, canActivate: [authGuard] },
   {
     path: 'signin',
     component: LoginComponent,
@@ -18,7 +19,11 @@ const routes: Routes = [
     component: RegistrationComponent,
     canActivate: [reverseAuthGuard],
   },
-  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  {
+    path: 'profile',
+    component: HeaderProfilePageComponent,
+    canActivate: [authGuard],
+  },
 ];
 
 
