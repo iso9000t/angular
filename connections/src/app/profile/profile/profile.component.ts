@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { loadProfile, updateProfileSuccess } from 'src/app/redux/actions/profile-fetch.action';
+import { loadProfile, resetProfileState, updateProfileSuccess } from 'src/app/redux/actions/profile-fetch.action';
 import { updateProfile } from 'src/app/redux/actions/profile-fetch.action';
 import {
   selectProfile,
@@ -88,7 +88,8 @@ export class ProfileComponent implements OnInit {
         this.snackBar.open('Logout successful', 'Close', { duration: 6000 });
         localStorage.clear();
         sessionStorage.clear();
-        this.clearCookies(); 
+        this.resetProfile();
+        this.clearCookies();
         this.checkCookies();
         console.log('isAuthenticated ', this.loginService.isAuthenticated());
         this.router.navigate(['/signin']);
@@ -114,5 +115,9 @@ export class ProfileComponent implements OnInit {
 
   private checkCookies() {
     console.log('Cookies:', document.cookie);
+  }
+
+  resetProfile() {
+    this.store.dispatch(resetProfileState());
   }
 }

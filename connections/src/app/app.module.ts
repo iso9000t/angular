@@ -23,6 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthInterceptor } from './login/interceptors/auth.interceptor';
 import { profileReducer } from './redux/reducers/profile-fetch.reducer';
 import { ProfileEffects } from './redux/effects/profile.effect';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -48,6 +49,7 @@ import { MatToolbarModule } from '@angular/material/toolbar'; */
   ],
   imports: [
     MatCardModule,
+    MatProgressSpinnerModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

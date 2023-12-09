@@ -19,14 +19,14 @@ export const updateProfile = createAction(
   props<NameData>()
 );
 
-// Update Profile Success Action
 export const updateProfileSuccess = createAction(
   '[Profile] Update Profile Success',
   props<{ updatedProfile: ProfileResponse }>()
 );
 
-// Update Profile Failure Action
 export const updateProfileFailure = createAction(
   '[Profile] Update Profile Failure',
-  props<{ error: string }>() // Expect a string instead of ProfileError
+  props<{ error: string }>()
 );
+
+export const resetProfileState = createAction('[Profile] Reset Profile State');
