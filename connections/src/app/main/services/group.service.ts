@@ -5,7 +5,7 @@ import { environment } from 'src/environment/environent';
 import { GroupUpdateResponse } from '../models/group.model';
 
 @Injectable({
-  providedIn: 'root', // This ensures the service is available application-wide
+  providedIn: 'root', 
 })
   
 export class GroupService {

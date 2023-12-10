@@ -1,1 +1,18 @@
-<button mat-raised-button (click)="update()" class="update">Update</button>
+<button mat-raised-button (click)="updateGroups()" class="update">Update</button>
+<!-- <div *ngIf="groupData">
+  <p>Total group count: {{ groupData.Count }}</p>
+  <ul>
+    <li *ngFor="let item of groupData.Items">
+      ID: {{ item.id.S }}, Name: {{ item.name.S }}, Created At: {{ item.createdAt.S }}, Created By: {{ item.createdBy.S }}
+    </li>
+  </ul>
+</div> -->
+
+<div *ngIf="loading$ | async">Loading...</div>
+<div *ngIf="error$ | async as error">Error: {{ error.message }}</div>
+<ul *ngIf="groups$ | async as groups">
+  <li *ngFor="let group of groups">{{ group.name.S}}</li>
+</ul>
+<div *ngIf="lastUpdateTimestamp$ | async as lastUpdate">
+  Last Updated: {{ lastUpdate | date:'medium' }}
+</div>

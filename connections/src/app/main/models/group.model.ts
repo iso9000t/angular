@@ -13,3 +13,7 @@ export interface GroupItem {
 export interface AttributeValue {
   S: string;
 }
+export interface GroupError {
+    type: string;
+    message: string;
+}
