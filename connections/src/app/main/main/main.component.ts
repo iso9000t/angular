@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { Observable, take } from 'rxjs';
 import { GroupError, GroupItem, GroupUpdateResponse } from '../models/group.model';
 import { GroupService } from '../services/group.service';
 import * as GroupActions from '../../redux/actions/group-fetch.action';
 import { GroupState } from 'src/app/redux/models/redux.models';
-import * as gropuSelectors from '../../redux/selectors/groups.selector';
+import * as groupSelectors from '../../redux/selectors/groups.selector';
 
 @Component({
   selector: 'app-main',
@@ -21,30 +21,28 @@ export class MainComponent implements OnInit {
 
   constructor(
     private groupService: GroupService,
-    private store: Store
+    private store: Store<GroupState>
   ) {
-    this.groups$ = this.store.select(gropuSelectors.selectGroups);
-    this.loading$ = this.store.select(gropuSelectors.selectGroupsLoading);
-    this.error$ = this.store.select(gropuSelectors.selectGroupsError);
-    this.lastUpdateTimestamp$ = this.store.select(gropuSelectors.selectLastUpdateTimestamp);
+    this.groups$ = this.store.select(groupSelectors.selectGroups);
+    this.loading$ = this.store.select(groupSelectors.selectGroupsLoading);
+    this.error$ = this.store.select(groupSelectors.selectGroupsError);
+    this.lastUpdateTimestamp$ = this.store.select(
+      groupSelectors.selectLastUpdateTimestamp
+    );
   }
 
   ngOnInit(): void {
-    this.updateGroups();
+    // Check if groups are already loaded in the store
+    this.store
+      .pipe(select(groupSelectors.selectGroups), take(1))
+      .subscribe((groups) => {
+        if (groups.length === 0) {
+          this.store.dispatch(GroupActions.loadGroups());
+        }
+      });
   }
 
   updateGroups() {
     this.store.dispatch(GroupActions.loadGroups());
-    /*     console.log('Update button clicked');
-        this.groupService.updateGroupList().subscribe(
-          (response: GroupUpdateResponse) => {
-            console.log('Group list updated:', response);
-            this.groupData = response;
-          },
-          (error) => {
-            console.error('Error updating group list:', error.message);
-            // Handle the error here
-          }
-        ); */
   }
 }

@@ -19,19 +19,14 @@ export class GroupEffects {
   loadGroups$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GroupActions.loadGroups),
-      withLatestFrom(this.store.pipe(select(selectGroups))), // Get the current state of groups
-      mergeMap(([action, groups]) => {
-        if (groups.length === 0) {
-          // Check if groups are already loaded
-          return this.groupService.updateGroupList().pipe(
-            map((response) =>
-              GroupActions.loadGroupsSuccess({ groups: response.Items })
-            ),
-            catchError((error) => of(GroupActions.loadGroupsFailure({ error })))
-          );
-        }
-        return of({ type: '[Groups] No Action' }); // Return a no-op action if groups are already loaded
-      })
+      mergeMap(() =>
+        this.groupService.updateGroupList().pipe(
+          map((response) =>
+            GroupActions.loadGroupsSuccess({ groups: response.Items })
+          ),
+          catchError((error) => of(GroupActions.loadGroupsFailure({ error })))
+        )
+      )
     )
   );
 }
