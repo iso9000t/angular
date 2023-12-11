@@ -12,3 +12,5 @@ export const loadGroupsFailure = createAction(
     '[Groups] Load Group Failure',
     props<{ error: GroupError }>()
 );
+
+export const resetGroupState = createAction('[Groups] Reset Groups State');

@@ -1,4 +1,12 @@
-<button mat-raised-button (click)="updateGroups()" class="update">Update</button>
+<button mat-raised-button (click)="updateGroups()" [disabled]="((countdown$ | async)!) > 0" class="update">Update</button>
+<div *ngIf="countdown$ | async as countdown">
+  <span *ngIf="countdown > 0">Next update in: {{ countdown / 1000 | number:'1.0-0' }} seconds</span>
+</div>
+
+<!-- ... rest of the template -->
+
+<!-- ... rest of the template -->
+
 <!-- <div *ngIf="groupData">
   <p>Total group count: {{ groupData.Count }}</p>
   <ul>
@@ -14,5 +22,5 @@
   <li *ngFor="let group of groups">{{ group.name.S}}</li>
 </ul>
 <div *ngIf="lastUpdateTimestamp$ | async as lastUpdate">
-  Last Updated: {{ lastUpdate | date:'medium' }}
+  Last Update: {{ lastUpdate | date:'medium' }}
 </div>

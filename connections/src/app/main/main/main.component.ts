@@ -1,7 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, take } from 'rxjs';
-import { GroupError, GroupItem, GroupUpdateResponse } from '../models/group.model';
+import {
+  interval,
+  map,
+  Observable,
+  startWith,
+  switchMap,
+  take,
+  takeWhile,
+} from 'rxjs';
+import {
+  GroupError,
+  GroupItem,
+  GroupUpdateResponse,
+} from '../models/group.model';
 import { GroupService } from '../services/group.service';
 import * as GroupActions from '../../redux/actions/group-fetch.action';
 import { GroupState } from 'src/app/redux/models/redux.models';
@@ -18,6 +30,7 @@ export class MainComponent implements OnInit {
   loading$!: Observable<boolean>;
   error$!: Observable<GroupError | null>;
   lastUpdateTimestamp$!: Observable<number | null>;
+  countdown$!: Observable<number>;
 
   constructor(
     private groupService: GroupService,
@@ -32,7 +45,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Check if groups are already loaded in the store
     this.store
       .pipe(select(groupSelectors.selectGroups), take(1))
       .subscribe((groups) => {
@@ -40,6 +52,21 @@ export class MainComponent implements OnInit {
           this.store.dispatch(GroupActions.loadGroups());
         }
       });
+    
+   this.countdown$ = this.lastUpdateTimestamp$.pipe(
+     switchMap((lastUpdate) => {
+       const endTime = (lastUpdate || 0) + 60000; // 1 minute from the last update
+       return interval(1000).pipe(
+         startWith(0),
+         map(() => {
+           const timeLeft = Math.max(0, endTime - Date.now());
+           return timeLeft;
+         }),
+         takeWhile((timeLeft) => timeLeft > 0, true) // true to include when timeLeft reaches 0
+       );
+     }),
+     startWith(60000) // Initialize with 60 seconds
+   );
   }
 
   updateGroups() {

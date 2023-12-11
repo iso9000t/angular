@@ -13,6 +13,7 @@ import { ProfileService } from '../service/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, ofType } from '@ngrx/effects';
 import { LoginService } from 'src/app/login/services/login.service';
+import { resetGroupState } from 'src/app/redux/actions/group-fetch.action';
 
 @Component({
   selector: 'app-profile',
@@ -89,8 +90,10 @@ export class ProfileComponent implements OnInit {
         localStorage.clear();
         sessionStorage.clear();
         this.resetProfile();
+        this.store.dispatch(resetGroupState());
         this.clearCookies();
         this.checkCookies();
+        
         console.log('isAuthenticated ', this.loginService.isAuthenticated());
         this.router.navigate(['/signin']);
       },

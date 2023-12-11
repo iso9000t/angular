@@ -27,5 +27,6 @@ export const groupReducer = createReducer(
     ...state,
     loading: false,
     error,
-  }))
+  })),
+  on(GroupActions.resetGroupState, () => initialGroupState)
 );
