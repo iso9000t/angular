@@ -28,6 +28,9 @@ import { Actions, ofType } from '@ngrx/effects';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnDestroy {
+onCreate() {
+console.log('Creating a group');
+}
   groupData: GroupUpdateResponse | undefined = undefined;
   groups$!: Observable<GroupItem[]>;
   loading$!: Observable<boolean>;
