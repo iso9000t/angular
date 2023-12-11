@@ -6,7 +6,8 @@ const initialGroupState: GroupState = {
   groups: [],
   loading: false,
   error: null,
-  lastUpdateTimestamp: null
+  lastUpdateTimestamp: null,
+  hasUpdated: false,
 };
 
 export const groupReducer = createReducer(
@@ -28,5 +29,9 @@ export const groupReducer = createReducer(
     loading: false,
     error,
   })),
-  on(GroupActions.resetGroupState, () => initialGroupState)
+    on(GroupActions.resetGroupState, () => initialGroupState),
+  on(GroupActions.setHasUpdated, state => ({
+      ...state,
+      hasUpdated: true,
+  }))
 );

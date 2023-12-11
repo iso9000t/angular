@@ -4,6 +4,7 @@ import {
   interval,
   map,
   Observable,
+  of,
   startWith,
   switchMap,
   take,
@@ -18,6 +19,7 @@ import { GroupService } from '../services/group.service';
 import * as GroupActions from '../../redux/actions/group-fetch.action';
 import { GroupState } from 'src/app/redux/models/redux.models';
 import * as groupSelectors from '../../redux/selectors/groups.selector';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-main',
@@ -31,10 +33,12 @@ export class MainComponent implements OnInit {
   error$!: Observable<GroupError | null>;
   lastUpdateTimestamp$!: Observable<number | null>;
   countdown$!: Observable<number>;
+  hasUpdatedSuccessfully: boolean = false;
 
   constructor(
     private groupService: GroupService,
-    private store: Store<GroupState>
+    private store: Store<GroupState>,
+    private actions$: Actions
   ) {
     this.groups$ = this.store.select(groupSelectors.selectGroups);
     this.loading$ = this.store.select(groupSelectors.selectGroupsLoading);
@@ -52,24 +56,47 @@ export class MainComponent implements OnInit {
           this.store.dispatch(GroupActions.loadGroups());
         }
       });
-    
-   this.countdown$ = this.lastUpdateTimestamp$.pipe(
-     switchMap((lastUpdate) => {
-       const endTime = (lastUpdate || 0) + 60000; // 1 minute from the last update
-       return interval(1000).pipe(
-         startWith(0),
-         map(() => {
-           const timeLeft = Math.max(0, endTime - Date.now());
-           return timeLeft;
-         }),
-         takeWhile((timeLeft) => timeLeft > 0, true) // true to include when timeLeft reaches 0
-       );
-     }),
-     startWith(60000) // Initialize with 60 seconds
-   );
+
+    // Listen for the loadGroupsSuccess action
+    this.actions$.pipe(ofType(GroupActions.loadGroupsSuccess)).subscribe(() => {
+      this.hasUpdatedSuccessfully = true;
+    });
+
+   this.countdown$ = this.store.pipe(
+  select(groupSelectors.selectHasUpdated),
+  switchMap((hasUpdated) => {
+    if (!hasUpdated) {
+      return of(0);
+    }
+    return this.lastUpdateTimestamp$.pipe(
+      switchMap((lastUpdate) => {
+        const endTime = (lastUpdate || 0) + 60000;
+        return interval(1000).pipe(
+          startWith(0),
+          map(() => Math.max(0, endTime - Date.now())),
+          takeWhile((timeLeft) => timeLeft > 0, true)
+        );
+      })
+    );
+  }),
+  startWith(60000)
+);
+
+
+
   }
 
   updateGroups() {
     this.store.dispatch(GroupActions.loadGroups());
+
+    // Listen for the loadGroupsSuccess action
+    this.actions$
+      .pipe(
+        ofType(GroupActions.loadGroupsSuccess),
+        take(1) // Ensure it only reacts once to the next success action
+      )
+      .subscribe(() => {
+        this.store.dispatch(GroupActions.setHasUpdated());
+      });
   }
 }

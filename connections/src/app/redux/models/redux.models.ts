@@ -9,6 +9,7 @@ export interface GroupState {
   groups: GroupItem[];
   loading: boolean;
   error: GroupError | null;
-  lastUpdateTimestamp: number | null; // Unix timestamp (milliseconds)
+  lastUpdateTimestamp: number | null;
+  hasUpdated: boolean;
 }
 

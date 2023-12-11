@@ -29,3 +29,9 @@ export const selectLastUpdateTimestamp = createSelector(
   selectGroupFeatureState,
   (state: GroupState) => state.lastUpdateTimestamp
 );
+
+export const selectHasUpdated = createSelector(
+  selectGroupFeatureState,
+  (state: GroupState) => state.hasUpdated
+);
+

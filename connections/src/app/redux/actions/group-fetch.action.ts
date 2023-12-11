@@ -14,3 +14,5 @@ export const loadGroupsFailure = createAction(
 );
 
 export const resetGroupState = createAction('[Groups] Reset Groups State');
+
+export const setHasUpdated = createAction('[Groups] Set Has Updated');

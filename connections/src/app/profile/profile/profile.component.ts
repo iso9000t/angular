@@ -33,7 +33,6 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store,
-    private profileService: ProfileService,
     private loginService: LoginService,
     private snackBar: MatSnackBar,
     private actions$: Actions
