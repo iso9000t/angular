@@ -6,7 +6,7 @@
   <mat-card color="primary" class="card">
     <mat-card-header class="card-header">
       <mat-card-title>Profile</mat-card-title>
-      <button mat-raised-button (click)="onLogout()" class="logout-button" [disabled]="isEditing">
+      <button mat-raised-button (click)="onLogout()" class="logout-button" [disabled]="isEditing || isLoading">
         Logout
       </button>
     </mat-card-header>
