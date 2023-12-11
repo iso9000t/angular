@@ -1,4 +1,4 @@
-<button mat-raised-button (click)="updateGroups()" [disabled]="((countdown$ | async)!) > 0" class="update">Update</button>
+<button mat-raised-button (click)="updateGroups()" [disabled]="((countdown$ | async)!) > 0 || (loading$ | async)" class="update">Update</button>
 <div *ngIf="countdown$ | async as countdown">
   <span *ngIf="countdown > 0">Next update in: {{ countdown / 1000 | number:'1.0-0' }} seconds</span>
 </div>

@@ -30,6 +30,7 @@
               color="primary"
               mat-flat-button
               (click)="onEdit(profile.name.S)"
+              [disabled]="isLoading"
             >
               Edit
             </button>

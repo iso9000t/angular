@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import {
   interval,
@@ -6,6 +6,7 @@ import {
   Observable,
   of,
   startWith,
+  Subscription,
   switchMap,
   take,
   takeWhile,
@@ -26,7 +27,7 @@ import { Actions, ofType } from '@ngrx/effects';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   groupData: GroupUpdateResponse | undefined = undefined;
   groups$!: Observable<GroupItem[]>;
   loading$!: Observable<boolean>;
@@ -34,6 +35,7 @@ export class MainComponent implements OnInit {
   lastUpdateTimestamp$!: Observable<number | null>;
   countdown$!: Observable<number>;
   hasUpdatedSuccessfully: boolean = false;
+  private subscriptions = new Subscription();
 
   constructor(
     private groupService: GroupService,
@@ -49,41 +51,33 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store
-      .pipe(select(groupSelectors.selectGroups), take(1))
-      .subscribe((groups) => {
-        if (groups.length === 0) {
-          this.store.dispatch(GroupActions.loadGroups());
+    this.subscribeToLeadGroups();
+
+    this.subscribeToLoadGroupSuccess();
+
+    this.countdown$ = this.store.pipe(
+      select(groupSelectors.selectHasUpdated),
+      switchMap((hasUpdated) => {
+        if (!hasUpdated) {
+          return of(0);
         }
-      });
-
-    // Listen for the loadGroupsSuccess action
-    this.actions$.pipe(ofType(GroupActions.loadGroupsSuccess)).subscribe(() => {
-      this.hasUpdatedSuccessfully = true;
-    });
-
-   this.countdown$ = this.store.pipe(
-  select(groupSelectors.selectHasUpdated),
-  switchMap((hasUpdated) => {
-    if (!hasUpdated) {
-      return of(0);
-    }
-    return this.lastUpdateTimestamp$.pipe(
-      switchMap((lastUpdate) => {
-        const endTime = (lastUpdate || 0) + 60000;
-        return interval(1000).pipe(
-          startWith(0),
-          map(() => Math.max(0, endTime - Date.now())),
-          takeWhile((timeLeft) => timeLeft > 0, true)
+        return this.lastUpdateTimestamp$.pipe(
+          switchMap((lastUpdate) => {
+            const endTime = (lastUpdate || 0) + 60000;
+            return interval(1000).pipe(
+              startWith(0),
+              map(() => Math.max(0, endTime - Date.now())),
+              takeWhile((timeLeft) => timeLeft > 0, true)
+            );
+          })
         );
-      })
+      }),
+      startWith(60000)
     );
-  }),
-  startWith(60000)
-);
+  }
 
-
-
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   updateGroups() {
@@ -99,4 +93,25 @@ export class MainComponent implements OnInit {
         this.store.dispatch(GroupActions.setHasUpdated());
       });
   }
+
+  private subscribeToLeadGroups() {
+       const groupsSubscription = this.store
+         .pipe(select(groupSelectors.selectGroups), take(1))
+         .subscribe((groups) => {
+           if (groups.length === 0) {
+             this.store.dispatch(GroupActions.loadGroups());
+           }
+         });
+       this.subscriptions.add(groupsSubscription);
+  }
+
+  private subscribeToLoadGroupSuccess() {
+       const successSubscription = this.actions$
+         .pipe(ofType(GroupActions.loadGroupsSuccess))
+         .subscribe(() => {
+           this.hasUpdatedSuccessfully = true;
+         });
+       this.subscriptions.add(successSubscription);
+  }
+
 }

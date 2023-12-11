@@ -83,6 +83,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onLogout() {
+    this.isLoading = true;
     this.loginService.logout().subscribe({
       next: () => {
         this.snackBar.open('Logout successful', 'Close', { duration: 6000 });
