@@ -12,6 +12,7 @@ import {
   takeWhile,
 } from 'rxjs';
 import {
+  GroupCreateResponse,
   GroupError,
   GroupItem,
   GroupUpdateResponse,
@@ -38,6 +39,7 @@ export class MainComponent implements OnInit, OnDestroy {
   countdown$!: Observable<number>;
   hasUpdatedSuccessfully: boolean = false;
   private subscriptions = new Subscription();
+  myGroupData: GroupCreateResponse | undefined = undefined;
 
   constructor(
     public dialog: MatDialog,
@@ -125,6 +127,21 @@ export class MainComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed. Result:', result);
       // Here you can handle the data returned from the dialog
+      this.createGroup(result);
+    });
+  }
+
+  private createGroup(groupName: string) {
+    this.groupService.createGroup(groupName).subscribe({
+      next: (data) => {
+        this.myGroupData = data;
+        console.log(this.myGroupData);
+        // You might want to dispatch a success action or update state here
+      },
+      error: (error) => {
+        console.error('Error creating group:', error);
+        // Handle the error, maybe show a user-friendly message
+      },
     });
   }
 }

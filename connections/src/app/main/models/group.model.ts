@@ -14,6 +14,10 @@ export interface AttributeValue {
   S: string;
 }
 export interface GroupError {
-    type: string;
-    message: string;
+  type: string;
+  message: string;
+}
+
+export interface GroupCreateResponse {
+  groupID: string;
 }
