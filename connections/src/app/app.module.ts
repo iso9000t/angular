@@ -35,6 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeaderProfilePageComponent } from './registration/pages/header-profile-page/header-profile-page.component';
 import { groupReducer } from './redux/reducers/group.reducer';
 import { GroupEffects } from './redux/effects/group.effect';
+import { MatDialogModule } from '@angular/material/dialog';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -61,6 +62,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
     HeaderProfilePageComponent,
   ],
   imports: [
+    MatDialogModule,
     MatCardModule,
     MatProgressSpinnerModule,
     BrowserModule,

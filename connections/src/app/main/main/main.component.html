@@ -2,7 +2,7 @@
 <div *ngIf="countdown$ | async as countdown">
   <span *ngIf="countdown > 0">Next update in: {{ countdown / 1000 | number:'1.0-0' }} seconds</span>
 </div>
-<button mat-raised-button (click)="onCreate()">Create</button>
+<button mat-raised-button (click)="openDialog()">Create</button>
 
 <!-- ... rest of the template -->
 

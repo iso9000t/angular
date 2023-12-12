@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Add Group</h1>
+<div mat-dialog-content class="mat-dialog-container">
+  <form [formGroup]="groupNameForm">
+    <mat-form-field class="name-field">
+      <input matInput placeholder="Group Name" formControlName="name" />
+      <mat-error *ngIf="groupNameForm.get('name')?.hasError('required')"
+        >Name is required</mat-error
+      >
+      <mat-error *ngIf="groupNameForm.get('name')?.hasError('pattern')"
+        >Letters, space or digits only</mat-error
+      >
+      <mat-error *ngIf="groupNameForm.get('name')?.hasError('maxlength')">
+        30 symbols maximum
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="groupNameForm.value" cdkFocusInitial>
+    Save
+  </button>
+</div>

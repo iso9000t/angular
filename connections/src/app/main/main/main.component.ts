@@ -21,6 +21,8 @@ import * as GroupActions from '../../redux/actions/group-fetch.action';
 import { GroupState } from 'src/app/redux/models/redux.models';
 import * as groupSelectors from '../../redux/selectors/groups.selector';
 import { Actions, ofType } from '@ngrx/effects';
+import { MatDialog } from '@angular/material/dialog';
+import { GroupNameDialogComponent } from '../group-name-dialog/group-name-dialog.component';
 
 @Component({
   selector: 'app-main',
@@ -28,9 +30,6 @@ import { Actions, ofType } from '@ngrx/effects';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnDestroy {
-onCreate() {
-console.log('Creating a group');
-}
   groupData: GroupUpdateResponse | undefined = undefined;
   groups$!: Observable<GroupItem[]>;
   loading$!: Observable<boolean>;
@@ -41,6 +40,7 @@ console.log('Creating a group');
   private subscriptions = new Subscription();
 
   constructor(
+    public dialog: MatDialog,
     private groupService: GroupService,
     private store: Store<GroupState>,
     private actions$: Actions
@@ -98,23 +98,33 @@ console.log('Creating a group');
   }
 
   private subscribeToLeadGroups() {
-       const groupsSubscription = this.store
-         .pipe(select(groupSelectors.selectGroups), take(1))
-         .subscribe((groups) => {
-           if (groups.length === 0) {
-             this.store.dispatch(GroupActions.loadGroups());
-           }
-         });
-       this.subscriptions.add(groupsSubscription);
+    const groupsSubscription = this.store
+      .pipe(select(groupSelectors.selectGroups), take(1))
+      .subscribe((groups) => {
+        if (groups.length === 0) {
+          this.store.dispatch(GroupActions.loadGroups());
+        }
+      });
+    this.subscriptions.add(groupsSubscription);
   }
 
   private subscribeToLoadGroupSuccess() {
-       const successSubscription = this.actions$
-         .pipe(ofType(GroupActions.loadGroupsSuccess))
-         .subscribe(() => {
-           this.hasUpdatedSuccessfully = true;
-         });
-       this.subscriptions.add(successSubscription);
+    const successSubscription = this.actions$
+      .pipe(ofType(GroupActions.loadGroupsSuccess))
+      .subscribe(() => {
+        this.hasUpdatedSuccessfully = true;
+      });
+    this.subscriptions.add(successSubscription);
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(GroupNameDialogComponent, {
+      width: '360px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed. Result:', result);
+      // Here you can handle the data returned from the dialog
+    });
+  }
 }
