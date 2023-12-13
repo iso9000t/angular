@@ -27,6 +27,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupNameDialogComponent } from '../group-name-dialog/group-name-dialog.component';
 import * as GroupDeleteActions from '../../redux/actions/group-delete.action';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -48,7 +49,8 @@ export class MainComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private groupService: GroupService,
     private store: Store<GroupState>,
-    private actions$: Actions
+    private actions$: Actions,
+    private snackBar: MatSnackBar
   ) {
     this.groups$ = this.store.select(groupSelectors.selectGroups);
     this.loading$ = this.store.select(groupSelectors.selectGroupsLoading);
@@ -61,6 +63,11 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUserUid = localStorage.getItem('uid');
     this.subscribeToLeadGroups();
+
+    this.subscribeToGroupCreateSuccess();
+    this.subscribeToGroupCreateFailure();
+    this.subscribeToGroupDeleteSuccess();
+    this.subscribeToGroupDeleteFailure();
 
     this.subscribeToLoadGroupSuccess();
     console.log(`my uid is: ${localStorage.getItem('uid')}`);
@@ -87,6 +94,14 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  showSnackbar(
+    message: string,
+    action: string = 'Close',
+    duration: number = 3000
+  ): void {
+    this.snackBar.open(message, action, { duration });
   }
 
   updateGroups() {
@@ -139,5 +154,33 @@ export class MainComponent implements OnInit, OnDestroy {
 
   deleteGroup(groupId: string): void {
     this.store.dispatch(GroupDeleteActions.deleteGroup({ groupId }));
+  }
+
+  private subscribeToGroupCreateSuccess() {
+    const subscription = this.actions$
+      .pipe(ofType(GroupCreateActions.createGroupSuccess))
+      .subscribe(() => this.showSnackbar('Group created successfully'));
+    this.subscriptions.add(subscription);
+  }
+
+  private subscribeToGroupCreateFailure() {
+    const subscription = this.actions$
+      .pipe(ofType(GroupCreateActions.createGroupFailure))
+      .subscribe(({ error }) => this.showSnackbar(`Error: ${error.message}`));
+    this.subscriptions.add(subscription);
+  }
+
+  private subscribeToGroupDeleteSuccess() {
+    const subscription = this.actions$
+      .pipe(ofType(GroupDeleteActions.deleteGroupSuccess))
+      .subscribe(() => this.showSnackbar('Group deleted successfully'));
+    this.subscriptions.add(subscription);
+  }
+
+  private subscribeToGroupDeleteFailure() {
+    const subscription = this.actions$
+      .pipe(ofType(GroupDeleteActions.deleteGroupFailure))
+      .subscribe(({ error }) => this.showSnackbar(`Error: ${error.message}`));
+    this.subscriptions.add(subscription);
   }
 }
