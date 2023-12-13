@@ -42,6 +42,7 @@ export class MainComponent implements OnInit, OnDestroy {
   hasUpdatedSuccessfully: boolean = false;
   private subscriptions = new Subscription();
   myGroupData: GroupCreateResponse | undefined = undefined;
+  currentUserUid: string | null = null;
 
   constructor(
     public dialog: MatDialog,
@@ -58,6 +59,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.currentUserUid = localStorage.getItem('uid');
     this.subscribeToLeadGroups();
 
     this.subscribeToLoadGroupSuccess();
@@ -135,17 +137,10 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  private createGroup(groupName: GroupCreateRequestBody) {
-    this.groupService.createGroup(groupName).subscribe({
-      next: (data) => {
-        this.myGroupData = data;
-        console.log(this.myGroupData);
-        // You might want to dispatch a success action or update state here
-      },
-      error: (error) => {
-        console.error('Error creating group:', error);
-        // Handle the error, maybe show a user-friendly message
-      },
-    });
+  deleteGroup(groupId: string): void {
+    this.groupService.deleteGroup(groupId).subscribe(
+      () => console.log(`Group ${groupId} deleted`),
+      (error) => console.log(error)
+    );
   }
 }

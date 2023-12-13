@@ -10,6 +10,7 @@ import { GroupCreateRequestBody, GroupCreateResponse, GroupUpdateResponse } from
 export class GroupService {
   private groupListURL: string = `${environment.apiUrl}/groups/list`;
   private groupCreateURL: string = `${environment.apiUrl}/groups/create`;
+  private groupDeleteURL: string = `${environment.apiUrl}/groups/delete`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,5 +25,10 @@ export class GroupService {
     console.log('Creating group list');
 
     return this.http.post<GroupCreateResponse>(this.groupCreateURL, groupName);
+  }
+
+  deleteGroup(groupId: string): Observable<void> {
+    const urlWithParam = `${this.groupDeleteURL}?groupID=${groupId}`;
+    return this.http.delete<void>(urlWithParam);
   }
 }
