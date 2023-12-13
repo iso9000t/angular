@@ -1,9 +1,9 @@
 import { GroupError, GroupItem } from "src/app/main/models/group.model";
-import { ProfileResponse } from "src/app/profile/models/profile.model";
+import { ProfileError, ProfileResponse } from "src/app/profile/models/profile.model";
 
 export interface ProfileState {
   profile: ProfileResponse | null;
-  error: string | null;
+  error: ProfileError | null;
 }
 export interface GroupState {
   groups: GroupItem[];

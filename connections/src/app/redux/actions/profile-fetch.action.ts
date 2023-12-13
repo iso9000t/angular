@@ -26,7 +26,7 @@ export const updateProfileSuccess = createAction(
 
 export const updateProfileFailure = createAction(
   '[Profile] Update Profile Failure',
-  props<{ error: string }>()
+  props<{ error: ProfileError }>()
 );
 
 export const resetProfileState = createAction('[Profile] Reset Profile State');
