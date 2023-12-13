@@ -12,6 +12,7 @@ import {
   takeWhile,
 } from 'rxjs';
 import {
+  GroupCreateRequestBody,
   GroupCreateResponse,
   GroupError,
   GroupItem,
@@ -131,7 +132,7 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  private createGroup(groupName: string) {
+  private createGroup(groupName: GroupCreateRequestBody) {
     this.groupService.createGroup(groupName).subscribe({
       next: (data) => {
         this.myGroupData = data;

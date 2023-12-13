@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environent';
-import { GroupCreateResponse, GroupUpdateResponse } from '../models/group.model';
+import { GroupCreateRequestBody, GroupCreateResponse, GroupUpdateResponse } from '../models/group.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +18,11 @@ export class GroupService {
     return this.http.get<GroupUpdateResponse>(this.groupListURL);
   }
 
-  createGroup(groupName: any): Observable<GroupCreateResponse> {
+  createGroup(
+    groupName: GroupCreateRequestBody
+  ): Observable<GroupCreateResponse> {
     console.log('Creating group list');
- 
+
     return this.http.post<GroupCreateResponse>(this.groupCreateURL, groupName);
   }
 }

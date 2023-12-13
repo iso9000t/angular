@@ -21,3 +21,6 @@ export interface GroupError {
 export interface GroupCreateResponse {
   groupID: string;
 }
+export interface GroupCreateRequestBody {
+  name: string;
+}
