@@ -36,6 +36,7 @@ import { HeaderProfilePageComponent } from './registration/pages/header-profile-
 import { groupReducer } from './redux/reducers/group.reducer';
 import { GroupEffects } from './redux/effects/group.effect';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DEFAULT_DIALOG_CONFIG } from '@angular/cdk/dialog';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -87,6 +88,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
   providers: [
     provideHttpClient(withInterceptors([AuthInterceptor])),
     { provide: ErrorStateMatcher, useClass: DirtyErrorStateMatcher },
+    { provide: DEFAULT_DIALOG_CONFIG, useValue: { hasBackdrop: false } },
   ],
   bootstrap: [AppComponent],
 })

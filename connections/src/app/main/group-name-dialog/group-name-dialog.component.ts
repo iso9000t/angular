@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -9,7 +9,11 @@ import {
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { nameValidator } from 'src/app/registration/validators/name.validator';
+import { Store } from '@ngrx/store';
+import { GroupState } from 'src/app/redux/models/redux.models';
+import * as GroupCreateActions from 'src/app/redux/actions/group-create.action';
+import { Subscription } from 'rxjs';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-group-name-dialog',
@@ -24,8 +28,9 @@ import { nameValidator } from 'src/app/registration/validators/name.validator';
   templateUrl: './group-name-dialog.component.html',
   styleUrls: ['./group-name-dialog.component.scss'],
 })
-export class GroupNameDialogComponent {
-  constructor(public dialogRef: MatDialogRef<GroupNameDialogComponent>) {}
+export class GroupNameDialogComponent implements OnInit, OnDestroy {
+  private subscription = new Subscription();
+  isSubmitting = false;
   groupNameForm: FormGroup = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -34,7 +39,60 @@ export class GroupNameDialogComponent {
     ]),
   });
 
+  constructor(
+    public dialogRef: MatDialogRef<GroupNameDialogComponent>,
+    private store: Store<GroupState>,
+    private actions$: Actions
+  ) { }
+  
+  ngOnInit(): void {
+    this.subscribeToCreateGroupSuccess();
+    this.subscribeToCreateGroupFailure(); 
+  }
+
+  private subscribeToCreateGroupSuccess() {
+    this.subscription.add(
+      this.actions$
+        .pipe(ofType(GroupCreateActions.createGroupSuccess))
+        .subscribe(() => {
+          this.isSubmitting = false;
+          this.groupNameForm.enable();
+          this.dialogRef.close();
+        })
+    );
+  }
+
+  private subscribeToCreateGroupFailure() {
+    this.subscription.add(
+      this.actions$
+        .pipe(ofType(GroupCreateActions.createGroupFailure))
+        .subscribe(() => {
+          this.isSubmitting = false;
+           this.groupNameForm.enable();
+        })
+    );
+  }
+
+  onSave() {
+    if (this.groupNameForm.valid) {
+        this.isSubmitting = true;
+        this.groupNameForm.disable();
+      const groupName = this.groupNameForm.get('name')?.value;
+      if (groupName) {
+        this.store.dispatch(
+          GroupCreateActions.createGroup({
+            requestBody: { name: groupName },
+          })
+        );
+      }
+    }
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

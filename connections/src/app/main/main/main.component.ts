@@ -44,7 +44,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   myGroupData: GroupCreateResponse | undefined = undefined;
   currentUserUid: string | null = null;
-
+  
   constructor(
     public dialog: MatDialog,
     private groupService: GroupService,
@@ -141,15 +141,16 @@ export class MainComponent implements OnInit, OnDestroy {
   openDialog(): void {
     const dialogRef = this.dialog.open(GroupNameDialogComponent, {
       width: '360px',
+      disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+/*     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.name) {
         this.store.dispatch(
           GroupCreateActions.createGroup({ requestBody: { name: result.name } })
         );
       }
-    });
+    }); */
   }
 
   deleteGroup(groupId: string): void {
