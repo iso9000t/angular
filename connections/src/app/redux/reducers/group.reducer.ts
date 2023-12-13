@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as GroupActions from '../actions/group-fetch.action';
 import { GroupState } from '../models/redux.models';
 import * as GetGroupActions from '../actions/group-create.action';
+import * as GroupDeleteActions from '../actions/group-delete.action';
 
 const initialGroupState: GroupState = {
   groups: [],
@@ -53,5 +54,20 @@ export const groupReducer = createReducer(
     ...state,
     loading: false, // Set loading to false as the operation is complete
     error, // Update the error state with the received error
+  })),
+  on(GroupDeleteActions.deleteGroup, (state) => ({
+    ...state,
+    loading: true,
+    error: null, // Reset error state when starting a new operation
+  })),
+  on(GroupDeleteActions.deleteGroupSuccess, (state, { groupId }) => ({
+    ...state,
+    groups: state.groups.filter((group) => group.id.S !== groupId),
+    loading: false,
+  })),
+  on(GroupDeleteActions.deleteGroupFailure, (state, { error }) => ({
+    ...state,
+    error, // error is now of type GroupError
+    loading: false,
   }))
 );

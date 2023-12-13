@@ -7,7 +7,8 @@ import { GroupService } from 'src/app/main/services/group.service';
 import * as GroupActions from '../actions/group-fetch.action'
 import { selectGroups } from '../selectors/groups.selector';
 import * as CreateGroupActions from '../actions/group-create.action';
-import { GroupItem } from 'src/app/main/models/group.model';
+import { GroupError, GroupItem } from 'src/app/main/models/group.model';
+import * as GroupDeleteActions from '../actions/group-delete.action';
 
 
 @Injectable()
@@ -47,7 +48,31 @@ export class GroupEffects {
             return CreateGroupActions.createGroupSuccess({ group: newGroup });
           }),
           catchError((error) =>
-            of(CreateGroupActions.createGroupFailure({ error }))
+            of(
+              CreateGroupActions.createGroupFailure({
+                error: error as GroupError,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  deleteGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupDeleteActions.deleteGroup),
+      mergeMap((action) =>
+        this.groupService.deleteGroup(action.groupId).pipe(
+          map(() =>
+            GroupDeleteActions.deleteGroupSuccess({ groupId: action.groupId })
+          ),
+          catchError((error) =>
+            of(
+              GroupDeleteActions.deleteGroupFailure({
+                error: error as GroupError,
+              })
+            )
           )
         )
       )

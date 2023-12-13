@@ -26,7 +26,7 @@ import * as groupSelectors from '../../redux/selectors/groups.selector';
 import { Actions, ofType } from '@ngrx/effects';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupNameDialogComponent } from '../group-name-dialog/group-name-dialog.component';
-
+import * as GroupDeleteActions from '../../redux/actions/group-delete.action';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -138,9 +138,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   deleteGroup(groupId: string): void {
-    this.groupService.deleteGroup(groupId).subscribe(
-      () => console.log(`Group ${groupId} deleted`),
-      (error) => console.log(error)
-    );
+    this.store.dispatch(GroupDeleteActions.deleteGroup({ groupId }));
   }
 }
