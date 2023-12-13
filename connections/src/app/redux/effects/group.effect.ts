@@ -6,6 +6,8 @@ import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { GroupService } from 'src/app/main/services/group.service';
 import * as GroupActions from '../actions/group-fetch.action'
 import { selectGroups } from '../selectors/groups.selector';
+import * as CreateGroupActions from '../actions/group-create.action';
+import { GroupItem } from 'src/app/main/models/group.model';
 
 
 @Injectable()
@@ -25,6 +27,28 @@ export class GroupEffects {
             GroupActions.loadGroupsSuccess({ groups: response.Items })
           ),
           catchError((error) => of(GroupActions.loadGroupsFailure({ error })))
+        )
+      )
+    )
+  );
+
+  createGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CreateGroupActions.createGroup),
+      mergeMap((action) =>
+        this.groupService.createGroup(action.requestBody).pipe(
+          map((response) => {
+            const newGroup: GroupItem = {
+              id: { S: response.groupID },
+              name: { S: action.requestBody.name },
+              createdBy: { S: localStorage.getItem('uid') || 'defaultUserId' },
+              createdAt: { S: new Date().getTime().toString() },
+            };
+            return CreateGroupActions.createGroupSuccess({ group: newGroup });
+          }),
+          catchError((error) =>
+            of(CreateGroupActions.createGroupFailure({ error }))
+          )
         )
       )
     )

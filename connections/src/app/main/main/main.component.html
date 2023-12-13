@@ -20,7 +20,7 @@
 <div *ngIf="loading$ | async">Loading...</div>
 <div *ngIf="error$ | async as error">Error: {{ error.message }}</div>
 <ul *ngIf="groups$ | async as groups">
-  <li *ngFor="let group of groups">{{ group.name.S}}</li>
+  <li *ngFor="let group of groups">{{ group.name.S}}Created At: <!-- {{ group.createdAt?.S }} -->, Created By: {{ group.createdBy?.S }}</li>
 </ul>
 <div *ngIf="lastUpdateTimestamp$ | async as lastUpdate">
   Last Update: {{ lastUpdate | date:'medium' }}

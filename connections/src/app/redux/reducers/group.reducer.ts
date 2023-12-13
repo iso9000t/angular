@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as GroupActions from '../actions/group-fetch.action';
 import { GroupState } from '../models/redux.models';
+import * as GetGroupActions from '../actions/group-create.action';
 
 const initialGroupState: GroupState = {
   groups: [],
@@ -29,9 +30,28 @@ export const groupReducer = createReducer(
     loading: false,
     error,
   })),
-    on(GroupActions.resetGroupState, () => initialGroupState),
-  on(GroupActions.setHasUpdated, state => ({
-      ...state,
-      hasUpdated: true,
+  on(GroupActions.resetGroupState, () => initialGroupState),
+  on(GroupActions.setHasUpdated, (state) => ({
+    ...state,
+    hasUpdated: true,
+  })),
+  on(GetGroupActions.createGroup, (state) => ({
+    ...state,
+    loading: true,
+    error: null, // Reset error state when starting a new operation
+  })),
+
+  // Handle successful group creation
+  on(GetGroupActions.createGroupSuccess, (state, { group }) => ({
+    ...state,
+    groups: [...state.groups, group],
+    loading: false, // Set loading to false as the operation is complete
+  })),
+
+  // Handle failure in group creation
+  on(GetGroupActions.createGroupFailure, (state, { error }) => ({
+    ...state,
+    loading: false, // Set loading to false as the operation is complete
+    error, // Update the error state with the received error
   }))
 );

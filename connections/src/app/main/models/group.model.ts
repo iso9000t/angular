@@ -6,8 +6,8 @@ export interface GroupUpdateResponse {
 export interface GroupItem {
   id: AttributeValue;
   name: AttributeValue;
-  createdAt: AttributeValue;
-  createdBy: AttributeValue;
+  createdAt?: AttributeValue;
+  createdBy?: AttributeValue;
 }
 
 export interface AttributeValue {

@@ -20,6 +20,7 @@ import {
 } from '../models/group.model';
 import { GroupService } from '../services/group.service';
 import * as GroupActions from '../../redux/actions/group-fetch.action';
+import * as GroupCreateActions from '../../redux/actions/group-create.action';
 import { GroupState } from 'src/app/redux/models/redux.models';
 import * as groupSelectors from '../../redux/selectors/groups.selector';
 import { Actions, ofType } from '@ngrx/effects';
@@ -60,7 +61,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscribeToLeadGroups();
 
     this.subscribeToLoadGroupSuccess();
-
+    console.log(`my uid is: ${localStorage.getItem('uid')}`);
     this.countdown$ = this.store.pipe(
       select(groupSelectors.selectHasUpdated),
       switchMap((hasUpdated) => {
@@ -126,9 +127,11 @@ export class MainComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed. Result:', result);
-      // Here you can handle the data returned from the dialog
-      this.createGroup(result);
+      if (result && result.name) {
+        this.store.dispatch(
+          GroupCreateActions.createGroup({ requestBody: { name: result.name } })
+        );
+      }
     });
   }
 
