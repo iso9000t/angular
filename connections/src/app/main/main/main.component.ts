@@ -28,6 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GroupNameDialogComponent } from '../group-name-dialog/group-name-dialog.component';
 import * as GroupDeleteActions from '../../redux/actions/group-delete.action';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GroupDeleteDialogComponent } from '../group-delete-dialog/group-delete-dialog.component';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -44,7 +45,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   myGroupData: GroupCreateResponse | undefined = undefined;
   currentUserUid: string | null = null;
-  
+
   constructor(
     public dialog: MatDialog,
     private groupService: GroupService,
@@ -62,7 +63,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentUserUid = localStorage.getItem('uid');
-    this.subscribeToLeadGroups();
+    this.subscribeToLoadGroups();
 
     this.subscribeToGroupCreateSuccess();
     this.subscribeToGroupCreateFailure();
@@ -118,7 +119,7 @@ export class MainComponent implements OnInit, OnDestroy {
       });
   }
 
-  private subscribeToLeadGroups() {
+  private subscribeToLoadGroups() {
     const groupsSubscription = this.store
       .pipe(select(groupSelectors.selectGroups), take(1))
       .subscribe((groups) => {
@@ -138,13 +139,13 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscriptions.add(successSubscription);
   }
 
-  openDialog(): void {
+  openSaveDialog(): void {
     const dialogRef = this.dialog.open(GroupNameDialogComponent, {
       width: '360px',
       disableClose: true,
     });
 
-/*     dialogRef.afterClosed().subscribe((result) => {
+    /*     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.name) {
         this.store.dispatch(
           GroupCreateActions.createGroup({ requestBody: { name: result.name } })
@@ -153,8 +154,12 @@ export class MainComponent implements OnInit, OnDestroy {
     }); */
   }
 
-  deleteGroup(groupId: string): void {
-    this.store.dispatch(GroupDeleteActions.deleteGroup({ groupId }));
+  openDeleteDialog(groupId: string): void {
+    const dialogRef = this.dialog.open(GroupDeleteDialogComponent, {
+      width: '360px',
+      disableClose: true,
+      data: { groupId },
+    });
   }
 
   private subscribeToGroupCreateSuccess() {

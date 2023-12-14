@@ -1,8 +1,16 @@
-<button (click)="updateGroups()" [disabled]="((countdown$ | async)!) > 0 || (loading$ | async)" class="update">Update</button>
+<button
+  (click)="updateGroups()"
+  [disabled]="(countdown$ | async)! > 0 || (loading$ | async)"
+  class="update"
+>
+  Update
+</button>
 <div *ngIf="countdown$ | async as countdown">
-  <span *ngIf="countdown > 0">Next update in: {{ countdown / 1000 | number:'1.0-0' }} seconds</span>
+  <span *ngIf="countdown > 0"
+    >Next update in: {{ countdown / 1000 | number : "1.0-0" }} seconds</span
+  >
 </div>
-<button (click)="openDialog()">Create</button>
+<button (click)="openSaveDialog()">Create</button>
 
 <!-- ... rest of the template -->
 
@@ -22,10 +30,17 @@
 <ul *ngIf="groups$ | async as groups">
   <li *ngFor="let group of groups">
     {{ group.name.S }} - Created By: {{ group.createdBy?.S }}
-    <button mat-raised-button *ngIf="group.createdBy?.S === currentUserUid" [disabled]="loading$ | async" (click)="deleteGroup(group.id.S)">Delete</button>
+    <button
+      mat-raised-button
+      *ngIf="group.createdBy?.S === currentUserUid"
+      [disabled]="loading$ | async"
+      (click)="openDeleteDialog(group.id.S)"
+    >
+      Delete
+    </button>
   </li>
 </ul>
 
 <div *ngIf="lastUpdateTimestamp$ | async as lastUpdate">
-  Last Update: {{ lastUpdate | date:'medium' }}
+  Last Update: {{ lastUpdate | date : "medium" }}
 </div>
