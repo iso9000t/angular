@@ -64,9 +64,9 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-     this.lastUpdateTimestamp$ = this.store.select(
-       groupSelectors.selectLastUpdateTimestamp
-     );
+    this.lastUpdateTimestamp$ = this.store.select(
+      groupSelectors.selectLastUpdateTimestamp
+    );
     this.currentUserUid = localStorage.getItem('uid');
     this.countdown$ = this.timerService.getCountdown();
     this.subscribeToLoadGroups();
@@ -77,25 +77,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.subscribeToLoadGroupSuccess();
     console.log(`my uid is: ${localStorage.getItem('uid')}`);
-    /*    this.countdown$ = this.store.pipe(
-      select(groupSelectors.selectHasUpdated),
-      switchMap((hasUpdated) => {
-        if (!hasUpdated) {
-          return of(0);
-        }
-        return this.lastUpdateTimestamp$.pipe(
-          switchMap((lastUpdate) => {
-            const endTime = (lastUpdate || 0) + 60000;
-            return interval(1000).pipe(
-              startWith(0),
-              map(() => Math.max(0, endTime - Date.now())),
-              takeWhile((timeLeft) => timeLeft > 0, true)
-            );
-          })
-        );
-      }),
-      startWith(60000)
-    ); */
   }
 
   ngOnDestroy(): void {
@@ -114,17 +95,21 @@ export class MainComponent implements OnInit, OnDestroy {
     this.store.dispatch(GroupActions.loadGroups());
 
     // Listen for the loadGroupsSuccess action
+    this.reactToGroupSuccessAction();
+  }
+
+  private reactToGroupSuccessAction() {
+  
     this.actions$
       .pipe(
         ofType(GroupActions.loadGroupsSuccess),
-        take(1) // Ensure it only reacts once to the next success action
+        take(1)
       )
       .subscribe(() => {
         this.store.dispatch(GroupActions.setHasUpdated());
         this.timerService.startCountdown();
       });
   }
-
   private subscribeToLoadGroups() {
     const groupsSubscription = this.store
       .pipe(select(groupSelectors.selectGroups), take(1))
@@ -150,14 +135,6 @@ export class MainComponent implements OnInit, OnDestroy {
       width: '360px',
       disableClose: true,
     });
-
-    /*     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.name) {
-        this.store.dispatch(
-          GroupCreateActions.createGroup({ requestBody: { name: result.name } })
-        );
-      }
-    }); */
   }
 
   openDeleteDialog(groupId: string): void {
