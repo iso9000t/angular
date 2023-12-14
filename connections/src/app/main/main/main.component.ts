@@ -29,6 +29,7 @@ import { GroupNameDialogComponent } from '../group-name-dialog/group-name-dialog
 import * as GroupDeleteActions from '../../redux/actions/group-delete.action';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupDeleteDialogComponent } from '../group-delete-dialog/group-delete-dialog.component';
+import { TimerService } from '../services/timer-service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -51,20 +52,24 @@ export class MainComponent implements OnInit, OnDestroy {
     private groupService: GroupService,
     private store: Store<GroupState>,
     private actions$: Actions,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private timerService: TimerService
   ) {
     this.groups$ = this.store.select(groupSelectors.selectGroups);
     this.loading$ = this.store.select(groupSelectors.selectGroupsLoading);
     this.error$ = this.store.select(groupSelectors.selectGroupsError);
-    this.lastUpdateTimestamp$ = this.store.select(
+    /* this.lastUpdateTimestamp$ = this.store.select(
       groupSelectors.selectLastUpdateTimestamp
-    );
+    ); */
   }
 
   ngOnInit(): void {
+     this.lastUpdateTimestamp$ = this.store.select(
+       groupSelectors.selectLastUpdateTimestamp
+     );
     this.currentUserUid = localStorage.getItem('uid');
+    this.countdown$ = this.timerService.getCountdown();
     this.subscribeToLoadGroups();
-
     this.subscribeToGroupCreateSuccess();
     this.subscribeToGroupCreateFailure();
     this.subscribeToGroupDeleteSuccess();
@@ -72,7 +77,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.subscribeToLoadGroupSuccess();
     console.log(`my uid is: ${localStorage.getItem('uid')}`);
-    this.countdown$ = this.store.pipe(
+    /*    this.countdown$ = this.store.pipe(
       select(groupSelectors.selectHasUpdated),
       switchMap((hasUpdated) => {
         if (!hasUpdated) {
@@ -90,7 +95,7 @@ export class MainComponent implements OnInit, OnDestroy {
         );
       }),
       startWith(60000)
-    );
+    ); */
   }
 
   ngOnDestroy(): void {
@@ -116,6 +121,7 @@ export class MainComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this.store.dispatch(GroupActions.setHasUpdated());
+        this.timerService.startCountdown();
       });
   }
 
