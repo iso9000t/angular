@@ -9,3 +9,8 @@ export interface UserItem {
   name: AttributeValue;
   uid: AttributeValue;
 }
+
+export interface UserError {
+  type: string;
+  message: string;
+}

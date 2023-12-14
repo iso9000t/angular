@@ -10,6 +10,5 @@ export interface GroupState {
   loading: boolean;
   error: GroupError | null;
   lastUpdateTimestamp: number | null;
-
 }
 
