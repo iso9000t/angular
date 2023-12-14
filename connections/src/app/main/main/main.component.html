@@ -7,12 +7,12 @@
       <div class="update-div">
         <button
           (click)="updateGroups()"
-          [disabled]="(countdown$ | async)! > 0 || (loading$ | async)"
+          [disabled]="(countdownGroupUpdate$ | async)! > 0 || (loadingGroups$ | async)"
           class="update"
         >
-          Update
+          Update group list
         </button>
-        <div *ngIf="countdown$ | async as countdown">
+        <div *ngIf="countdownGroupUpdate$ | async as countdown">
           <span *ngIf="countdown > 0"
             >Next update in: {{ countdown / 1000 | number : "1.0-0" }}</span
           >
@@ -21,7 +21,7 @@
       <button (click)="openSaveDialog()">Create</button>
       
     </div>
-<div *ngIf="loading$ | async">Processing...</div>
+<div *ngIf="loadingGroups$ | async">Processing...</div>
     
 
     <div class="scrollable-content">
@@ -31,7 +31,7 @@
           <button
             class="delete-btn"
             *ngIf="group.createdBy?.S === currentUserUid"
-            [disabled]="loading$ | async"
+            [disabled]="loadingGroups$ | async"
             (click)="openDeleteDialog(group.id.S)"
           >
             x
@@ -47,7 +47,12 @@
   <!-- Right Side -->
   <div class="right-side">
     <!-- Placeholder content for the right side -->
-    <p>Right side works!</p>
+     <button
+          (click)="updateUsers()"
+          class="update"
+        >
+          Update user list
+        </button>
     <!-- Add more content here as needed -->
   </div>
 </div>

@@ -38,10 +38,10 @@ import { TimerService } from '../services/timer-service';
 export class MainComponent implements OnInit, OnDestroy {
   groupData: GroupUpdateResponse | undefined = undefined;
   groups$!: Observable<GroupItem[]>;
-  loading$!: Observable<boolean>;
+  loadingGroups$!: Observable<boolean>;
   error$!: Observable<GroupError | null>;
   lastUpdateTimestamp$!: Observable<number | null>;
-  countdown$!: Observable<number>;
+  countdownGroupUpdate$!: Observable<number>;
   hasUpdatedSuccessfully: boolean = false;
   private subscriptions = new Subscription();
   myGroupData: GroupCreateResponse | undefined = undefined;
@@ -56,7 +56,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private timerService: TimerService
   ) {
     this.groups$ = this.store.select(groupSelectors.selectGroups);
-    this.loading$ = this.store.select(groupSelectors.selectGroupsLoading);
+    this.loadingGroups$ = this.store.select(groupSelectors.selectGroupsLoading);
     this.error$ = this.store.select(groupSelectors.selectGroupsError);
     /* this.lastUpdateTimestamp$ = this.store.select(
       groupSelectors.selectLastUpdateTimestamp
@@ -68,7 +68,7 @@ export class MainComponent implements OnInit, OnDestroy {
       groupSelectors.selectLastUpdateTimestamp
     );
     this.currentUserUid = localStorage.getItem('uid');
-    this.countdown$ = this.timerService.getCountdown();
+    this.countdownGroupUpdate$ = this.timerService.getCountdown();
     this.subscribeToLoadGroups();
     this.subscribeToGroupCreateSuccess();
     this.subscribeToGroupCreateFailure();
@@ -99,14 +99,9 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private reactToGroupSuccessAction() {
-  
     this.actions$
-      .pipe(
-        ofType(GroupActions.loadGroupsSuccess),
-        take(1)
-      )
+      .pipe(ofType(GroupActions.loadGroupsSuccess), take(1))
       .subscribe(() => {
-        this.store.dispatch(GroupActions.setHasUpdated());
         this.timerService.startCountdown();
       });
   }
@@ -171,5 +166,13 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(ofType(GroupDeleteActions.deleteGroupFailure))
       .subscribe(({ error }) => this.showSnackbar(`Error: ${error.message}`));
     this.subscriptions.add(subscription);
+  }
+
+  updateUsers() {
+    this.groupService.updateUserList().subscribe((response) => {
+      console.log(response);
+      this.showSnackbar('Users updated successfully');
+    
+    })
   }
 }

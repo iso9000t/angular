@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environent';
 import { GroupCreateRequestBody, GroupCreateResponse, GroupUpdateResponse } from '../models/group.model';
+import { UserListResponse } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,14 @@ export class GroupService {
   private groupListURL: string = `${environment.apiUrl}/groups/list`;
   private groupCreateURL: string = `${environment.apiUrl}/groups/create`;
   private groupDeleteURL: string = `${environment.apiUrl}/groups/delete`;
+  private userListURL: string = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
+
+  updateUserList(): Observable<UserListResponse> {
+    console.log('Updating group list');
+    return this.http.get<UserListResponse>(this.userListURL);
+  }
 
   updateGroupList(): Observable<GroupUpdateResponse> {
     console.log('Updating group list');
