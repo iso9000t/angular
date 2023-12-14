@@ -1,46 +1,53 @@
-<button
-  (click)="updateGroups()"
-  [disabled]="(countdown$ | async)! > 0 || (loading$ | async)"
-  class="update"
->
-  Update
-</button>
-<div *ngIf="countdown$ | async as countdown">
-  <span *ngIf="countdown > 0"
-    >Next update in: {{ countdown / 1000 | number : "1.0-0" }} seconds</span
-  >
-</div>
-<button (click)="openSaveDialog()">Create</button>
-
-<!-- ... rest of the template -->
-
-<!-- ... rest of the template -->
-
-<!-- <div *ngIf="groupData">
-  <p>Total group count: {{ groupData.Count }}</p>
-  <ul>
-    <li *ngFor="let item of groupData.Items">
-      ID: {{ item.id.S }}, Name: {{ item.name.S }}, Created At: {{ item.createdAt.S }}, Created By: {{ item.createdBy.S }}
-    </li>
-  </ul>
-</div> -->
-
+<div class="container">
+  <!-- Left Side -->
+  <div class="left-side">
+    <!-- Your existing list for groups and other content -->
+    <div class="top-buttons-div">
+        <div class="top-block"></div>
+      <div class="update-div">
+        <button
+          (click)="updateGroups()"
+          [disabled]="(countdown$ | async)! > 0 || (loading$ | async)"
+          class="update"
+        >
+          Update
+        </button>
+        <div *ngIf="countdown$ | async as countdown">
+          <span *ngIf="countdown > 0"
+            >Next update in: {{ countdown / 1000 | number : "1.0-0" }}</span
+          >
+        </div>
+      </div>
+      <button (click)="openSaveDialog()">Create</button>
+      
+    </div>
 <div *ngIf="loading$ | async">Processing...</div>
-<div *ngIf="error$ | async as error">Error: {{ error.message }}</div>
-<ul *ngIf="groups$ | async as groups">
-  <li *ngFor="let group of groups">
-    {{ group.name.S }} - Created By: {{ group.createdBy?.S }}
-    <button
-      mat-raised-button
-      *ngIf="group.createdBy?.S === currentUserUid"
-      [disabled]="loading$ | async"
-      (click)="openDeleteDialog(group.id.S)"
-    >
-      Delete
-    </button>
-  </li>
-</ul>
+    
 
-<div *ngIf="lastUpdateTimestamp$ | async as lastUpdate">
-  Last Update: {{ lastUpdate | date : "medium" }}
+    <div class="scrollable-content">
+      <ul *ngIf="groups$ | async as groups">
+        <li *ngFor="let group of groups">
+          {{ group.name.S }}
+          <button
+            class="delete-btn"
+            *ngIf="group.createdBy?.S === currentUserUid"
+            [disabled]="loading$ | async"
+            (click)="openDeleteDialog(group.id.S)"
+          >
+            x
+          </button>
+        </li>
+      </ul>
+
+      <div *ngIf="lastUpdateTimestamp$ | async as lastUpdate">
+        Last Update: {{ lastUpdate | date : "medium" }}
+      </div>
+    </div>
+  </div>
+  <!-- Right Side -->
+  <div class="right-side">
+    <!-- Placeholder content for the right side -->
+    <p>Right side works!</p>
+    <!-- Add more content here as needed -->
+  </div>
 </div>
