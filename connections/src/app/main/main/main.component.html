@@ -1,70 +1,82 @@
 <div class="container">
   <!-- Left Side (Groups) -->
   <div class="left-side">
-    <h2>Groups</h2> <!-- Header for the Groups section -->
+    <h2>Groups</h2>
+    <div *ngIf="lastUpdateTimeGroup$ | async as lastUpdate">
+      Last Update: {{ lastUpdate | date : "medium" }}
+    </div>
+    <!-- Header for the Groups section -->
     <div class="top-buttons-div">
       <div class="update-div">
         <button
           (click)="updateGroups()"
-          [disabled]="(countdownGroupUpdate$ | async)! > 0 || (loadingGroups$ | async)"
+          [disabled]="
+            (countdownGroupUpdate$ | async)! > 0 || (loadingGroups$ | async)
+          "
           class="update"
         >
-          Update group list
+          Update groups
         </button>
         <div *ngIf="countdownGroupUpdate$ | async as countdown">
-          <span *ngIf="countdown > 0">Next update in: {{ countdown / 1000 | number : "1.0-0" }}</span>
+          <span class="update-number" *ngIf="countdown > 0">
+            {{ countdown / 1000 | number : "1.0-0" }}</span
+          >
         </div>
       </div>
-      <button (click)="openSaveDialog()">Create</button>
+      <button (click)="openSaveDialog()">Create group</button>
     </div>
     <div *ngIf="loadingGroups$ | async">Processing...</div>
     <div class="scrollable-content">
       <ul *ngIf="groups$ | async as groups">
-        <li *ngFor="let group of groups">
-          {{ group.name.S }}
+        <li *ngFor="let group of groups" class="group-item">
+          <div class="group-content" (click)="navigateToGroup(group.id.S)">
+            {{ group.name.S }}
+          </div>
           <button
-            class="delete-btn"
             *ngIf="group.createdBy?.S === currentUserUid"
+            class="delete-btn"
             [disabled]="loadingGroups$ | async"
-            (click)="openDeleteDialog(group.id.S)"
+            (click)="openDeleteDialog(group.id.S); $event.stopPropagation()"
           >
             x
           </button>
         </li>
       </ul>
-      <div *ngIf="lastUpdateTimeGroup$ | async as lastUpdate">
-        Last Update: {{ lastUpdate | date : "medium" }}
-      </div>
     </div>
   </div>
 
   <!-- Right Side (Users) -->
   <div class="right-side">
-    <h2>Users</h2> <!-- Header for the Users section -->
+    <h2>Users</h2>
+    <div *ngIf="lastUpdateTimeUser$ | async as lastUpdate">
+      Last User Update: {{ lastUpdate | date : "medium" }}
+    </div>
+    <!-- Header for the Users section -->
     <div class="top-buttons-div">
       <div class="update-div">
         <button
           (click)="updateUsers()"
-          [disabled]="(countdownUserUpdate$ | async)! > 0 || (loadingUsers$ | async)"
+          [disabled]="
+            (countdownUserUpdate$ | async)! > 0 || (loadingUsers$ | async)
+          "
           class="update"
         >
           Update user list
         </button>
         <div *ngIf="countdownUserUpdate$ | async as countdown">
-          <span *ngIf="countdown > 0">Next update in: {{ countdown / 1000 | number : "1.0-0" }}</span>
+          <span *ngIf="countdown > 0"
+            >Next update in: {{ countdown / 1000 | number : "1.0-0" }}</span
+          >
         </div>
       </div>
     </div>
-    <div *ngIf="(loadingUsers$ | async)">Processing...</div>
+    <div *ngIf="loadingUsers$ | async">Processing...</div>
     <div class="scrollable-content">
       <ul *ngIf="users$ | async as users">
         <li *ngFor="let user of users">
-          {{ user.name.S }} {{ user.uid}}
+          {{ user.name.S }}
         </li>
       </ul>
-      <div *ngIf="lastUpdateTimeUser$ | async as lastUpdate">
-        Last User Update: {{ lastUpdate | date : "medium" }}
-      </div>
     </div>
     <div *ngIf="errorUsers$ | async as error">
       <span class="error-message">Error: {{ error.message }}</span>

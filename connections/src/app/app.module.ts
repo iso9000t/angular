@@ -40,6 +40,7 @@ import { DEFAULT_DIALOG_CONFIG } from '@angular/cdk/dialog';
 import { GroupDeleteDialogComponent } from './main/group-delete-dialog/group-delete-dialog.component';
 import { userReducer } from './redux/reducers/user.reducer';
 import { UserEffects } from './redux/effects/user.effect';
+import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -65,6 +66,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
     HeaderMainPageComponent,
     HeaderProfilePageComponent,
     GroupDeleteDialogComponent,
+    GroupDialogComponent,
   ],
   imports: [
     MatDialogModule,

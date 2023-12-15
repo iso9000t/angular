@@ -29,6 +29,7 @@ import { GroupDeleteDialogComponent } from '../group-delete-dialog/group-delete-
 import { TimerService } from '../services/timer-service';
 import { UserItem, UserListResponse } from '../models/user.model';
 import { selectUsersExceptCurrent } from '../../redux/selectors/user.selector';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -55,6 +56,7 @@ export class MainComponent implements OnInit, OnDestroy {
   currentUserUid!: string;
 
   constructor(
+    private router: Router,
     public dialog: MatDialog,
     private store: Store,
     private actions$: Actions,
@@ -234,5 +236,9 @@ export class MainComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.add(failureSubscription);
+  }
+
+  navigateToGroup(groupId: string): void {
+    this.router.navigate(['/group', groupId]);
   }
 }

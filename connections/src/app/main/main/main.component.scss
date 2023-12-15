@@ -1,22 +1,16 @@
-/* main.component.css */
-
 .container {
   display: flex;
   flex-direction: row;
   height: 100vh;
-  align-items: center; /* Changed from center to start to align content to the top */
+  align-items: flex-start; /* Align content to the top */
   margin-top: 20px;
-  /* overflow-y: auto; */
-  
 }
-
 
 .left-side,
 .right-side {
   flex: 1; /* Equal flex basis */
-  flex-basis: 50%; /* Explicitly setting each side to take up 50% of the container */
+  flex-basis: 50%; /* Each side takes up 50% of the container */
   padding: 10px;
-/*   overflow-y: auto; */
   height: 100%;
   text-align: center;
 }
@@ -25,56 +19,65 @@
   border-left: 1px solid #ccc;
 }
 
-.top-buttons-div{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-position: sticky;
-
-  top: 0; /* Stick to the top of the left-side */
-  background-color: white; /* Optional: Background color to overlap content below */
-  z-index: 100; /* To ensure it stays above other content */
-  padding: 10px 0; /* Padding around the buttons */
-  margin-bottom: 10px; /* Space between buttons and scrollable content */
+.top-buttons-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+  padding: 10px 0;
+  margin-bottom: 10px;
 }
 
 .scrollable-content {
   overflow-y: auto;
-  height: calc(100% - 60px); /* Adjust height based on the height of top-buttons-div */
+  height: calc(100% - 60px);
 }
-.update-div{
-display: flex;
-flex-direction: row;
-width: 300px;
-align-items: center;
+
+.update-div {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  align-items: center;
 }
-/* Styling for the group items */
+
 ul {
   list-style: none;
   padding: 0;
 }
 
+.group-content {
+  cursor: pointer;
+}
+
 li {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: larger;
+  color: #6558ac;
+  text-transform: uppercase;
   position: relative;
   background-color: #f0f0f0;
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.05s, box-shadow 0.05s; /* Smooth transition for hover effect */
+  transition: background-color 0.05s, box-shadow 0.3s;
 }
 
 li:hover {
-  background-color: #e8e8e8; /* Slightly darker background on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+  background-color: #e8e8e8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Delete button styled as a cross icon */
 .delete-btn {
-
+  font-size: small;
   color: white;
+  background-color: #3a9ac7; /* Material red */
   border: none;
-  border-radius: 10%;
+  border-radius: 50%;
   width: 30px;
   height: 30px;
   font-size: 30px;
@@ -85,34 +88,50 @@ li:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s;
 }
 
 .delete-btn:hover {
-  background-color: #cc0000; /* Darker shade of red for hover */
+  background-color: #913780; /* Darker red */
 }
 
-/* Styles for Create and Update buttons */
 button {
-  background-color: #007bff;
+  background-color: #8c85ab; /* Material blue */
   color: white;
   border: none;
   padding: 10px 15px;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  margin-right: 5px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-right: 10px;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #6790bc; /* Darker blue */
 }
 
 button:disabled {
-  background-color: #cccccc; /* Gray background for disabled buttons */
-  color: #666666; /* Darker gray text for better contrast */
-  cursor: not-allowed; /* Change cursor to indicate the button is not clickable */
-}
-/* Optional: Additional styling as needed */
-.right-side {
-  border-left: 1px solid #ccc;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
 }
 
+/* Styling for headers */
+h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  color: #424242;
+  margin-bottom: 15px;
+}
+
+/* Styling for the update number */
+.update-number {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #1a73e8;
+  margin-left: 10px;
+}
