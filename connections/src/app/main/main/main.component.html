@@ -57,7 +57,7 @@
         <button
           (click)="updateUsers()"
           [disabled]="
-            (countdownUserUpdate$ | async)! > 0 || (loadingUsers$ | async)
+            (countdownUserUpdate$ | async)! > 0 || (loadingUsers$ | async) || (loadingConversations$ | async)
           "
           class="update"
         >
@@ -73,7 +73,7 @@
     <div *ngIf="loadingUsers$ | async">Processing...</div>
     <div class="scrollable-content">
       <ul *ngIf="users$ | async as users">
-        <li *ngFor="let user of users">
+        <li *ngFor="let user of users" [ngClass]="{'highlighted': isCompanion(user.uid.S)}">
           {{ user.name.S }}
         </li>
       </ul>

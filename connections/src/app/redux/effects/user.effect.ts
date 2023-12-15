@@ -25,6 +25,4 @@ export class UserEffects {
       )
     )
   );
-
-  // Add other user-related effects here as needed
 }

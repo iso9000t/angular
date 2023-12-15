@@ -52,6 +52,15 @@ ul {
   cursor: pointer;
 }
 
+.highlighted {
+background-color: #acd6d2;;
+}
+
+.highlighted:hover {
+background-color: #7da5c0;
+}
+
+
 li {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
