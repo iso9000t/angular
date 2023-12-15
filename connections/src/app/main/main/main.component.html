@@ -55,11 +55,11 @@
         </div>
       </div>
     </div>
-    <div *ngIf="loadingUsers$ | async">Processing...</div>
+    <div *ngIf="(loadingUsers$ | async)">Processing...</div>
     <div class="scrollable-content">
       <ul *ngIf="users$ | async as users">
         <li *ngFor="let user of users">
-          {{ user.name.S }}
+          {{ user.name.S }} {{ user.uid}}
         </li>
       </ul>
       <div *ngIf="lastUpdateTimeUser$ | async as lastUpdate">

@@ -28,6 +28,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupDeleteDialogComponent } from '../group-delete-dialog/group-delete-dialog.component';
 import { TimerService } from '../services/timer-service';
 import { UserItem, UserListResponse } from '../models/user.model';
+import { selectUsersExceptCurrent } from '../../redux/selectors/user.selector';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -51,7 +52,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   myGroupData: GroupCreateResponse | undefined = undefined;
   myUserData: UserListResponse | undefined = undefined;
-  currentUserUid: string | null = null;
+  currentUserUid!: string;
 
   constructor(
     public dialog: MatDialog,
@@ -62,8 +63,11 @@ export class MainComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.currentUserUid = localStorage.getItem('uid')!;
     this.groups$ = this.store.select(groupSelectors.selectGroups);
-    this.users$ = this.store.select(userSelectors.selectUsers);
+    this.users$ = this.store.select(
+      selectUsersExceptCurrent(this.currentUserUid)
+    );
     this.loadingGroups$ = this.store.select(groupSelectors.selectGroupsLoading);
     this.loadingUsers$ = this.store.select(userSelectors.selectUsersLoading);
     this.errorGroups$ = this.store.select(groupSelectors.selectGroupsError);
@@ -76,7 +80,6 @@ export class MainComponent implements OnInit, OnDestroy {
       userSelectors.selectLastUserUpdateTimestamp
     );
 
-    this.currentUserUid = localStorage.getItem('uid');
     this.countdownGroupUpdate$ = this.timerService.getGroupCountdown();
     this.countdownUserUpdate$ = this.timerService.getUserCountdown();
     this.subscribeToLoadGroups();
@@ -88,7 +91,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscribeToLoadGroupSuccess();
     this.subscribeToLoadGroupFailure();
     this.subscribeToLoadUserSuccess();
-    this.subscribeToLoadUserFailure(); 
+    this.subscribeToLoadUserFailure();
     console.log(`my uid is: ${localStorage.getItem('uid')}`);
   }
 
