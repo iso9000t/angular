@@ -1,0 +1,6 @@
+/* In your app-page.component.css */
+:host {
+  display: block; /* or 'flex', depending on your layout */
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Hide overflow */
+}
