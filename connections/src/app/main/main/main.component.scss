@@ -4,16 +4,21 @@
   display: flex;
   flex-direction: row;
   height: 100vh;
-  align-items: center;
+  align-items: start; /* Changed from center to start to align content to the top */
   margin-top: 20px;
 }
 
 .left-side,
 .right-side {
-  flex: 1;
+  flex: 1; /* Equal flex basis */
+  flex-basis: 50%; /* Explicitly setting each side to take up 50% of the container */
   padding: 10px;
   overflow-y: auto;
   height: 100%;
+}
+
+.right-side {
+  border-left: 1px solid #ccc;
 }
 
 .top-buttons-div{

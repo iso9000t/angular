@@ -1,16 +1,16 @@
 import { createAction, props } from '@ngrx/store';
-import { GroupError, GroupItem } from 'src/app/main/models/group.model';
+import { UserError, UserItem } from 'src/app/main/models/user.model';
 
-export const loadGroups = createAction('[Groups] Load Group');
+export const loadUsers = createAction('[Users] Load Users');
 
-export const loadGroupsSuccess = createAction(
-  '[Groups] Load Group Success',
-  props<{ groups: GroupItem[] }>()
+export const loadUsersSuccess = createAction(
+  '[Users] Load Users Success',
+  props<{ users: UserItem[] }>()
 );
 
-export const loadGroupsFailure = createAction(
-  '[Groups] Load Group Failure',
-  props<{ error: GroupError }>()
+export const loadUsersFailure = createAction(
+  '[Users] Load Users Failure',
+  props<{ error: UserError }>()
 );
 
-export const resetGroupState = createAction('[Groups] Reset Groups State');
+export const resetUserState = createAction('[Users] Reset Users State');

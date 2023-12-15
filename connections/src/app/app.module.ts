@@ -38,6 +38,8 @@ import { GroupEffects } from './redux/effects/group.effect';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DEFAULT_DIALOG_CONFIG } from '@angular/cdk/dialog';
 import { GroupDeleteDialogComponent } from './main/group-delete-dialog/group-delete-dialog.component';
+import { userReducer } from './redux/reducers/user.reducer';
+import { UserEffects } from './redux/effects/user.effect';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -83,8 +85,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
     StoreModule.forRoot({
       profile: profileReducer,
       group: groupReducer,
+      user: userReducer,
     }),
-    EffectsModule.forRoot([ProfileEffects, GroupEffects]),
+    EffectsModule.forRoot([ProfileEffects, GroupEffects, UserEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [

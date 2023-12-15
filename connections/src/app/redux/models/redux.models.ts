@@ -1,4 +1,5 @@
 import { GroupError, GroupItem } from "src/app/main/models/group.model";
+import { UserError, UserItem } from "src/app/main/models/user.model";
 import { ProfileError, ProfileResponse } from "src/app/profile/models/profile.model";
 
 export interface ProfileState {
@@ -12,3 +13,9 @@ export interface GroupState {
   lastUpdateTimestamp: number | null;
 }
 
+export interface UserState {
+  users: UserItem[];
+  isLoading: boolean;
+  error: UserError | null;
+  lastUpdated: number | null;
+}
