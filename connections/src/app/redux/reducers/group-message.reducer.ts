@@ -17,10 +17,28 @@ export const groupMessageReducer = createReducer(
     error: null,
   })),
   on(
+    GroupMessageActions.loadGroupMessagesSince,
+    (state: GroupMessageState) => ({
+      ...state,
+      isLoading: true,
+      error: null, // Optionally reset the error state
+    })
+  ),
+  on(
     GroupMessageActions.loadGroupMessagesSuccess,
     (state: GroupMessageState, { groupId, messages }) => ({
       ...state,
       messages,
+      isLoading: false,
+      error: null,
+      lastFetched: Date.now(),
+    })
+  ),
+  on(
+    GroupMessageActions.loadGroupMessagesSinceSuccess,
+    (state: GroupMessageState, { newMessages }) => ({
+      ...state,
+      messages: [...state.messages, ...newMessages], // Append new messages
       isLoading: false,
       error: null,
       lastFetched: Date.now(),
@@ -35,9 +53,12 @@ export const groupMessageReducer = createReducer(
     })
   ),
   on(
-    GroupMessageActions.resetGroupMessageState,
-    () => initialGroupMessageState
-  )
-  // Resetting state back to initial values
-  
+    GroupMessageActions.loadGroupMessagesSinceFailure,
+    (state: GroupMessageState, { error }) => ({
+      ...state,
+      isLoading: false,
+      error,
+    })
+  ),
+  on(GroupMessageActions.resetGroupMessageState, () => initialGroupMessageState)
 );

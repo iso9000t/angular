@@ -22,3 +22,18 @@ export const loadGroupMessagesFailure = createAction(
 export const resetGroupMessageState = createAction(
   '[Group Messages] Reset Group Messages State'
 );
+
+export const loadGroupMessagesSince = createAction(
+  '[Group Messages] Load Group Messages Since',
+  props<{ groupId: string; since: number }>()
+);
+
+export const loadGroupMessagesSinceSuccess = createAction(
+  '[Group Messages] Load Group Messages Since Success',
+  props<{ newMessages: GroupMessageItem[] }>()
+);
+
+export const loadGroupMessagesSinceFailure = createAction(
+  '[Group Messages] Load Group Messages Since Failure',
+  props<{ error: GroupMessageError }>()
+);

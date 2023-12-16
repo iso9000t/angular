@@ -24,7 +24,8 @@ export class GroupDialogComponent implements OnInit {
   );
   error$ = this.store.select(GroupMessageSelectors.selectGroupMessagesError);
   sortedMessages$!: Observable<GroupMessageItem[]>;
-  latestMessageTimestamp!: string | null; // Variable to store the latest message timestamp
+  latestMessageTimestamp: number = 0 ;
+ 
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 
@@ -49,15 +50,22 @@ export class GroupDialogComponent implements OnInit {
     // Subscribe to the latest message timestamp selector
     this.store
       .select(GroupMessageSelectors.selectLatestMessageTimestamp)
-      .subscribe((timestamp) => {
-        this.latestMessageTimestamp = timestamp;
+      .subscribe((timestampString) => {
+        // Convert the timestamp to a number here
+        this.latestMessageTimestamp = timestampString
+          ? Number(timestampString)
+          : 0;
         console.log('Latest message timestamp:', this.latestMessageTimestamp);
       });
   }
 
   onUpdate() {
+    // Use the latestMessageTimestamp directly in your dispatch
     this.store.dispatch(
-      GroupMessageActions.loadGroupMessages({ groupId: this.groupID })
+      GroupMessageActions.loadGroupMessagesSince({
+        groupId: this.groupID,
+        since: this.latestMessageTimestamp,
+      })
     );
   }
 

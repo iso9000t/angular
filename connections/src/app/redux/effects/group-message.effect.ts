@@ -29,5 +29,24 @@ export class GroupMessageEffects {
     )
   );
 
-  // Add other group message-related effects here as needed
+  // New effect for loading group messages since a specific timestamp
+  loadGroupMessagesSince$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupMessageActions.loadGroupMessagesSince),
+      mergeMap((action) =>
+        this.groupService
+          .getGroupMessagesSince(action.groupId, action.since)
+          .pipe(
+            map((response) =>
+              GroupMessageActions.loadGroupMessagesSinceSuccess({
+                newMessages: response.Items,
+              })
+            ),
+            catchError((error: GroupMessageError) =>
+              of(GroupMessageActions.loadGroupMessagesSinceFailure({ error }))
+            )
+          )
+      )
+    )
+  );
 }
