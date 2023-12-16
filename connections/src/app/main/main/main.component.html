@@ -64,8 +64,8 @@
           Update user list
         </button>
         <div *ngIf="countdownUserUpdate$ | async as countdown">
-          <span *ngIf="countdown > 0"
-            >Next update in: {{ countdown / 1000 | number : "1.0-0" }}</span
+          <span class="update-number" *ngIf="countdown > 0"
+            >{{ countdown / 1000 | number : "1.0-0" }}</span
           >
         </div>
       </div>
