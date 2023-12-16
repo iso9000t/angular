@@ -14,3 +14,7 @@ export interface ConversationError {
   type: string;
   message: string;
 }
+
+export interface ConversationCreateResponse {
+  conversationID: string;
+}

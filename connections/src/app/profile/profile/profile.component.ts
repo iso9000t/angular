@@ -14,7 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, ofType } from '@ngrx/effects';
 import { LoginService } from 'src/app/login/services/login.service';
 import { resetGroupState } from 'src/app/redux/actions/group-fetch.action';
-
+import { resetConversationState } from 'src/app/redux/actions/conversation.actions';
+import { resetUserState } from 'src/app/redux/actions/user.action';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -91,6 +92,9 @@ export class ProfileComponent implements OnInit {
         sessionStorage.clear();
         this.resetProfile();
         this.store.dispatch(resetGroupState());
+        this.store.dispatch(resetProfileState());
+        this.store.dispatch(resetConversationState());
+        this.store.dispatch(resetUserState());
         this.clearCookies();
         this.checkCookies();
         
@@ -98,7 +102,7 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(['/signin']);
       },
       error: (error) => {
-        this.snackBar.open('Logout failed: ' + error.message, 'Close', {
+        this.snackBar.open('Logout failed: ' + error.error.message, 'Close', {
           duration: 6000,
         });
       },

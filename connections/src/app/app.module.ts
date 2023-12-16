@@ -43,6 +43,7 @@ import { UserEffects } from './redux/effects/user.effect';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { conversationReducer } from './redux/reducers/conversation.reducer';
 import { ConversationEffects } from './redux/effects/conversation.effect';
+import { ConversationComponent } from './conversation/conversation.component';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -69,6 +70,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
     HeaderProfilePageComponent,
     GroupDeleteDialogComponent,
     GroupDialogComponent,
+    ConversationComponent,
   ],
   imports: [
     MatDialogModule,

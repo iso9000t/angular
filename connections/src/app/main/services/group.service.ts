@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environent';
-import { ConversationListResponse } from '../models/conversation.model';
+import { ConversationCreateResponse, ConversationListResponse } from '../models/conversation.model';
 import { GroupCreateRequestBody, GroupCreateResponse, GroupUpdateResponse } from '../models/group.model';
 import { UserListResponse } from '../models/user.model';
 
@@ -15,6 +15,7 @@ export class GroupService {
   private groupDeleteURL: string = `${environment.apiUrl}/groups/delete`;
   private userListURL: string = `${environment.apiUrl}/users`;
   private conversationListURL: string = `${environment.apiUrl}/conversations/list`;
+  private conversationCreateURL: string = `${environment.apiUrl}/conversations/create`;
 
   constructor(private http: HttpClient) {}
 
@@ -26,6 +27,17 @@ export class GroupService {
   updateGroupList(): Observable<GroupUpdateResponse> {
     console.log('Updating group list');
     return this.http.get<GroupUpdateResponse>(this.groupListURL);
+  }
+
+  createConversation(
+    companionId: string
+  ): Observable<ConversationCreateResponse> {
+    console.log('Creating conversation');
+    const body = { companion: companionId };
+    return this.http.post<ConversationCreateResponse>(
+      this.conversationCreateURL,
+      body
+    );
   }
 
   createGroup(

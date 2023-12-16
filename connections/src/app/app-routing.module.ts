@@ -8,6 +8,7 @@ import { authGuard, reverseAuthGuard } from './guards/auth.guard';
 import { HeaderMainPageComponent } from './main/pages/header-main-page/header-main-page.component';
 import { HeaderProfilePageComponent } from './registration/pages/header-profile-page/header-profile-page.component';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
+import { ConversationComponent } from './conversation/conversation.component';
 const routes: Routes = [
   { path: '', component: HeaderMainPageComponent, canActivate: [authGuard] },
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'group/:groupID',
     component: GroupDialogComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'conversation/:conversationID',
+    component: ConversationComponent,
     canActivate: [authGuard],
   },
 ];

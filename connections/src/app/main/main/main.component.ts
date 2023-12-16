@@ -62,6 +62,7 @@ export class MainComponent implements OnInit, OnDestroy {
   myGroupData: GroupCreateResponse | undefined = undefined;
   myUserData: UserListResponse | undefined = undefined;
   currentUserUid!: string;
+  loadingUsers: boolean = false;
 
   constructor(
     private router: Router,
@@ -180,7 +181,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(failureSubscription);
   }
-  
+
   isCompanion(userId: string): boolean {
     let companions: string[] = [];
     this.companionIDs$.subscribe((ids) => (companions = ids));
@@ -334,5 +335,26 @@ export class MainComponent implements OnInit, OnDestroy {
 
   navigateToGroup(groupId: string): void {
     this.router.navigate(['/group', groupId]);
+  }
+
+  createAndNavigateToConversation(companionId: string): void {
+    this.loadingUsers = true;
+    this.groupService.createConversation(companionId).subscribe({
+      next: (response) => {
+        console.log('Create conversation response:', response);
+        if (response && response.conversationID) {
+          this.loadingUsers = false;
+          this.router.navigate(['/conversation', response.conversationID]);
+          this.showSnackbar('Conversation created successfully');
+        } else {
+          this.loadingUsers = false;
+          this.showSnackbar('Unexpected response format');
+        }
+      },
+      error: (error) => {
+        this.loadingUsers = false;
+        this.showSnackbar(`Error: ${error.error.message}`);
+      },
+    });
   }
 }

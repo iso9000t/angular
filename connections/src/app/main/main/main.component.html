@@ -35,7 +35,7 @@
           <button
             *ngIf="group.createdBy?.S === currentUserUid"
             class="delete-btn"
-            [disabled]="loadingGroups$ | async"
+            [disabled]="(loadingGroups$ | async)"
             (click)="openDeleteDialog(group.id.S); $event.stopPropagation()"
           >
             x
@@ -57,29 +57,39 @@
         <button
           (click)="updateUsers()"
           [disabled]="
-            (countdownUserUpdate$ | async)! > 0 || (loadingUsers$ | async) || (loadingConversations$ | async)
+            (countdownUserUpdate$ | async)! > 0 ||
+            (loadingUsers$ | async) ||
+            (loadingConversations$ | async) || loadingUsers
           "
           class="update"
         >
           Update user list
         </button>
         <div *ngIf="countdownUserUpdate$ | async as countdown">
-          <span class="update-number" *ngIf="countdown > 0"
-            >{{ countdown / 1000 | number : "1.0-0" }}</span
-          >
+          <span class="update-number" *ngIf="countdown > 0">{{
+            countdown / 1000 | number : "1.0-0"
+          }}</span>
         </div>
       </div>
     </div>
-    <div *ngIf="loadingUsers$ | async">Processing...</div>
+    <div *ngIf="(loadingUsers$ | async) || loadingUsers">Processing...</div>
     <div class="scrollable-content">
       <ul *ngIf="users$ | async as users">
-        <li *ngFor="let user of users" [ngClass]="{'highlighted': isCompanion(user.uid.S)}">
+        <li
+          *ngFor="let user of users"
+          [ngClass]="{ highlighted: isCompanion(user.uid.S) }"
+          (click)="
+            isCompanion(user.uid.S)
+              ? null
+              : createAndNavigateToConversation(user.uid.S)
+          "
+        >
           {{ user.name.S }}
         </li>
       </ul>
     </div>
-    <div *ngIf="errorUsers$ | async as error">
+    <!-- <div *ngIf="errorUsers$ | async as error">
       <span class="error-message">Error: {{ error.message }}</span>
-    </div>
+    </div> -->
   </div>
 </div>
