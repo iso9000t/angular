@@ -4,7 +4,7 @@
 
 
 <a routerLink="/">Back</a>
-
+<p *ngIf="lastUpdated$ | async">last updateed at: {{lastUpdated$ | async| date:'medium'}}</p>
 <button (click)="onUpdate()">Update</button>
 <!-- This button will be visible if the user is an owner of any group -->
 <button *ngIf="isGroupCreator" (click)="onDelete()">Delete Group</button>
