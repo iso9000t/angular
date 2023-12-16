@@ -4,6 +4,10 @@ import { Store } from '@ngrx/store';
 import * as GroupSelectors from '../redux/selectors/groups.selector';
 import * as GroupMessageSelectors from '../redux/selectors/group-message.selector';
 import * as GroupMessageActions from '../redux/actions/group-message.action';
+import * as Useractions from '../redux/actions/user.action';
+import { Observable } from 'rxjs';
+import { UserItem } from '../main/models/user.model';
+import { GroupMessageItem } from '../main/models/group.model';
 
 @Component({
   selector: 'app-group-dialog',
@@ -19,6 +23,8 @@ export class GroupDialogComponent implements OnInit {
     GroupMessageSelectors.selectGroupMessagesLoading
   );
   error$ = this.store.select(GroupMessageSelectors.selectGroupMessagesError);
+  sortedMessages$!: Observable<GroupMessageItem[]>;
+  latestMessageTimestamp!: string | null; // Variable to store the latest message timestamp
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 
@@ -27,12 +33,25 @@ export class GroupDialogComponent implements OnInit {
     this.store.dispatch(
       GroupMessageActions.loadGroupMessages({ groupId: this.groupID })
     );
+    this.store.dispatch(Useractions.loadUsers());
 
     this.store
       .select(GroupSelectors.isUserGroupCreator, { groupId: this.groupID })
       .subscribe((isCreator) => {
         this.isGroupCreator = isCreator;
         console.log('Is user the group creator?', isCreator);
+      });
+
+    this.sortedMessages$ = this.store.select(
+      GroupMessageSelectors.selectSortedGroupMessages
+    );
+
+    // Subscribe to the latest message timestamp selector
+    this.store
+      .select(GroupMessageSelectors.selectLatestMessageTimestamp)
+      .subscribe((timestamp) => {
+        this.latestMessageTimestamp = timestamp;
+        console.log('Latest message timestamp:', this.latestMessageTimestamp);
       });
   }
 
