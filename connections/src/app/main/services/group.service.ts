@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environent';
 import { ConversationCreateResponse, ConversationListResponse } from '../models/conversation.model';
-import { GroupCreateRequestBody, GroupCreateResponse, GroupUpdateResponse } from '../models/group.model';
+import { GroupCreateRequestBody, GroupCreateResponse, GroupMessageResponse, GroupUpdateResponse } from '../models/group.model';
 import { UserListResponse } from '../models/user.model';
 
 @Injectable({
@@ -16,6 +16,7 @@ export class GroupService {
   private userListURL: string = `${environment.apiUrl}/users`;
   private conversationListURL: string = `${environment.apiUrl}/conversations/list`;
   private conversationCreateURL: string = `${environment.apiUrl}/conversations/create`;
+  private groupReadURL: string = `${environment.apiUrl}/groups/read`;
 
   constructor(private http: HttpClient) {}
 
@@ -55,5 +56,22 @@ export class GroupService {
 
   getConversationList(): Observable<ConversationListResponse> {
     return this.http.get<ConversationListResponse>(this.conversationListURL);
+  }
+
+  getGroupMessages(groupId: string): Observable<GroupMessageResponse> {
+    console.log('Retrieving group messages');
+    return this.http.get<GroupMessageResponse>(
+      `${this.groupReadURL}?groupID=${groupId}`
+    );
+  }
+
+  getGroupMessagesSince(
+    groupId: string,
+    since: number
+  ): Observable<GroupMessageResponse> {
+    console.log('Retrieving group messages since', since);
+    return this.http.get<GroupMessageResponse>(
+      `${this.groupReadURL}?groupID=${groupId}&since=${since}`
+    );
   }
 }

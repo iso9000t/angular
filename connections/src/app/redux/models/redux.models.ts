@@ -1,5 +1,5 @@
 import { ConversationError, ConversationItem } from "src/app/main/models/conversation.model";
-import { GroupError, GroupItem } from "src/app/main/models/group.model";
+import { GroupError, GroupItem, GroupMessageError, GroupMessageItem } from "src/app/main/models/group.model";
 import { UserError, UserItem } from "src/app/main/models/user.model";
 import { ProfileError, ProfileResponse } from "src/app/profile/models/profile.model";
 
@@ -26,4 +26,11 @@ export interface ConversationState {
   isLoading: boolean;
   error: ConversationError | null;
   lastUpdated: number | null;
+}
+
+export interface GroupMessageState {
+  messages: GroupMessageItem[];
+  isLoading: boolean;
+  error: GroupMessageError | null;
+  lastFetched: number | null;
 }

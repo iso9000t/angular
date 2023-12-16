@@ -1,6 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { GroupItem } from 'src/app/main/models/group.model';
 import { GroupState } from '../models/redux.models';
 
+const getUserUID = () => localStorage.getItem('uid');
 
 // Selector for the entire group feature state
 export const selectGroupFeatureState =
@@ -29,5 +31,23 @@ export const selectLastUpdateTimestamp = createSelector(
   selectGroupFeatureState,
   (state: GroupState) => state.lastUpdateTimestamp
 );
+
+export const selectGroupById = createSelector(
+  selectGroupFeatureState,
+  (state: GroupState, props: { groupId: string }) =>
+    state.groups.find((group) => group.id.S === props.groupId)
+);
+
+
+export const isUserGroupCreator = createSelector(
+  selectGroupById,
+  (group: GroupItem | undefined) => {
+    const userUID = getUserUID();
+    return group ? group.createdBy?.S === userUID : false;
+  }
+);
+
+
+
 
 

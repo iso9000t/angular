@@ -24,3 +24,19 @@ export interface GroupCreateResponse {
 export interface GroupCreateRequestBody {
   name: string;
 }
+
+export interface GroupMessageItem {
+  authorID: AttributeValue;
+  message: AttributeValue;
+  createdAt: AttributeValue;
+}
+
+export interface GroupMessageResponse {
+  Count: number;
+  Items: GroupMessageItem[];
+}
+
+export interface GroupMessageError {
+  type: string;
+  message: string;
+}

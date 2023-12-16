@@ -44,6 +44,9 @@ import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { conversationReducer } from './redux/reducers/conversation.reducer';
 import { ConversationEffects } from './redux/effects/conversation.effect';
 import { ConversationComponent } from './conversation/conversation.component';
+import { groupMessageReducer } from './redux/reducers/group-message.reducer';
+import { GroupMessageEffects } from './redux/effects/group-message.effect';
+import { UserNamePipe } from './pipes/user-name.pipe';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -71,6 +74,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
     GroupDeleteDialogComponent,
     GroupDialogComponent,
     ConversationComponent,
+    UserNamePipe,
   ],
   imports: [
     MatDialogModule,
@@ -93,12 +97,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
       group: groupReducer,
       user: userReducer,
       conversation: conversationReducer,
+      groupMessage: groupMessageReducer,
     }),
     EffectsModule.forRoot([
       ProfileEffects,
       GroupEffects,
       UserEffects,
       ConversationEffects,
+      GroupMessageEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

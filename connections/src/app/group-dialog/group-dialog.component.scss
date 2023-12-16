@@ -1,0 +1,16 @@
+/* GroupDialogComponent Styles */
+.messages-area {
+  /* Styles for the message area */
+}
+
+.own-message {
+  text-align: right;
+}
+
+.other-message {
+  text-align: left;
+}
+
+.message-date, .message-author, .message-content {
+  /* Shared styles for message components */
+}

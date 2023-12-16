@@ -1,1 +1,25 @@
 <p>group-dialog works!</p>
+
+
+
+
+<a routerLink="/">Back</a>
+
+<button (click)="onUpdate()">Update</button>
+<!-- This button will be visible if the user is an owner of any group -->
+<button *ngIf="isGroupCreator" (click)="onDelete()">Delete Group</button>
+
+<!-- GroupDialogComponent Template -->
+<div class="messages-area">
+  <ng-container *ngIf="messages$ | async as messages">
+    <div *ngFor="let message of messages" 
+     [class.own-message]="message.authorID.S === userUID"
+     [class.other-message]="message.authorID.S !== userUID">
+
+  <div class="message-date">{{ message.createdAt.S | date:'medium' }}</div>
+  <div class="message-author">{{ message.authorID.S | userName | async }}</div>
+  <div class="message-content">{{ message.message.S }}</div>
+</div>
+
+  </ng-container>
+</div>
