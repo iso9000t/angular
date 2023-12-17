@@ -16,7 +16,7 @@ export const loadGroupMessagesSuccess = createAction(
 
 export const loadGroupMessagesFailure = createAction(
   '[Group Messages] Load Group Messages Failure',
-  props<{ error: GroupMessageError }>()
+  props<{ groupId: string; error: GroupMessageError }>()
 );
 
 export const resetGroupMessageState = createAction(
@@ -30,10 +30,11 @@ export const loadGroupMessagesSince = createAction(
 
 export const loadGroupMessagesSinceSuccess = createAction(
   '[Group Messages] Load Group Messages Since Success',
-  props<{ newMessages: GroupMessageItem[] }>()
+  props<{ groupId: string; newMessages: GroupMessageItem[] }>()
 );
+
 
 export const loadGroupMessagesSinceFailure = createAction(
   '[Group Messages] Load Group Messages Since Failure',
-  props<{ error: GroupMessageError }>()
+  props<{ groupId: string; error: GroupMessageError }>()
 );

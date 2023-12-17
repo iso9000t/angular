@@ -1,26 +1,44 @@
-<p>group-dialog works!</p>
-
-
-
-
 <a routerLink="/">Back</a>
-<p *ngIf="lastUpdated$ | async">last updateed at: {{lastUpdated$ | async| date:'medium'}}</p>
-<button (click)="onUpdate()">Update</button>
-<!-- This button will be visible if the user is an owner of any group -->
+<p *ngIf="lastUpdated$ | async">
+  Last updated at: {{ lastUpdated$ | async | date : "medium" }}
+</p>
+<button (click)="onUpdate()" [disabled]="loading$ | async">Update</button>
+
+<!-- Visible if the user is a group owner -->
 <button *ngIf="isGroupCreator" (click)="onDelete()">Delete Group</button>
 
 <!-- GroupDialogComponent Template -->
-<div class="messages-area">
-  <ng-container *ngIf="messages$ | async as messages">
-    <div *ngFor="let message of sortedMessages$ | async" 
-     [class.own-message]="message.authorID.S === userUID"
-     [class.other-message]="message.authorID.S !== userUID">
-  
-  <div class="message-date">{{ message.createdAt.S | date:'medium' }}</div>
-  <div class="message-author">{{ message.authorID.S | userName | async }}</div>
-  <div class="message-content">{{ message.message.S }}</div>
-</div>
+<div class="chat-container">
+  <div class="messages-area">
+    <ng-container *ngIf="messages$ | async as messages">
+      <div
+        *ngFor="let message of sortedMessages$ | async"
+        [class.own-message]="message.authorID.S === userUID"
+        [class.other-message]="message.authorID.S !== userUID"
+      >
+        <div class="message-box">
+          <div class="message-date">
+            {{ message.createdAt.S | date : "medium" }}
+          </div>
+          <div class="message-author">
+            {{ message.authorID.S | userName | async }}
+          </div>
+          <div class="message-content">{{ message.message.S }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 
-
-  </ng-container>
+  <!-- Message Input Form -->
+  <form (ngSubmit)="onSendMessage()">
+    <div class="message-input">
+      <input
+        matInput
+        type="text"
+        placeholder="Send a message"
+        [formControl]="messageInput"
+      />
+      <button type="submit" [disabled]="messageInput.invalid">Send</button>
+    </div>
+  </form>
 </div>

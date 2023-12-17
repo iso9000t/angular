@@ -28,9 +28,15 @@ export interface ConversationState {
   lastUpdated: number | null;
 }
 
-export interface GroupMessageState {
+export interface GroupMessages {
   messages: GroupMessageItem[];
   isLoading: boolean;
   error: GroupMessageError | null;
   lastFetched: number | null;
+  initialLoadCompleted: boolean;
 }
+
+export interface GroupMessageState {
+  groups: { [groupId: string]: GroupMessages };
+}
+

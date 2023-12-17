@@ -10,6 +10,8 @@ import { GroupMessageError } from 'src/app/main/models/group.model';
 export class GroupMessageEffects {
   constructor(private actions$: Actions, private groupService: GroupService) {}
 
+  // GroupMessageEffects file
+
   loadGroupMessages$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GroupMessageActions.loadGroupMessages),
@@ -22,14 +24,18 @@ export class GroupMessageEffects {
             })
           ),
           catchError((error: GroupMessageError) =>
-            of(GroupMessageActions.loadGroupMessagesFailure({ error }))
+            of(
+              GroupMessageActions.loadGroupMessagesFailure({
+                groupId: action.groupId,
+                error,
+              })
+            )
           )
         )
       )
     )
   );
 
-  // New effect for loading group messages since a specific timestamp
   loadGroupMessagesSince$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GroupMessageActions.loadGroupMessagesSince),
@@ -39,11 +45,17 @@ export class GroupMessageEffects {
           .pipe(
             map((response) =>
               GroupMessageActions.loadGroupMessagesSinceSuccess({
+                groupId: action.groupId,
                 newMessages: response.Items,
               })
             ),
             catchError((error: GroupMessageError) =>
-              of(GroupMessageActions.loadGroupMessagesSinceFailure({ error }))
+              of(
+                GroupMessageActions.loadGroupMessagesSinceFailure({
+                  groupId: action.groupId,
+                  error,
+                })
+              )
             )
           )
       )
