@@ -17,6 +17,7 @@ export class GroupService {
   private conversationListURL: string = `${environment.apiUrl}/conversations/list`;
   private conversationCreateURL: string = `${environment.apiUrl}/conversations/create`;
   private groupReadURL: string = `${environment.apiUrl}/groups/read`;
+  private groupAppendURL: string = `${environment.apiUrl}/groups/append`;
 
   constructor(private http: HttpClient) {}
 
@@ -73,5 +74,14 @@ export class GroupService {
     return this.http.get<GroupMessageResponse>(
       `${this.groupReadURL}?groupID=${groupId}&since=${since}`
     );
+  }
+
+  sendGroupMessage(groupId: string, message: string): Observable<void> {
+    console.log('Sending message to group');
+    const body = {
+      groupID: groupId,
+      message: message,
+    };
+    return this.http.post<void>(this.groupAppendURL, body);
   }
 }

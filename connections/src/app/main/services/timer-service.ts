@@ -8,6 +8,7 @@ import { map, startWith, takeWhile, finalize } from 'rxjs/operators';
 export class TimerService {
   private groupCountdownSource = new BehaviorSubject<number>(0);
   private userCountdownSource = new BehaviorSubject<number>(0);
+  private groupMessageSource = new BehaviorSubject<number>(0);
 
   startGroupCountdown(countdownDuration: number = 60000): void {
     this.startCountdown(this.groupCountdownSource, countdownDuration);
@@ -16,9 +17,15 @@ export class TimerService {
   startUserCountdown(countdownDuration: number = 60000): void {
     this.startCountdown(this.userCountdownSource, countdownDuration);
   }
+  startGroupMessageCountdown(countdownDuration: number = 60000): void {
+    this.startCountdown(this.groupMessageSource, countdownDuration);
+  }
 
   getGroupCountdown(): Observable<number> {
     return this.groupCountdownSource.asObservable();
+  }
+  getGroupMessageCountdown(): Observable<number> {
+    return this.groupMessageSource.asObservable();
   }
 
   getUserCountdown(): Observable<number> {
