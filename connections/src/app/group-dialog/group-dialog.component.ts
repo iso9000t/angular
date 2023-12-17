@@ -18,6 +18,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { GroupService } from '../main/services/group.service';
 import { Actions, ofType } from '@ngrx/effects';
 import { GroupTimerService } from '../main/services/group-timer.service';
+import { MatDialog } from '@angular/material/dialog';
+import { GroupDeleteDialogComponent } from '../main/group-delete-dialog/group-delete-dialog.component';
 @Component({
   selector: 'app-group-dialog',
   templateUrl: './group-dialog.component.html',
@@ -55,6 +57,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
   lastmess$!: Observable<any>;
 
   constructor(
+    public dialog: MatDialog,
     private groupService: GroupService,
     private store: Store,
     private route: ActivatedRoute,
@@ -161,6 +164,14 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     localStorage.removeItem(`isGroupCreator_${this.groupID}`);
+  }
+
+  openDeleteDialog(groupId: string): void {
+    const dialogRef = this.dialog.open(GroupDeleteDialogComponent, {
+      width: '360px',
+      disableClose: true,
+      data: { groupId },
+    });
   }
 
   private checkInitialLoad() {

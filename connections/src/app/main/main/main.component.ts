@@ -202,6 +202,7 @@ export class MainComponent implements OnInit, OnDestroy {
       data: { groupId },
     });
   }
+  
   private subscribeToConversationIDs() {
     const conversationIDsSubscription = this.conversationIDs$.subscribe(
       (result) => {

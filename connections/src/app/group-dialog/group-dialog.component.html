@@ -2,17 +2,29 @@
 <p *ngIf="lastUpdated$ | async">
   Last updated at: {{ lastUpdated$ | async | date : "medium" }}
 </p>
-<button (click)="onUpdate()"[disabled]="
-            (countdownGroupMessageUpdate$ | async)! > 0 || (loading$ | async)
-          ">Update</button>
-          <div *ngIf="countdownGroupMessageUpdate$ | async as countdown">
+<button
+  (click)="onUpdate()"
+  [disabled]="(countdownGroupMessageUpdate$ | async)! > 0 || (loading$ | async)"
+>
+  Update
+</button>
+<div *ngIf="countdownGroupMessageUpdate$ | async as countdown">
   <span class="update-number" *ngIf="countdown > 0">
-    {{ countdown / 1000 | number : '1.0-0' }}
+    {{ countdown / 1000 | number : "1.0-0" }}
   </span>
 </div>
-<p>{{lastmess$ | async | date : "medium" }}</p>
+<p>{{ lastmess$ | async | date : "medium" }}</p>
 <!-- Visible if the user is a group owner -->
-<button *ngIf="isGroupCreator" (click)="onDelete()">Delete Group</button>
+<!-- <button *ngIf="isGroupCreator" (click)="onDelete()">Delete Group</button> -->
+
+<button
+  *ngIf="isGroupCreator"
+  class="delete-btn"
+  [disabled]="loading$ | async"
+  (click)="openDeleteDialog(groupID); $event.stopPropagation()"
+>
+  Delete Group
+</button>
 
 <!-- GroupDialogComponent Template -->
 <div class="chat-container">

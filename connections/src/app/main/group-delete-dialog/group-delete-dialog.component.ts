@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { GroupState } from 'src/app/redux/models/redux.models';
 import * as GroupDeleteActions from 'src/app/redux/actions/group-delete.action';
 import { Actions, ofType } from '@ngrx/effects';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-group-delete-dialog',
@@ -19,7 +21,8 @@ export class GroupDeleteDialogComponent implements OnDestroy {
     public dialogRef: MatDialogRef<GroupDeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { groupId: string },
     private store: Store<GroupState>,
-    private actions$: Actions
+    private actions$: Actions,
+    private router: Router
   ) {
     this.subscribeToDeleteGroupSuccess();
     this.subscribeToDeleteGroupFailure();
@@ -32,6 +35,7 @@ export class GroupDeleteDialogComponent implements OnDestroy {
         .subscribe(() => {
           this.isSubmitting = false;
           this.dialogRef.close();
+          this.router.navigate(['/']);
         })
     );
   }
