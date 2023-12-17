@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environment/environent';
 import { ConversationCreateResponse, ConversationListResponse } from '../models/conversation.model';
 import { GroupCreateRequestBody, GroupCreateResponse, GroupMessageResponse, GroupUpdateResponse } from '../models/group.model';
@@ -60,20 +60,28 @@ export class GroupService {
   }
 
   getGroupMessages(groupId: string): Observable<GroupMessageResponse> {
-    console.log('Retrieving group messages');
-    return this.http.get<GroupMessageResponse>(
-      `${this.groupReadURL}?groupID=${groupId}`
-    );
+    return this.http
+      .get<GroupMessageResponse>(`${this.groupReadURL}?groupID=${groupId}`)
+      .pipe(
+        catchError((error) => {
+          return throwError(error.error); // Pass the error response to the component
+        })
+      );
   }
 
   getGroupMessagesSince(
     groupId: string,
     since: number
   ): Observable<GroupMessageResponse> {
-    console.log('Retrieving group messages since', since);
-    return this.http.get<GroupMessageResponse>(
-      `${this.groupReadURL}?groupID=${groupId}&since=${since}`
-    );
+    return this.http
+      .get<GroupMessageResponse>(
+        `${this.groupReadURL}?groupID=${groupId}&since=${since}`
+      )
+      .pipe(
+        catchError((error) => {
+          return throwError(error.error);
+        })
+      );
   }
 
   sendGroupMessage(groupId: string, message: string): Observable<void> {

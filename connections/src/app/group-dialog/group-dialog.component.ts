@@ -20,6 +20,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { GroupTimerService } from '../main/services/group-timer.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupDeleteDialogComponent } from '../main/group-delete-dialog/group-delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-group-dialog',
   templateUrl: './group-dialog.component.html',
@@ -62,7 +63,8 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     private store: Store,
     private route: ActivatedRoute,
     private timerService: GroupTimerService,
-    private actions$: Actions
+    private actions$: Actions,
+    private snackBar: MatSnackBar
   ) {
     this.isGroupCreator$ = this.store.pipe(
       select(GroupSelectors.isUserGroupCreator, { groupId: this.groupID })
@@ -89,7 +91,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
             );
           },
           error: (err) => {
-            console.error('Error sending message:', err);
+            this.showSnackbar(`Error loadidng users: ${err.error.message}`);
           },
         });
       } else {
@@ -133,6 +135,11 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.countdownGroupMessageUpdate$ = this.timerService.getCountdownForGroup(
       this.groupID
     );
+
+    this.subscribeToLoadUsersFailure();
+    this.subscribeToLoadGroupMessagesFailure();
+    this.subscribeToLoadGroupMessagesSinceFailure();
+    this.subscribeToSendGroupMessagesSinceFailure();
     /*  this.countdownGroupMessageUpdate$ = this.timerService
       .getGroupMessageCountdown()
       .pipe(startWith(0)); */
@@ -184,6 +191,14 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     );
   }
 
+  showSnackbar(
+    message: string,
+    action: string = 'Close',
+    duration: number = 3000
+  ): void {
+    this.snackBar.open(message, action, { duration });
+  }
+
   private subscribeToLoadGroupMessages() {
     // Create a new subscription
     const initialLoadSubscription = this.initialLoadCompleted$
@@ -219,6 +234,52 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  private subscribeToLoadUsersFailure() {
+    const subscription = this.actions$
+      .pipe(ofType(UserActions.loadUsersFailure))
+      .subscribe(({ error }) =>
+        this.showSnackbar(`Error loadidng users: ${error.message}`)
+      );
+    this.subscriptions.add(subscription);
+  }
+
+  /*   private subscribeToLoadGroupMessagesSuccess() {
+    const successSubscription = this.actions$
+      .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess))
+      .subscribe(() => {
+        this.showSnackbar(`Group messages successdully loaded`);
+      });
+    this.subscriptions.add(successSubscription);
+  }
+ */
+  private subscribeToLoadGroupMessagesFailure() {
+    const failureSubscription = this.actions$
+      .pipe(ofType(GroupMessageActions.loadGroupMessagesFailure))
+      .subscribe((error) => {
+        this.showSnackbar(error.error.message);
+      });
+    this.subscriptions.add(failureSubscription);
+  }
+
+  private subscribeToLoadGroupMessagesSinceFailure() {
+    const failureSubscription = this.actions$
+      .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceFailure))
+      .subscribe((error) => {
+        this.showSnackbar(error.error.message);
+        console.log(error);
+      });
+    this.subscriptions.add(failureSubscription);
+  }
+
+  private subscribeToSendGroupMessagesSinceFailure() {
+    const failureSubscription = this.actions$
+      .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceFailure))
+      .subscribe((error) => {
+        this.showSnackbar(error.error.message);
+      });
+    this.subscriptions.add(failureSubscription);
   }
 
   /* private setupGroupCreatorSubscription() {
@@ -288,8 +349,14 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete() {
-    // Dispatch an action to delete the group if necessary
+  private reactToGroupMessageFailureAction() {
+    this.actions$
+      .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess), take(1))
+      .subscribe(() => {
+        console.log('Group message update successful');
+        // Start countdown for this specific group
+        this.timerService.startCountdownForGroup(this.groupID);
+      });
   }
 
   private debugSelectors() {
@@ -312,7 +379,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     // Debugging error state
     this.subscriptions.add(
       this.error$.subscribe((error) => {
-        console.log('Error:', error);
+        console.log('Error:', error?.message);
       })
     );
 
