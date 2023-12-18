@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ConversationItem } from 'src/app/main/models/conversation.model';
 import { ConversationState } from '../models/redux.models';
 
 // Selector for the entire conversation feature state
@@ -39,4 +40,13 @@ export const selectConversationCompanionIDs = createSelector(
 export const selectConversationIDs = createSelector(
   selectConversations,
   (conversations) => conversations.map(conversation => conversation.id.S)
+);
+
+// Add a new selector in conversation.selector.ts
+export const selectConversationByCompanionId = createSelector(
+  selectConversations,
+  (conversations: ConversationItem[], props: { userId: string }) =>
+    conversations.find(
+      conversation => conversation.companionID.S === props.userId
+    )
 );

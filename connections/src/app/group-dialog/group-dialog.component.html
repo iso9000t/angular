@@ -1,30 +1,33 @@
-<a routerLink="/">Back</a>
-<p *ngIf="lastUpdated$ | async">
-  Last updated at: {{ lastUpdated$ | async | date : "medium" }}
-</p>
-<button
-  (click)="onUpdate()"
-  [disabled]="(countdownGroupMessageUpdate$ | async)! > 0 || (loading$ | async)"
->
-  Update
-</button>
-<div *ngIf="countdownGroupMessageUpdate$ | async as countdown">
-  <span class="update-number" *ngIf="countdown > 0">
-    {{ countdown / 1000 | number : "1.0-0" }}
-  </span>
+<div class="top-controls">
+  <a routerLink="/" class="back-link">Back</a>
+  <p class="last-updated" *ngIf="lastUpdated$ | async">
+    Last updated at: {{ lastUpdated$ | async | date : "medium" }}
+  </p>
+  <div class="button-container">
+    <div *ngIf="countdownGroupMessageUpdate$ | async as countdown">
+      <span class="update-number" *ngIf="countdown > 0">
+        {{ countdown / 1000 | number : "1.0-0" }}
+      </span>
+    </div>
+    <button
+      class="update-button"
+      (click)="onUpdate()"
+      [disabled]="
+        (countdownGroupMessageUpdate$ | async)! > 0 || (loading$ | async)
+      "
+    >
+      Update
+    </button>
+    <button
+      *ngIf="isGroupCreator"
+      class="delete-button"
+      [disabled]="loading$ | async"
+      (click)="openDeleteDialog(groupID); $event.stopPropagation()"
+    >
+      Delete Group
+    </button>
+  </div>
 </div>
-<p>{{ lastmess$ | async | date : "medium" }}</p>
-<!-- Visible if the user is a group owner -->
-<!-- <button *ngIf="isGroupCreator" (click)="onDelete()">Delete Group</button> -->
-
-<button
-  *ngIf="isGroupCreator"
-  class="delete-btn"
-  [disabled]="loading$ | async"
-  (click)="openDeleteDialog(groupID); $event.stopPropagation()"
->
-  Delete Group
-</button>
 
 <!-- GroupDialogComponent Template -->
 <div class="chat-container">
@@ -37,10 +40,15 @@
       >
         <div class="message-box">
           <div class="message-date">
-            {{ message.createdAt.S | date : "medium" }}
+            {{ message.createdAt.S | date : "yyyy/MM/dd HH:mm" }}
           </div>
           <div class="message-author">
-            {{ message.authorID.S | userName | async }}
+            <!-- Display 'Me' if the user is the author, else display the user name -->
+            {{
+              message.authorID.S === userUID
+                ? "Me"
+                : (message.authorID.S | userName | async)
+            }}
           </div>
           <div class="message-content">{{ message.message.S }}</div>
         </div>

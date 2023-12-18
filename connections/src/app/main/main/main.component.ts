@@ -202,7 +202,7 @@ export class MainComponent implements OnInit, OnDestroy {
       data: { groupId },
     });
   }
-  
+
   private subscribeToConversationIDs() {
     const conversationIDsSubscription = this.conversationIDs$.subscribe(
       (result) => {
@@ -336,6 +336,26 @@ export class MainComponent implements OnInit, OnDestroy {
 
   navigateToGroup(groupId: string): void {
     this.router.navigate(['/group', groupId]);
+  }
+
+  createOrNavigateToConversation(userId: string): void {
+    // Check if a conversation with this user already exists
+    this.store
+      .pipe(
+        select(conversationSelectors.selectConversationByCompanionId, {
+          userId,
+        }),
+        take(1)
+      )
+      .subscribe((existingConversation) => {
+        if (existingConversation) {
+          // If the conversation exists, navigate to it
+          this.router.navigate(['/conversation', existingConversation.id.S]);
+        } else {
+          // If not, create a new conversation
+          this.createAndNavigateToConversation(userId);
+        }
+      });
   }
 
   createAndNavigateToConversation(companionId: string): void {
