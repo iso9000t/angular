@@ -10,7 +10,6 @@ import { GroupMessageError } from 'src/app/main/models/group.model';
 export class GroupMessageEffects {
   constructor(private actions$: Actions, private groupService: GroupService) {}
 
-  // GroupMessageEffects file
 
   loadGroupMessages$ = createEffect(() =>
     this.actions$.pipe(

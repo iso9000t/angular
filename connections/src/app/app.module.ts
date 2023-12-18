@@ -47,6 +47,8 @@ import { ConversationComponent } from './conversation/conversation.component';
 import { groupMessageReducer } from './redux/reducers/group-message.reducer';
 import { GroupMessageEffects } from './redux/effects/group-message.effect';
 import { UserNamePipe } from './pipes/user-name.pipe';
+import { privateMessageReducer } from './redux/reducers/private-message-reducer';
+import { PrivateMessageEffects } from './redux/effects/private-message.effect';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -98,6 +100,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
       user: userReducer,
       conversation: conversationReducer,
       groupMessage: groupMessageReducer,
+      privateMessage: privateMessageReducer,
     }),
     EffectsModule.forRoot([
       ProfileEffects,
@@ -105,6 +108,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
       UserEffects,
       ConversationEffects,
       GroupMessageEffects,
+      PrivateMessageEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

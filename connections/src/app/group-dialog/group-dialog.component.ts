@@ -170,7 +170,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-    localStorage.removeItem(`isGroupCreator_${this.groupID}`);
+    /* localStorage.removeItem(`isGroupCreator_${this.groupID}`); */
   }
 
   openDeleteDialog(groupId: string): void {
@@ -303,10 +303,10 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
         .subscribe((isCreator) => {
           if (isCreator !== undefined) {
             // If isCreator is defined, use it and store in localStorage
-            localStorage.setItem(
+           /*  localStorage.setItem(
               `isGroupCreator_${this.groupID}`,
               String(isCreator)
-            );
+            ); */
             this.isGroupCreator = isCreator;
             console.log('Is Group Creator:', this.isGroupCreator);
           } else {
@@ -397,10 +397,10 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
         .subscribe((isCreator) => {
           this.isGroupCreator = isCreator;
           console.log('Is Group Creator lfffff:', this.isGroupCreator);
-          localStorage.setItem(
+         /*  localStorage.setItem(
             `isGroupCreator_${this.groupID}`,
             String(isCreator)
-          );
+          ); */
         })
     );
   }

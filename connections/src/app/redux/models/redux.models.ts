@@ -1,5 +1,5 @@
 import { ConversationError, ConversationItem } from "src/app/main/models/conversation.model";
-import { GroupError, GroupItem, GroupMessageError, GroupMessageItem } from "src/app/main/models/group.model";
+import { AttributeValue, GroupError, GroupItem, GroupMessageError, GroupMessageItem } from "src/app/main/models/group.model";
 import { UserError, UserItem } from "src/app/main/models/user.model";
 import { ProfileError, ProfileResponse } from "src/app/profile/models/profile.model";
 
@@ -36,7 +36,30 @@ export interface GroupMessages {
   initialLoadCompleted: boolean;
 }
 
+
 export interface GroupMessageState {
   groups: { [groupId: string]: GroupMessages };
 }
 
+export interface PrivateMessageState {
+  conversations: { [conversationId: string]: PrivateMessages };
+}
+
+export interface PrivateMessages {
+  messages: PrivateMessageItem[];
+  isLoading: boolean;
+  error: PrivateMessageError | null;
+  lastFetched: number | null;
+  initialLoadCompleted: boolean;
+}
+
+export interface PrivateMessageItem {
+  authorID: AttributeValue;
+  message: AttributeValue;
+  createdAt: AttributeValue;
+}
+
+export interface PrivateMessageError {
+  type: string;
+  message: string;
+}

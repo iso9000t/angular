@@ -4,6 +4,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environment/environent';
 import { ConversationCreateResponse, ConversationListResponse } from '../models/conversation.model';
 import { GroupCreateRequestBody, GroupCreateResponse, GroupMessageResponse, GroupUpdateResponse } from '../models/group.model';
+import { PrivateMessageListResponse } from '../models/private-message.model';
 import { UserListResponse } from '../models/user.model';
 
 @Injectable({
@@ -18,7 +19,7 @@ export class GroupService {
   private conversationCreateURL: string = `${environment.apiUrl}/conversations/create`;
   private groupReadURL: string = `${environment.apiUrl}/groups/read`;
   private groupAppendURL: string = `${environment.apiUrl}/groups/append`;
-
+  private conversationReadURL: string = `${environment.apiUrl}/conversations/read`;
   constructor(private http: HttpClient) {}
 
   updateUserList(): Observable<UserListResponse> {
@@ -64,7 +65,7 @@ export class GroupService {
       .get<GroupMessageResponse>(`${this.groupReadURL}?groupID=${groupId}`)
       .pipe(
         catchError((error) => {
-          return throwError(error.error); // Pass the error response to the component
+          return throwError(error.error);
         })
       );
   }
@@ -91,5 +92,31 @@ export class GroupService {
       message: message,
     };
     return this.http.post<void>(this.groupAppendURL, body);
+  }
+
+    getPrivateMessages(conversationID: string): Observable<PrivateMessageListResponse> {
+    return this.http
+      .get<PrivateMessageListResponse>(`${this.conversationReadURL}?conversationID=${conversationID}`)
+      .pipe(
+        catchError((error) => {
+          return throwError(error.error); // Handle errors
+        })
+      );
+  }
+
+  // Fetch messages in a private conversation since a specific timestamp
+  getPrivateMessagesSince(
+    conversationID: string,
+    since: number
+  ): Observable<PrivateMessageListResponse> {
+    return this.http
+      .get<PrivateMessageListResponse>(
+        `${this.conversationReadURL}?conversationID=${conversationID}&since=${since}`
+      )
+      .pipe(
+        catchError((error) => {
+          return throwError(error.error); // Handle errors
+        })
+      );
   }
 }
