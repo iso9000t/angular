@@ -32,7 +32,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
   countdownGroupMessageUpdate$!: Observable<number>;
   isGroupCreator: boolean = false;
   groupsList$ = this.store.select(GroupSelectors.selectGroups);
-  isCreatorFromStorage: boolean = false;
+ 
   itialLoadCompleted = false;
   isGroupCreator$!: Observable<boolean>;
   initialLoadCompleted$: Observable<boolean> = this.store.select(
@@ -95,8 +95,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
           },
         });
       } else {
-        console.error('Group ID is not valid.');
-        // Handle invalid group ID case here
+        this.showSnackbar(`Group ID is not valid.`);
       }
 
       this.messageInput.reset();
@@ -135,36 +134,19 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.countdownGroupMessageUpdate$ = this.timerService.getCountdownForGroup(
       this.groupID
     );
-
+    this.setupLatestMessageTimestampSubscription();
     this.subscribeToLoadUsersFailure();
     this.subscribeToLoadGroupMessagesFailure();
     this.subscribeToLoadGroupMessagesSinceFailure();
-    this.subscribeToSendGroupMessagesSinceFailure();
-    /*  this.countdownGroupMessageUpdate$ = this.timerService
-      .getGroupMessageCountdown()
-      .pipe(startWith(0)); */
-    /*     this.isGroupCreator =
-      localStorage.getItem(`isGroupCreator_${this.groupID}`) === 'true'; */
-
-    /*     const storedValue = localStorage.getItem(`isGroupCreator_${this.groupID}`);
-    this.isCreatorFromStorage = storedValue === 'true';
-    console.log(`isCreatorFromStorage`, this.isCreatorFromStorage); */
-    // Add this line to your subscriptions in ngOnInit or another appropriate place
-    /* this.subscriptions.add(
-      this.initialLoadCompleted$.subscribe((result) => {
-        console.log('Second time',result);
-      })
-    ); */
-
+    this.subscribeToSendGroupMessagesFailure();
     this.lastmess$ = this.store.select(
       GroupMessageSelectors.selectLatestMessageTimestamp(this.groupID)
     );
-
     this.subscribeToLoadGroupMessages();
     this.subscribeToLoadUsers();
     this.setupGroupCreatorSubscription();
-    this.setupLatestMessageTimestampSubscription();
-    this.debugSelectors();
+    
+/*     this.debugSelectors(); */
     this.checkInitialLoad();
   }
 
@@ -273,7 +255,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.add(failureSubscription);
   }
 
-  private subscribeToSendGroupMessagesSinceFailure() {
+  private subscribeToSendGroupMessagesFailure() {
     const failureSubscription = this.actions$
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceFailure))
       .subscribe((error) => {
@@ -302,15 +284,9 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
         .select(GroupSelectors.isUserGroupCreator, { groupId: this.groupID })
         .subscribe((isCreator) => {
           if (isCreator !== undefined) {
-            // If isCreator is defined, use it and store in localStorage
-           /*  localStorage.setItem(
-              `isGroupCreator_${this.groupID}`,
-              String(isCreator)
-            ); */
             this.isGroupCreator = isCreator;
             console.log('Is Group Creator:', this.isGroupCreator);
           } else {
-            // If isCreator is undefined, dispatch an action to fetch the data
             this.store.dispatch(GroupActions.loadGroups());
           }
         })

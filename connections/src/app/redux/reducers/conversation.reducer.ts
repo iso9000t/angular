@@ -31,5 +31,29 @@ export const conversationReducer = createReducer(
     isLoading: false,
     error,
   })),
-  on(ConversationActions.resetConversationState, () => initialConversationState)
+  on(
+    ConversationActions.resetConversationState,
+    () => initialConversationState
+  ),
+  on(ConversationActions.deleteConversation, (state, { conversationId }) => ({
+    ...state,
+    isLoading: true,
+    error: null,
+  })),
+  on(
+    ConversationActions.deleteConversationSuccess,
+    (state, { conversationId }) => ({
+      ...state,
+      conversations: state.conversations.filter(
+        (conv) => conv.id.S !== conversationId
+      ),
+      isLoading: false,
+    })
+  ),
+  on(ConversationActions.deleteConversationFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error,
+  }))
 );
+

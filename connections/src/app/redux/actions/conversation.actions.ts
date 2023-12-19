@@ -21,3 +21,18 @@ export const loadConversationsFailure = createAction(
 export const resetConversationState = createAction(
   '[Conversations] Reset Conversations State'
 );
+
+export const deleteConversation = createAction(
+  '[Conversations] Delete Conversation',
+  props<{ conversationId: string }>()
+);
+
+export const deleteConversationSuccess = createAction(
+  '[Conversations] Delete Conversation Success',
+  props<{ conversationId: string }>()
+);
+
+export const deleteConversationFailure = createAction(
+  '[Conversations] Delete Conversation Failure',
+  props<{ error: ConversationError }>()
+);

@@ -49,6 +49,7 @@ import { GroupMessageEffects } from './redux/effects/group-message.effect';
 import { UserNamePipe } from './pipes/user-name.pipe';
 import { privateMessageReducer } from './redux/reducers/private-message-reducer';
 import { PrivateMessageEffects } from './redux/effects/private-message.effect';
+import { ConversationDeleteDialogComponent } from './main/conversation-delete-dialog/conversation-delete-dialog.component';
 
 /* import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -77,6 +78,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
     GroupDialogComponent,
     ConversationComponent,
     UserNamePipe,
+    ConversationDeleteDialogComponent,
   ],
   imports: [
     MatDialogModule,

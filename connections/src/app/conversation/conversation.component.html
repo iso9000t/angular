@@ -1,3 +1,68 @@
 <div class="top-controls">
   <a routerLink="/" class="back-link">Back</a>
+  <p class="last-updated" *ngIf="lastUpdated$ | async">
+    Last updated at: {{ lastUpdated$ | async | date : "medium" }}
+  </p>
+  <div class="button-container">
+    <div *ngIf="countdownPrivateMessageUpdate$ | async as countdown">
+      <span class="update-number" *ngIf="countdown > 0">
+        {{ countdown / 1000 | number : "1.0-0" }}
+      </span>
+    </div>
+    <button
+      class="update-button"
+      (click)="onUpdate()"
+      [disabled]="
+        (countdownPrivateMessageUpdate$ | async)! > 0 || (loading$ | async)
+      "
+    >
+      Update
+    </button>
+     <button
+      class="delete-button"
+      [disabled]="loading$ | async"
+      (click)="openDeleteDialog(conversationID); $event.stopPropagation()"
+    >
+      Delete
+    </button>
+  </div>
+</div>
 
+<div class="chat-container">
+  <div class="messages-area">
+    <ng-container *ngIf="sortedMessages$ | async as messages">
+      <div
+        *ngFor="let message of sortedMessages$ | async"
+        [class.own-message]="message.authorID.S === userUID"
+        [class.other-message]="message.authorID.S !== userUID"
+      >
+        <div class="message-box">
+          <div class="message-date">
+            {{ message.createdAt.S | date : "yyyy/MM/dd HH:mm" }}
+          </div>
+          <div class="message-author">
+            <!-- Display 'Me' if the user is the author, else display the user name -->
+            {{
+              message.authorID.S === userUID
+                ? "Me"
+                : (message.authorID.S | userName | async)
+            }}
+          </div>
+          <div class="message-content">{{ message.message.S }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <form (ngSubmit)="onSendMessage()">
+    <div class="message-input">
+      <input
+        matInput
+        type="text"
+        placeholder="Send a message"
+        [formControl]="messageInput"
+      />
+      <button type="submit" [disabled]="messageInput.invalid">Send</button>
+    </div>
+  </form>
+</div>

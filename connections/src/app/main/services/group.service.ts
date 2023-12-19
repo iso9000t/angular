@@ -20,6 +20,9 @@ export class GroupService {
   private groupReadURL: string = `${environment.apiUrl}/groups/read`;
   private groupAppendURL: string = `${environment.apiUrl}/groups/append`;
   private conversationReadURL: string = `${environment.apiUrl}/conversations/read`;
+  private conversationAppendURL: string = `${environment.apiUrl}/conversations/append`;
+  private conversationDeleteURL: string = `${environment.apiUrl}/conversations/delete`;
+
   constructor(private http: HttpClient) {}
 
   updateUserList(): Observable<UserListResponse> {
@@ -54,6 +57,16 @@ export class GroupService {
   deleteGroup(groupId: string): Observable<void> {
     const urlWithParam = `${this.groupDeleteURL}?groupID=${groupId}`;
     return this.http.delete<void>(urlWithParam);
+  }
+
+  deleteConversation(conversationID: string): Observable<void> {
+    console.log('Deleting conversation with ID:', conversationID);
+    const urlWithParam = `${this.conversationDeleteURL}?conversationID=${conversationID}`;
+    return this.http.delete<void>(urlWithParam).pipe(
+      catchError((error) => {
+        return throwError(error.error); // Transform and rethrow the error
+      })
+    );
   }
 
   getConversationList(): Observable<ConversationListResponse> {
@@ -94,9 +107,25 @@ export class GroupService {
     return this.http.post<void>(this.groupAppendURL, body);
   }
 
-    getPrivateMessages(conversationID: string): Observable<PrivateMessageListResponse> {
+  sendPrivateMessage(
+    conversationID: string,
+    message: string
+  ): Observable<void> {
+    console.log('Sending private message to conversation');
+    const body = {
+      conversationID: conversationID,
+      message: message,
+    };
+    return this.http.post<void>(this.conversationAppendURL, body);
+  }
+
+  getPrivateMessages(
+    conversationID: string
+  ): Observable<PrivateMessageListResponse> {
     return this.http
-      .get<PrivateMessageListResponse>(`${this.conversationReadURL}?conversationID=${conversationID}`)
+      .get<PrivateMessageListResponse>(
+        `${this.conversationReadURL}?conversationID=${conversationID}`
+      )
       .pipe(
         catchError((error) => {
           return throwError(error.error); // Handle errors
