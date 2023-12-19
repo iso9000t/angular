@@ -161,7 +161,7 @@ button:disabled:hover {
 :host-context(.dark-theme) {
   .chat-container {
     background-color: #121212;
-    color: #414141; 
+    color: #414141;
   }
 
   .message-box {
@@ -214,5 +214,7 @@ button:disabled:hover {
     font-size: 0.9em;
     color: #bebebe;
   }
-
+  .form {
+    background-color: #45a049;
+  }
 }

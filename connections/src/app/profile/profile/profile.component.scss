@@ -1,3 +1,28 @@
+// Dark theme styles
+:host-context(.dark-theme) {
+  .card {
+    background-color: rgb(169, 169, 169);
+  }
+
+  .mat-mdc-card-header {
+    display: flex;
+    padding: 16px 16px 0;
+    justify-content: center;
+    background-color: rgb(169, 169, 169);
+  }
+
+  .mat-card-content {
+    padding-bottom: 0;
+    background-color: rgb(214, 214, 214);
+  }
+  .card-header,
+  .card-content,
+  .card {
+    background-color: rgb(84, 84, 84);
+    border-radius: 10px;
+  }
+}
+
 .profile-container {
   width: 100%;
   max-width: 600px;
@@ -9,7 +34,7 @@
 .loading-spinner {
   padding-top: 24vh;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .profile-item {
@@ -21,7 +46,6 @@
 .profile-label {
   font-weight: bold;
   margin-right: 10px;
- 
 }
 
 .profile-value {
@@ -34,11 +58,11 @@
 }
 
 .mat-card-content {
-  padding-bottom: 0; /* Removes extra padding inside mat-card-content */
+  padding-bottom: 0;
 }
 
 .mat-card-actions {
-  padding-top: 0; /* Removes extra padding above mat-card-actions */
+  padding-top: 0;
 }
 
 .error-message {
@@ -47,41 +71,43 @@
 }
 
 .mat-mdc-card-header {
-    display: flex;
-    padding: 16px 16px 0;
-    justify-content: center;
+  display: flex;
+  padding: 16px 16px 0;
+  justify-content: center;
 }
 
 .profile-name-editable[_ngcontent-ng-c3898012477] {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: 30px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  column-gap: 30px;
 }
 
 .profile-name-editable[_ngcontent-ng-c2230522847] {
-    display: flex;
-    align-items: center;
-    column-gap: 20px;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
 }
 
 .profile-value {
   margin-right: 30px;
 }
 
-.card-header, .card-content, .card{
-  background-color: rgb(234, 239, 240);
+.card-header,
+.card-content,
+.card {
+  background-color: rgb(203, 203, 203);
   border-radius: 10px;
 }
 
 .mdc-card {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    align-items: center;
-    max-width: fit-content;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  align-items: center;
+  max-width: fit-content;
+  margin: 0 auto;
 }
 
 .logout-button {
@@ -89,7 +115,7 @@
   top: 10px;
   right: 10px;
 }
-.vertical-buttons{
+.vertical-buttons {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
