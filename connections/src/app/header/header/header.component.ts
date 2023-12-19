@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  themeIcon = 'light_mode'; // default icon
+  themeIcon = 'light_mode';
 
   ngOnInit() {
     this.applyTheme();

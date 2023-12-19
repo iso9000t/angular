@@ -62,7 +62,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.conversationID =
       this.route.snapshot.paramMap.get('conversationID') || '';
-    console.log('Conversation ID:', this.conversationID); //Уничтожить потом
 
     this.messages$ = this.store.select(
       PrivateMessageSelectors.selectPrivateMessages(this.conversationID)
@@ -86,7 +85,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.subscribeToLoadPrivateMessages();
     this.subscribeToLoadUsersFailure();
     this.subscribeToLoadUsers();
-
     this.checkInitialLoad();
     this.subscribeToLoadPrivateMessagesFailure();
     this.subscribeToSendPrivateMessagesFailure();
@@ -100,26 +98,20 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   openDeleteDialog(conversationID: string): void {
     const dialogRef = this.dialog.open(ConversationDeleteDialogComponent, {
-      width: '360px',
+      width: '380px',
       disableClose: true,
       data: { conversationId: conversationID },
     });
-
-    console.log('на отправке',conversationID);
   }
 
   onSendMessage(): void {
     if (this.messageInput.valid && this.conversationID) {
-      // Use a default value for the message if the form control value is null
       const message = this.messageInput.value || '';
-      console.log('Sending message:', message);
-
       if (this.conversationID !== '') {
         this.groupService
           .sendPrivateMessage(this.conversationID, message)
           .subscribe({
             next: () => {
-              // Dispatch action to update messages
               this.store.dispatch(
                 PrivateMessageActions.loadPrivateMessagesSince({
                   conversationId: this.conversationID,
@@ -140,12 +132,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToLoadPrivateMessages() {
-    // Create a new subscription
     const initialLoadSubscription = this.initialLoadCompleted$
       .pipe(take(1))
       .subscribe((initialLoadCompleted) => {
         if (initialLoadCompleted === true) {
-          // Load new messages only
           this.store.dispatch(
             PrivateMessageActions.loadPrivateMessagesSince({
               conversationId: this.conversationID,
@@ -153,7 +143,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
             })
           );
         } else {
-          // Load all messages initially (for false and undefined)
           this.store.dispatch(
             PrivateMessageActions.loadPrivateMessages({
               conversationId: this.conversationID,
@@ -188,7 +177,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     const failureSubscription = this.actions$
       .pipe(ofType(PrivateMessageActions.loadPrivateMessagesFailure))
       .subscribe((error) => {
-          this.showSnackbar(error.error.message);
+        this.showSnackbar(error.error.message);
       });
     this.subscriptions.add(failureSubscription);
   }
@@ -217,8 +206,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
         take(1)
       )
       .subscribe(() => {
-        console.log('Private message update successful');
-        // Start countdown for this specific group
         this.timerService.startCountdownForGroup(this.conversationID);
       });
   }
@@ -245,9 +232,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
             this.conversationID
           )
         )
-        .subscribe((messages) => {
-          console.log('Initial load is:', messages);
-        })
+        .subscribe((messages) => {})
     );
   }
 

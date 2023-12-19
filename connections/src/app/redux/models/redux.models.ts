@@ -1,7 +1,19 @@
-import { ConversationError, ConversationItem } from "src/app/main/models/conversation.model";
-import { AttributeValue, GroupError, GroupItem, GroupMessageError, GroupMessageItem } from "src/app/main/models/group.model";
-import { UserError, UserItem } from "src/app/main/models/user.model";
-import { ProfileError, ProfileResponse } from "src/app/profile/models/profile.model";
+import {
+  ConversationError,
+  ConversationItem,
+} from 'src/app/main/models/conversation.model';
+import {
+  AttributeValue,
+  GroupError,
+  GroupItem,
+  GroupMessageError,
+  GroupMessageItem,
+} from 'src/app/main/models/group.model';
+import { UserError, UserItem } from 'src/app/main/models/user.model';
+import {
+  ProfileError,
+  ProfileResponse,
+} from 'src/app/profile/models/profile.model';
 
 export interface ProfileState {
   profile: ProfileResponse | null;
@@ -35,7 +47,6 @@ export interface GroupMessages {
   lastFetched: number | null;
   initialLoadCompleted: boolean;
 }
-
 
 export interface GroupMessageState {
   groups: { [groupId: string]: GroupMessages };

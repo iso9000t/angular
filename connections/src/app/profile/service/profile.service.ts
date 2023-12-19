@@ -17,7 +17,6 @@ export class ProfileService {
     console.log('service used');
     return this.http.get<ProfileResponse>(this.profileURL).pipe(
       catchError((error) => {
-        console.log(error.error);
         this.snackBar.open(error.message, 'Close', {
           duration: 6000,
         });
@@ -29,6 +28,9 @@ export class ProfileService {
   updateProfileName(nameData: NameData): Observable<any> {
     return this.http.put(this.profileURL, nameData).pipe(
       catchError((error) => {
+        this.snackBar.open(error.message, 'Close', {
+          duration: 6000,
+        });
         return throwError(error.error);
       })
     );

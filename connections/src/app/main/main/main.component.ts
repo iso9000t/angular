@@ -122,7 +122,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscribeToLoadUserFailure();
     this.subscribeToLoadCompainionsIDSuccess();
     this.subscribeToLoadConversationsFailure();
-    console.log(`my uid is: ${localStorage.getItem('uid')}`);
     this.subscribeToLoadConversationCompanionsIDs();
     this.subscribeToCompanionIDs();
   }
@@ -167,7 +166,6 @@ export class MainComponent implements OnInit, OnDestroy {
     const successSubscription = this.actions$
       .pipe(ofType(GroupActions.loadGroupsSuccess))
       .subscribe(() => {
-        /*      this.hasUpdatedGroupsSuccessfully = true; */
       });
     this.subscriptions.add(successSubscription);
   }
@@ -190,31 +188,20 @@ export class MainComponent implements OnInit, OnDestroy {
 
   openSaveDialog(): void {
     const dialogRef = this.dialog.open(GroupNameDialogComponent, {
-      width: '360px',
       disableClose: true,
     });
   }
 
   openDeleteDialog(groupId: string): void {
     const dialogRef = this.dialog.open(GroupDeleteDialogComponent, {
-      width: '360px',
+      width: '380px',
       disableClose: true,
       data: { groupId },
     });
   }
 
-  private subscribeToConversationIDs() {
-    const conversationIDsSubscription = this.conversationIDs$.subscribe(
-      (result) => {
-        console.log('conv', result);
-      }
-    );
-    this.subscriptions.add(conversationIDsSubscription);
-  }
-
   private subscribeToCompanionIDs() {
     const companionIDsSubscription = this.companionIDs$.subscribe((result) => {
-      console.log('sobu 2', result);
     });
     this.subscriptions.add(companionIDsSubscription);
   }
@@ -278,7 +265,6 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     this.subscriptions.add(usersSubscription);
   }
-  //conversationIDs$
   private subscribeToLoadConversationCompanionsIDs() {
     const companionsIDSubscription = this.store
       .pipe(
@@ -289,7 +275,6 @@ export class MainComponent implements OnInit, OnDestroy {
         if (conversations.length === 0) {
           this.store.dispatch(ConversationActions.loadConversations());
         }
-        console.log('Companions ac are', conversations);
       });
     this.subscriptions.add(companionsIDSubscription);
   }
@@ -298,7 +283,6 @@ export class MainComponent implements OnInit, OnDestroy {
     const successSubscription = this.actions$
       .pipe(ofType(UserActions.loadUsersSuccess))
       .subscribe(() => {
-        /*    this.hasUpdatedUsersSuccessfully = true; */
       });
     this.subscriptions.add(successSubscription);
   }
@@ -307,12 +291,9 @@ export class MainComponent implements OnInit, OnDestroy {
     const successSubscription = this.actions$
       .pipe(ofType(ConversationActions.loadConversationsSuccess))
       .subscribe(() => {
-        /*     this.hasUpdatedUsersSuccessfully = true; */
       });
     this.subscriptions.add(successSubscription);
   }
-
-  //conversations$;
 
   private subscribeToLoadUserFailure() {
     const failureSubscription = this.actions$
@@ -339,7 +320,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   createOrNavigateToConversation(userId: string): void {
-    // Check if a conversation with this user already exists
     this.store
       .pipe(
         select(conversationSelectors.selectConversationByCompanionId, {
@@ -349,10 +329,8 @@ export class MainComponent implements OnInit, OnDestroy {
       )
       .subscribe((existingConversation) => {
         if (existingConversation) {
-          // If the conversation exists, navigate to it
           this.router.navigate(['/conversation', existingConversation.id.S]);
         } else {
-          // If not, create a new conversation
           this.createAndNavigateToConversation(userId);
         }
       });
@@ -362,7 +340,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loadingUsers = true;
     this.groupService.createConversation(companionId).subscribe({
       next: (response) => {
-        console.log('Create conversation response:', response);
         if (response && response.conversationID) {
           this.loadingUsers = false;
           this.router.navigate(['/conversation', response.conversationID]);

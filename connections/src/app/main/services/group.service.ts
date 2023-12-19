@@ -76,7 +76,6 @@ export class GroupService {
   }
 
   deleteConversation(conversationID: string): Observable<void> {
-    console.log('Deleting conversation with ID:', conversationID);
     const urlWithParam = `${this.conversationDeleteURL}?conversationID=${conversationID}`;
     return this.http.delete<void>(urlWithParam).pipe(
       catchError((error) => {
@@ -136,7 +135,6 @@ export class GroupService {
     conversationID: string,
     message: string
   ): Observable<void> {
-    console.log('Sending private message to conversation');
     const body = {
       conversationID: conversationID,
       message: message,
@@ -153,12 +151,11 @@ export class GroupService {
       )
       .pipe(
         catchError((error) => {
-          return throwError(error.error); // Handle errors
+          return throwError(error.error);
         })
       );
   }
 
-  // Fetch messages in a private conversation since a specific timestamp
   getPrivateMessagesSince(
     conversationID: string,
     since: number
@@ -169,7 +166,7 @@ export class GroupService {
       )
       .pipe(
         catchError((error) => {
-          return throwError(error.error); // Handle errors
+          return throwError(error.error);
         })
       );
   }

@@ -34,26 +34,24 @@ export const groupReducer = createReducer(
   on(GetGroupActions.createGroup, (state) => ({
     ...state,
     loading: true,
-    error: null, // Reset error state when starting a new operation
+    error: null,
   })),
 
-  // Handle successful group creation
   on(GetGroupActions.createGroupSuccess, (state, { group }) => ({
     ...state,
     groups: [...state.groups, group],
-    loading: false, // Set loading to false as the operation is complete
+    loading: false,
   })),
 
-  // Handle failure in group creation
   on(GetGroupActions.createGroupFailure, (state, { error }) => ({
     ...state,
-    loading: false, // Set loading to false as the operation is complete
-    error, // Update the error state with the received error
+    loading: false, 
+    error, 
   })),
   on(GroupDeleteActions.deleteGroup, (state) => ({
     ...state,
     loading: true,
-    error: null, // Reset error state when starting a new operation
+    error: null,
   })),
   on(GroupDeleteActions.deleteGroupSuccess, (state, { groupId }) => ({
     ...state,
@@ -62,7 +60,7 @@ export const groupReducer = createReducer(
   })),
   on(GroupDeleteActions.deleteGroupFailure, (state, { error }) => ({
     ...state,
-    error, // error is now of type GroupError
+    error, 
     loading: false,
   }))
 );

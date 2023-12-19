@@ -1,5 +1,5 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { PrivateMessageState, PrivateMessages } from "../models/redux.models";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { PrivateMessageState, PrivateMessages } from '../models/redux.models';
 
 // Selector for the entire private message feature state
 export const selectPrivateMessageFeatureState =

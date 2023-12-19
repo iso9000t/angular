@@ -10,7 +10,6 @@ import * as CreateGroupActions from '../actions/group-create.action';
 import { GroupError, GroupItem } from 'src/app/main/models/group.model';
 import * as GroupDeleteActions from '../actions/group-delete.action';
 
-
 @Injectable()
 export class GroupEffects {
   constructor(
@@ -80,5 +79,3 @@ export class GroupEffects {
   );
 }
      
-
- 

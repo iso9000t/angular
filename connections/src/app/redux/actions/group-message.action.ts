@@ -33,7 +33,6 @@ export const loadGroupMessagesSinceSuccess = createAction(
   props<{ groupId: string; newMessages: GroupMessageItem[] }>()
 );
 
-
 export const loadGroupMessagesSinceFailure = createAction(
   '[Group Messages] Load Group Messages Since Failure',
   props<{ groupId: string; error: GroupMessageError }>()

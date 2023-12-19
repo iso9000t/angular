@@ -17,7 +17,6 @@ export const selectUsers = createSelector(
   (state: UserState) => state.users
 );
 
-
 // Selector for the loading status
 export const selectUsersLoading = createSelector(
   selectUserFeatureState,

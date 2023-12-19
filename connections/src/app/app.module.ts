@@ -51,20 +51,6 @@ import { privateMessageReducer } from './redux/reducers/private-message-reducer'
 import { PrivateMessageEffects } from './redux/effects/private-message.effect';
 import { ConversationDeleteDialogComponent } from './main/conversation-delete-dialog/conversation-delete-dialog.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
-
-/* import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';*/
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -42,7 +42,6 @@ export const selectConversationIDs = createSelector(
   (conversations) => conversations.map(conversation => conversation.id.S)
 );
 
-// Add a new selector in conversation.selector.ts
 export const selectConversationByCompanionId = createSelector(
   selectConversations,
   (conversations: ConversationItem[], props: { userId: string }) =>

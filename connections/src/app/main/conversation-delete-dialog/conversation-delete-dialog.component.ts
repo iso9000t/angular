@@ -25,7 +25,6 @@ export class ConversationDeleteDialogComponent implements OnDestroy {
     private actions$: Actions,
     private router: Router
   ) {
-    console.log('Dialog Data:', this.data);
     this.subscribeToDeleteConversationSuccess();
     this.subscribeToDeleteConversationFailure();
   }
@@ -54,7 +53,6 @@ export class ConversationDeleteDialogComponent implements OnDestroy {
 
   onDelete() {
     this.isSubmitting = true;
-    console.log('Dispatching delete action with ID:', this.data.conversationId); // Add this line for debugging
     this.store.dispatch(
       ConversationActions.deleteConversation({
         conversationId: this.data.conversationId,

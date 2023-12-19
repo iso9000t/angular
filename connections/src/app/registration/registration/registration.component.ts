@@ -77,9 +77,6 @@ export class RegistrationComponent {
             'Close',
             { duration: 3000 }
           );
-          console.log(
-            `Error message ${err.error.message}, Type: ${err.error.type}`
-          );
         },
       });
     }

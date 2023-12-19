@@ -32,22 +32,25 @@ export class ConversationEffects {
     )
   );
 
-  // In ConversationEffects class
-deleteConversation$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(ConversationActions.deleteConversation),
-    mergeMap((action) =>
-      this.groupService.deleteConversation(action.conversationId).pipe(
-        map(() => 
-          ConversationActions.deleteConversationSuccess({ conversationId: action.conversationId })
-        ),
-        catchError((error) =>
-          of(ConversationActions.deleteConversationFailure({ error: error as ConversationError }))
+  deleteConversation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ConversationActions.deleteConversation),
+      mergeMap((action) =>
+        this.groupService.deleteConversation(action.conversationId).pipe(
+          map(() =>
+            ConversationActions.deleteConversationSuccess({
+              conversationId: action.conversationId,
+            })
+          ),
+          catchError((error) =>
+            of(
+              ConversationActions.deleteConversationFailure({
+                error: error as ConversationError,
+              })
+            )
+          )
         )
       )
     )
-  )
-);
-
-  
+  );
 }

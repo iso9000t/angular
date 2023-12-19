@@ -76,14 +76,10 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
 
   onSendMessage(): void {
     if (this.messageInput.valid && this.groupID) {
-      // Use a default value for the message if the form control value is null
       const message = this.messageInput.value || '';
-      console.log('Sending message:', message);
-
       if (this.groupID !== '') {
         this.groupService.sendGroupMessage(this.groupID, message).subscribe({
           next: () => {
-            // Dispatch action to update messages
             this.store.dispatch(
               GroupMessageActions.loadGroupMessagesSince({
                 groupId: this.groupID,
@@ -98,21 +94,17 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
       } else {
         this.showSnackbar(`Group ID is not valid.`);
       }
-
       this.messageInput.reset();
     }
   }
 
   ngOnInit(): void {
     this.groupID = this.route.snapshot.paramMap.get('groupID') || '';
-
-    // Within ngOnInit()
     this.groupsList$.subscribe((groups) => {
       if (groups.length === 0) {
         this.store.dispatch(GroupActions.loadGroups());
       }
     });
-    // Initialize Observables after setting groupID
     this.messages$ = this.store.select(
       GroupMessageSelectors.selectGroupMessages(this.groupID)
     );
@@ -149,19 +141,16 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.subscribeToDeleteGroupSuccess();
     this.reactToGroupMessageFailureAction();
     this.subscribeToDeleteGroupFailure();
-
-    /*     this.debugSelectors(); */
     this.checkInitialLoad();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-    /* localStorage.removeItem(`isGroupCreator_${this.groupID}`); */
   }
 
   openDeleteDialog(groupId: string): void {
     const dialogRef = this.dialog.open(GroupDeleteDialogComponent, {
-      width: '360px',
+      width: '380px',
       disableClose: true,
       data: { groupId },
     });
@@ -171,9 +160,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.store
         .select(GroupMessageSelectors.selectInitialLoadCompleted(this.groupID))
-        .subscribe((messages) => {
-          console.log('Initial load is:', messages);
-        })
+        .subscribe((messages) => {})
     );
   }
 
@@ -186,12 +173,10 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToLoadGroupMessages() {
-    // Create a new subscription
     const initialLoadSubscription = this.initialLoadCompleted$
       .pipe(take(1))
       .subscribe((initialLoadCompleted) => {
         if (initialLoadCompleted === true) {
-          // Load new messages only
           this.store.dispatch(
             GroupMessageActions.loadGroupMessagesSince({
               groupId: this.groupID,
@@ -199,14 +184,11 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
             })
           );
         } else {
-          // Load all messages initially (for false and undefined)
           this.store.dispatch(
             GroupMessageActions.loadGroupMessages({ groupId: this.groupID })
           );
         }
       });
-
-    // Add the new subscription to this.subscriptions
     this.subscriptions.add(initialLoadSubscription);
   }
 
@@ -231,15 +213,6 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.add(subscription);
   }
 
-  /*   private subscribeToLoadGroupMessagesSuccess() {
-    const successSubscription = this.actions$
-      .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess))
-      .subscribe(() => {
-        this.showSnackbar(`Group messages successdully loaded`);
-      });
-    this.subscriptions.add(successSubscription);
-  }
- */
   private subscribeToLoadGroupMessagesFailure() {
     const failureSubscription = this.actions$
       .pipe(ofType(GroupMessageActions.loadGroupMessagesFailure))
@@ -271,7 +244,6 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceFailure))
       .subscribe((error) => {
         this.showSnackbar(error.error.message);
-        console.log(error);
       });
     this.subscriptions.add(failureSubscription);
   }
@@ -292,7 +264,6 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
         .subscribe((isCreator) => {
           if (isCreator !== undefined) {
             this.isGroupCreator = isCreator;
-            console.log('Is Group Creator:', this.isGroupCreator);
           } else {
             this.store.dispatch(GroupActions.loadGroups());
           }
@@ -326,7 +297,6 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.actions$
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess), take(1))
       .subscribe(() => {
-        console.log('Group message update successful');
         this.timerService.startCountdownForGroup(this.groupID);
       });
   }
@@ -335,55 +305,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.actions$
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess), take(1))
       .subscribe(() => {
-        console.log('Group message update successful');
-        // Start countdown for this specific group
         this.timerService.startCountdownForGroup(this.groupID);
       });
-  }
-
-  private debugSelectors() {
-    // Debugging sorted messages
-    this.subscriptions.add(
-      this.store
-        .select(GroupMessageSelectors.selectSortedGroupMessages(this.groupID))
-        .subscribe((messages) => {
-          console.log('Sorted Messages B:', messages);
-        })
-    );
-
-    // Debugging loading state
-    this.subscriptions.add(
-      this.loading$.subscribe((loading) => {
-        console.log('Loading:', loading);
-      })
-    );
-
-    // Debugging error state
-    this.subscriptions.add(
-      this.error$.subscribe((error) => {
-        console.log('Error:', error?.message);
-      })
-    );
-
-    // Debugging last updated timestamp
-    this.subscriptions.add(
-      this.lastUpdated$.subscribe((lastUpdated) => {
-        console.log('Last Updated Timestamp:', lastUpdated);
-      })
-    );
-
-    // Debugging group creator status
-    this.subscriptions.add(
-      this.store
-        .select(GroupSelectors.isUserGroupCreator, { groupId: this.groupID })
-        .subscribe((isCreator) => {
-          this.isGroupCreator = isCreator;
-          console.log('Is Group Creator lfffff:', this.isGroupCreator);
-          /*  localStorage.setItem(
-            `isGroupCreator_${this.groupID}`,
-            String(isCreator)
-          ); */
-        })
-    );
   }
 }

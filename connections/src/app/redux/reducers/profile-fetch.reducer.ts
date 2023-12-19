@@ -18,8 +18,7 @@ export const profileReducer = createReducer(
   })),
   on(ProfileActions.updateProfileFailure, (state, { error }) => ({
     ...state,
-    error: error, // This should update the error in the state
-    // Decide if I want to keep or change the profile field
+    error: error,
   })),
   on(ProfileActions.updateProfileSuccess, (state, { updatedProfile }) => ({
     ...state,

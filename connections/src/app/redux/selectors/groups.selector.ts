@@ -38,7 +38,6 @@ export const selectGroupById = createSelector(
     state.groups.find((group) => group.id.S === props.groupId)
 );
 
-
 export const isUserGroupCreator = createSelector(
   selectGroupById,
   (group: GroupItem | undefined) => {

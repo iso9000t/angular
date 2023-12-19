@@ -1,5 +1,7 @@
 <div class="centered-form-container">
-  <h1 class="form-header">PLEASE, SIGN UP or <a [routerLink]="['/signin']"> sign in </a></h1>
+  <h1 class="form-header">
+    PLEASE, SIGN UP or <a [routerLink]="['/signin']"> sign in </a>
+  </h1>
   <form
     [formGroup]="registrationForm"
     (ngSubmit)="onSubmit()"
@@ -7,16 +9,23 @@
   >
     <mat-form-field appearance="fill">
       <mat-label>First Name</mat-label>
-      <input matInput formControlName="name" maxlength="40"/>
+      <input matInput formControlName="name" maxlength="40" />
       <mat-error *ngIf="registrationForm.get('name')?.hasError('required')">
         Enter your name
       </mat-error>
-      <mat-error *ngIf="registrationForm.get('name')?.hasError('invalidName')">Only letters or spaces are allowed</mat-error>
+      <mat-error *ngIf="registrationForm.get('name')?.hasError('invalidName')"
+        >Only letters or spaces are allowed</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input type="email" oninput="this.value = this.value.toLowerCase()" matInput formControlName="email" />
+      <input
+        type="email"
+        oninput="this.value = this.value.toLowerCase()"
+        matInput
+        formControlName="email"
+      />
       <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
         Please enter a login email
       </mat-error>

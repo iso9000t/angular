@@ -1,23 +1,15 @@
-<h1 class="dialog-title" mat-dialog-title>Add Group</h1>
+<h1 class="centered-title" mat-dialog-title>Add Group</h1>
 <div mat-dialog-content class="mat-dialog-container">
-  <form [formGroup]="groupNameForm">
-    <mat-form-field class="name-field">
+  <form [formGroup]="groupNameForm" class="full-width-form">
+    <mat-form-field class="full-width-field">
       <input matInput placeholder="Group Name" formControlName="name" />
-      <mat-error *ngIf="groupNameForm.get('name')?.hasError('required')"
-        >Name is required</mat-error
-      >
-      <mat-error *ngIf="groupNameForm.get('name')?.hasError('pattern')"
-        >Letters, space or digits only</mat-error
-      >
-      <mat-error *ngIf="groupNameForm.get('name')?.hasError('maxlength')">
-        30 symbols maximum
-      </mat-error>
+      <mat-error *ngIf="groupNameForm.get('name')?.hasError('required')">Name is required</mat-error>
+      <mat-error *ngIf="groupNameForm.get('name')?.hasError('pattern')">Letters, space or digits only</mat-error>
+      <mat-error *ngIf="groupNameForm.get('name')?.hasError('maxlength')">30 symbols maximum</mat-error>
     </mat-form-field>
   </form>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()" [disabled]="isSubmitting">Cancel</button>
-  <button mat-button [disabled]="!groupNameForm.valid || isSubmitting" (click)="onSave()">
-    Save
-  </button>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onNoClick()" [disabled]="isSubmitting" class="left-button">Cancel</button>
+  <button mat-button [disabled]="!groupNameForm.valid || isSubmitting" (click)="onSave()" class="right-button">Save</button>
 </div>

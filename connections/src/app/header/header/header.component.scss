@@ -1,6 +1,6 @@
 mat-toolbar {
   display: flex;
-  justify-content: center; /* Align items in the center */
+  justify-content: center;
   align-items: center;
 }
 
@@ -28,6 +28,6 @@ mat-toolbar {
   }
 
   .active-link {
-    border-bottom: 2px solid rgb(228, 11, 11); /* Active link styling */
+    border-bottom: 2px solid rgb(228, 11, 11);
   }
 }
