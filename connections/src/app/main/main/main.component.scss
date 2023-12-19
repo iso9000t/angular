@@ -8,8 +8,8 @@
 
 .left-side,
 .right-side {
-  flex: 1; /* Equal flex basis */
-  flex-basis: 50%; /* Each side takes up 50% of the container */
+  flex: 1;
+  flex-basis: 50%;
   padding: 10px;
   height: 100%;
   text-align: center;
@@ -54,13 +54,12 @@ ul {
 }
 
 .highlighted {
-background-color: #acd6d2;;
+  background-color: #acd6d2;
 }
 
 .highlighted:hover {
-background-color: #7da5c0;
+  background-color: #7da5c0;
 }
-
 
 li {
   font-family: "Roboto", sans-serif;
@@ -102,11 +101,11 @@ li:hover {
 }
 
 .delete-btn:hover {
-  background-color: #913780; /* Darker red */
+  background-color: #913780;
 }
 
 button {
-  background-color: #8c85ab; /* Material blue */
+  background-color: #8c85ab;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -120,7 +119,7 @@ button {
 }
 
 button:hover {
-  background-color: #6790bc; /* Darker blue */
+  background-color: #6790bc;
 }
 
 button:disabled {
@@ -129,7 +128,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Styling for headers */
 h2 {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -144,4 +142,74 @@ h2 {
   font-weight: 400;
   color: #1a73e8;
   margin-left: 10px;
+}
+
+// main.component.scss
+
+// Styles for light theme (default)
+:host-context(.light-theme) {
+  .container {
+    background-color: #fff; // Light background color
+    color: #000; // Light text color
+  }
+
+  // Add more light theme styles here
+  .top-buttons-div {
+    background-color: #f0f0f0;
+  }
+
+  li {
+    background-color: #f0f0f0;
+  }
+}
+
+// Styles for dark theme
+:host-context(.dark-theme) {
+  .container {
+    background-color: #121212; // Dark background color
+    color: #fff; // Dark text color
+  }
+
+  // Add more dark theme styles here
+  .top-buttons-div {
+    background-color: #333;
+  }
+
+  li {
+    background-color: #444;
+    color: #d8ce73;
+  }
+
+  .highlighted {
+    background-color: #676666;
+  }
+
+  .highlighted:hover {
+    background-color: #c2ad81;
+  }
+
+  .group-content {
+    cursor: pointer;
+    color: #d8ce73;
+  }
+  button {
+    background-color: #a08166;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+  }
+
+  h2 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    color: #c3ab69;
+    margin-bottom: 15px;
+  }
 }

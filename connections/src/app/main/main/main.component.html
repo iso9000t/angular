@@ -76,7 +76,6 @@
     <!--   <div *ngIf="(loadingUsers$ | async) || loadingUsers">Processing...</div> -->
     <div class="scrollable-content">
       <ul *ngIf="users$ | async as users">
-        <!-- In main.component.html -->
         <li
           *ngFor="let user of users"
           [ngClass]="{ highlighted: isCompanion(user.uid.S) }"
@@ -86,8 +85,5 @@
         </li>
       </ul>
     </div>
-    <!-- <div *ngIf="errorUsers$ | async as error">
-      <span class="error-message">Error: {{ error.message }}</span>
-    </div> -->
   </div>
 </div>
