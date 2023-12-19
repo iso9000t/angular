@@ -1,10 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import {
-  Observable,
-  Subscription,
-  take,
-} from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import {
   GroupCreateRequestBody,
   GroupCreateResponse,
@@ -30,7 +26,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupDeleteDialogComponent } from '../group-delete-dialog/group-delete-dialog.component';
 import { TimerService } from '../services/timer-service';
 import { UserError, UserItem, UserListResponse } from '../models/user.model';
-import { ConversationError, ConversationItem, ConversationListResponse } from '../models/conversation.model';
+import {
+  ConversationError,
+  ConversationItem,
+  ConversationListResponse,
+} from '../models/conversation.model';
 import { selectUsersExceptCurrent } from '../../redux/selectors/user.selector';
 import { Router } from '@angular/router';
 @Component({

@@ -188,7 +188,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     const failureSubscription = this.actions$
       .pipe(ofType(PrivateMessageActions.loadPrivateMessagesFailure))
       .subscribe((error) => {
-        this.showSnackbar(error.error.message);
+          this.showSnackbar(error.error.message);
       });
     this.subscriptions.add(failureSubscription);
   }

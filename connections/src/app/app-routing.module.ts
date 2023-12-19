@@ -9,6 +9,7 @@ import { HeaderMainPageComponent } from './main/pages/header-main-page/header-ma
 import { HeaderProfilePageComponent } from './registration/pages/header-profile-page/header-profile-page.component';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 const routes: Routes = [
   { path: '', component: HeaderMainPageComponent, canActivate: [authGuard] },
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
     component: ConversationComponent,
     canActivate: [authGuard],
   },
+  { path: '**', component: ErrorPageComponent },
 ];
 
 
