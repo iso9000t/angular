@@ -13,3 +13,5 @@ People conversation 140 points
 Bonus: Style theme 50 points
 
 total: 800 points
+
+Deploy: https://rolling-scopes-school.github.io/iso9000t-ANGULAR2023Q4/connections
