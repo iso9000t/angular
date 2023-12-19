@@ -14,7 +14,7 @@ export class UserNamePipe implements PipeTransform {
 
   transform(userId: string): Observable<string> {
     if (!userId) {
-      return of('Unknown User');
+      return of('');
     }
     return this.store.pipe(
       select(selectUsers),
