@@ -25,7 +25,6 @@
       </div>
       <button (click)="openSaveDialog()">Create group</button>
     </div>
-    <!--     <div *ngIf="loadingGroups$ | async">Processing...</div> -->
     <div class="scrollable-content">
       <ul *ngIf="groups$ | async as groups">
         <li *ngFor="let group of groups" class="group-item">
@@ -73,7 +72,6 @@
         </div>
       </div>
     </div>
-    <!--   <div *ngIf="(loadingUsers$ | async) || loadingUsers">Processing...</div> -->
     <div class="scrollable-content">
       <ul *ngIf="users$ | async as users">
         <li

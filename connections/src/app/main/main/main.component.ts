@@ -373,8 +373,13 @@ export class MainComponent implements OnInit, OnDestroy {
         }
       },
       error: (error) => {
+        if (error.type === 'DuplicationNotAllowedException') {
+          this.showSnackbar(
+            `The conversation was created earlier, update the user list.`
+          );
+        }
         this.loadingUsers = false;
-        this.showSnackbar(`Error: ${error.error.message}`);
+        this.showSnackbar(`Update the userlist. ${error.message}.`);
       },
     });
   }

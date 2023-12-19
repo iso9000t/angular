@@ -6,6 +6,7 @@ import * as GroupActions from '../redux/actions/group-fetch.action';
 
 import * as GroupMessageSelectors from '../redux/selectors/group-message.selector';
 import * as GroupMessageActions from '../redux/actions/group-message.action';
+import * as GroupDeleteActions from '../redux/actions/group-delete.action';
 import * as UserActions from '../redux/actions/user.action';
 import * as UserSelector from '../redux/selectors/user.selector';
 import { Observable, Subscription } from 'rxjs';
@@ -32,7 +33,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
   countdownGroupMessageUpdate$!: Observable<number>;
   isGroupCreator: boolean = false;
   groupsList$ = this.store.select(GroupSelectors.selectGroups);
- 
+
   itialLoadCompleted = false;
   isGroupCreator$!: Observable<boolean>;
   initialLoadCompleted$: Observable<boolean> = this.store.select(
@@ -91,7 +92,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
             );
           },
           error: (err) => {
-            this.showSnackbar(`Error loadidng users: ${err.error.message}`);
+            this.showSnackbar(`Error loadidng users: ${err.message}`);
           },
         });
       } else {
@@ -145,8 +146,11 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.subscribeToLoadGroupMessages();
     this.subscribeToLoadUsers();
     this.setupGroupCreatorSubscription();
-    
-/*     this.debugSelectors(); */
+    this.subscribeToDeleteGroupSuccess();
+    this.reactToGroupMessageFailureAction();
+    this.subscribeToDeleteGroupFailure();
+
+    /*     this.debugSelectors(); */
     this.checkInitialLoad();
   }
 
@@ -245,6 +249,23 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.add(failureSubscription);
   }
 
+  private subscribeToDeleteGroupSuccess() {
+    const successSubscription = this.actions$
+      .pipe(ofType(GroupDeleteActions.deleteGroupSuccess))
+      .subscribe(() => {
+        this.showSnackbar(`Group has been successfully deleted.`);
+      });
+    this.subscriptions.add(successSubscription);
+  }
+  private subscribeToDeleteGroupFailure() {
+    const failureSubscription = this.actions$
+      .pipe(ofType(GroupDeleteActions.deleteGroupFailure))
+      .subscribe((error) => {
+        this.showSnackbar(error.error.message);
+      });
+    this.subscriptions.add(failureSubscription);
+  }
+
   private subscribeToLoadGroupMessagesSinceFailure() {
     const failureSubscription = this.actions$
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceFailure))
@@ -264,20 +285,6 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.add(failureSubscription);
   }
 
-  /* private setupGroupCreatorSubscription() {
-    this.subscriptions.add(
-      this.store
-        .select(GroupSelectors.isUserGroupCreator, { groupId: this.groupID })
-        .subscribe((isCreator) => {
-          localStorage.setItem(
-            `isGroupCreator_${this.groupID}`,
-            String(isCreator)
-          );
-          this.isGroupCreator = isCreator;
-          console.log('Is Group Creator AAAAAAAAAAAAA:', this.isGroupCreator);
-        })
-    );
-  } */
   private setupGroupCreatorSubscription() {
     this.subscriptions.add(
       this.store
@@ -320,7 +327,6 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess), take(1))
       .subscribe(() => {
         console.log('Group message update successful');
-        // Start countdown for this specific group
         this.timerService.startCountdownForGroup(this.groupID);
       });
   }
@@ -373,7 +379,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
         .subscribe((isCreator) => {
           this.isGroupCreator = isCreator;
           console.log('Is Group Creator lfffff:', this.isGroupCreator);
-         /*  localStorage.setItem(
+          /*  localStorage.setItem(
             `isGroupCreator_${this.groupID}`,
             String(isCreator)
           ); */

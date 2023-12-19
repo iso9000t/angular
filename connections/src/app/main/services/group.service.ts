@@ -26,37 +26,53 @@ export class GroupService {
   constructor(private http: HttpClient) {}
 
   updateUserList(): Observable<UserListResponse> {
-    console.log('Updating group list');
-    return this.http.get<UserListResponse>(this.userListURL);
+    return this.http.get<UserListResponse>(this.userListURL).pipe(
+      catchError((error) => {
+        return throwError(error.error);
+      })
+    );
   }
 
   updateGroupList(): Observable<GroupUpdateResponse> {
-    console.log('Updating group list');
-    return this.http.get<GroupUpdateResponse>(this.groupListURL);
+    return this.http.get<GroupUpdateResponse>(this.groupListURL).pipe(
+      catchError((error) => {
+        return throwError(error.error);
+      })
+    );
   }
 
   createConversation(
     companionId: string
   ): Observable<ConversationCreateResponse> {
-    console.log('Creating conversation');
     const body = { companion: companionId };
-    return this.http.post<ConversationCreateResponse>(
-      this.conversationCreateURL,
-      body
-    );
+    return this.http
+      .post<ConversationCreateResponse>(this.conversationCreateURL, body)
+      .pipe(
+        catchError((error) => {
+          return throwError(error.error);
+        })
+      );
   }
 
   createGroup(
     groupName: GroupCreateRequestBody
   ): Observable<GroupCreateResponse> {
-    console.log('Creating group list');
-
-    return this.http.post<GroupCreateResponse>(this.groupCreateURL, groupName);
+    return this.http
+      .post<GroupCreateResponse>(this.groupCreateURL, groupName)
+      .pipe(
+        catchError((error) => {
+          return throwError(error.error);
+        })
+      );
   }
 
   deleteGroup(groupId: string): Observable<void> {
     const urlWithParam = `${this.groupDeleteURL}?groupID=${groupId}`;
-    return this.http.delete<void>(urlWithParam);
+    return this.http.delete<void>(urlWithParam).pipe(
+      catchError((error) => {
+        return throwError(error.error);
+      })
+    );
   }
 
   deleteConversation(conversationID: string): Observable<void> {
@@ -64,13 +80,19 @@ export class GroupService {
     const urlWithParam = `${this.conversationDeleteURL}?conversationID=${conversationID}`;
     return this.http.delete<void>(urlWithParam).pipe(
       catchError((error) => {
-        return throwError(error.error); // Transform and rethrow the error
+        return throwError(error.error);
       })
     );
   }
 
   getConversationList(): Observable<ConversationListResponse> {
-    return this.http.get<ConversationListResponse>(this.conversationListURL);
+    return this.http
+      .get<ConversationListResponse>(this.conversationListURL)
+      .pipe(
+        catchError((error) => {
+          return throwError(error.error);
+        })
+      );
   }
 
   getGroupMessages(groupId: string): Observable<GroupMessageResponse> {
@@ -99,12 +121,15 @@ export class GroupService {
   }
 
   sendGroupMessage(groupId: string, message: string): Observable<void> {
-    console.log('Sending message to group');
     const body = {
       groupID: groupId,
       message: message,
     };
-    return this.http.post<void>(this.groupAppendURL, body);
+    return this.http.post<void>(this.groupAppendURL, body).pipe(
+      catchError((error) => {
+        return throwError(error.error);
+      })
+    );
   }
 
   sendPrivateMessage(

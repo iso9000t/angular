@@ -44,9 +44,8 @@ export class ProfileComponent implements OnInit {
 
     this.error$.subscribe((error) => {
       if (error) {
-        this.snackBar.open(error.message, 'Close', {
-          duration: 6000,
-        });
+        console.log('{Хрень}');
+        
       }
     });
 
