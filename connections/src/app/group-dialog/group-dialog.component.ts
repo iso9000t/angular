@@ -297,7 +297,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.actions$
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess), take(1))
       .subscribe(() => {
-        this.timerService.startCountdownForGroup(this.groupID);
+        this.timerService.startCountdownForGroup(this.groupID),take(1);
       });
   }
 
@@ -305,7 +305,7 @@ export class GroupDialogComponent implements OnInit, OnDestroy {
     this.actions$
       .pipe(ofType(GroupMessageActions.loadGroupMessagesSinceSuccess), take(1))
       .subscribe(() => {
-        this.timerService.startCountdownForGroup(this.groupID);
+       this.showSnackbar(`Error sending message`);
       });
   }
 }

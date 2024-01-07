@@ -42,7 +42,7 @@ export class TimerService {
         startWith(0),
         map(() => Math.max(0, endTime - Date.now())),
         takeWhile((timeLeft) => timeLeft > 0, true),
-        finalize(() => countdownSource.next(0)) // Reset when finished
+        finalize(() => countdownSource.next(0))
       )
       .subscribe((timeLeft) => countdownSource.next(timeLeft));
   }

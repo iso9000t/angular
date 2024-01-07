@@ -206,7 +206,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
         take(1)
       )
       .subscribe(() => {
-        this.timerService.startCountdownForGroup(this.conversationID);
+         this.timerService.startCountdownForGroup(this.conversationID), take(1);
       });
   }
 
