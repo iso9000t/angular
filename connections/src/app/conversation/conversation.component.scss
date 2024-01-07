@@ -91,7 +91,7 @@
   align-items: center;
   padding: 10px;
   background-color: #f3f3f3;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 0px solid #ddd;
 }
 
 .back-link {
@@ -107,6 +107,9 @@
 .last-updated {
   font-size: 0.9em;
   color: #666;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
 }
 
 .button-container {
@@ -160,6 +163,23 @@ button:disabled:hover {
   font-weight: 400;
   color: #1a73e8;
   margin-left: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #cdcdcd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
 }
 
 // Dark theme styles
@@ -221,5 +241,22 @@ button:disabled:hover {
   }
   .form {
     background-color: #45a049;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #393939;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
   }
 }

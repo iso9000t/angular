@@ -91,7 +91,7 @@
   align-items: center;
   padding: 10px;
   background-color: #f3f3f3;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 0px solid #ddd;
 }
 
 .back-link {
@@ -107,6 +107,9 @@
 .last-updated {
   font-size: 0.9em;
   color: #666;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
 }
 
 .button-container {
@@ -162,7 +165,23 @@ button:disabled:hover {
   margin-left: 10px;
 }
 
-// Dark theme styles
+::-webkit-scrollbar-track {
+  background: #cdcdcd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
 :host-context(.dark-theme) {
   .chat-container {
     background-color: #121212;
@@ -219,7 +238,25 @@ button:disabled:hover {
     font-size: 0.9em;
     color: #bebebe;
   }
+
   .form {
     background-color: #45a049;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #393939;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
   }
 }
