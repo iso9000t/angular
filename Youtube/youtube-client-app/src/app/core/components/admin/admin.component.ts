@@ -6,11 +6,13 @@ import {
     FormGroup,
     Validators,
 } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Store } from "@ngrx/store";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import * as AdminActions from "src/app/redux/actions/custom.actions";
-import { selectAdminCards } from "src/app/redux/selectors/custom.selector";
+
+import * as AdminActions from "../../../redux/actions/custom.actions";
+import { selectAdminCards } from "../../../redux/selectors/custom.selector";
 
 @Component({
     selector: "app-admin",
@@ -22,7 +24,11 @@ export class AdminComponent implements OnInit, OnDestroy {
     customCardsCount: number = 0;
     private unsubscribe$ = new Subject<void>();
 
-    constructor(private fb: FormBuilder, private store: Store) {}
+    constructor(
+        private fb: FormBuilder,
+        private store: Store,
+        private snackBar: MatSnackBar,
+    ) { }
 
     ngOnInit(): void {
         this.store
@@ -127,15 +133,21 @@ export class AdminComponent implements OnInit, OnDestroy {
                     },
                 };
 
-                console.log("Custom Card Submitted", customCard);
+                this.snackBar.open("Custom Card Submitted", "Close", {
+                    duration: 3000,
+                });
                 this.store.dispatch(AdminActions.addCard({ card: customCard }));
                 console.log(this.customCardsCount);
                 this.resetForm();
             } else {
-                console.log("Maximum limit of 20 custom cards reached");
+                this.snackBar.open("Maximum limit of 20 custom cards reached", "Close", {
+                    duration: 3000,
+                });
             }
         } else {
-            console.log("Form did not validate");
+            this.snackBar.open("Form did not validate", "Close", {
+                duration: 3000,
+            });
         }
     }
 

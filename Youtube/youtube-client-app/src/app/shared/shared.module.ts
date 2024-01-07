@@ -10,6 +10,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatToolbarModule } from "@angular/material/toolbar";
 
 import { VideoAgeBorderDirective } from "../youtube/directives/video-age-border.directive";
@@ -32,6 +33,7 @@ import { CustomButtonComponent } from "./components/custom-button/custom-button.
         MatDatepickerModule,
         MatNativeDateModule,
         MatPaginatorModule,
+        MatSnackBarModule,
     ],
     exports: [
         FormsModule,
@@ -48,6 +50,7 @@ import { CustomButtonComponent } from "./components/custom-button/custom-button.
         MatNativeDateModule,
         MatPaginatorModule,
         VideoAgeBorderDirective,
+        MatSnackBarModule,
     ],
 })
 export class SharedModule {}

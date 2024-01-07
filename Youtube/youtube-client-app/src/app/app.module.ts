@@ -46,7 +46,7 @@ import { ApiInterceptor } from "./youtube/interceptors/api.interceptor";
             }
         ),
         EffectsModule.forRoot([YoutubeEffects]),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() , connectInZone: true}),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode(), connectInZone: true }),
     ],
 })
 export class AppModule {}
