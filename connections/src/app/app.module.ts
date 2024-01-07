@@ -100,7 +100,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
       GroupMessageEffects,
       PrivateMessageEffects,
     ]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() , connectInZone: true}),
   ],
   providers: [
     provideHttpClient(withInterceptors([AuthInterceptor])),
