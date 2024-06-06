@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { DirtyErrorStateMatcher } from './shared/dirty-error-state-matcher';
-import { provideHttpClient, withInterceptors, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main/main.component';

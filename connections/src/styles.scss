@@ -2,11 +2,11 @@
 
 @include mat.core();
 
-$primary: mat.define-palette(mat.$blue-palette, A400);
-$accent: mat.define-palette(mat.$green-palette, 600);
-$warn: mat.define-palette(mat.$red-palette, 400);
+$primary: mat.m2-define-palette(mat.$m2-blue-palette, A400);
+$accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+$warn: mat.m2-define-palette(mat.$m2-red-palette, 400);
 
-$light-theme: mat.define-light-theme((
+$light-theme: mat.m2-define-light-theme((
   color: (
     primary: $primary,
     accent: $accent,
@@ -14,7 +14,7 @@ $light-theme: mat.define-light-theme((
   )
 ));
 
-$dark-theme: mat.define-dark-theme((
+$dark-theme: mat.m2-define-dark-theme((
   color: (
     primary: $primary,
     accent: $accent,
