@@ -12,11 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { DirtyErrorStateMatcher } from './shared/dirty-error-state-matcher';
-import {
-  HttpClientModule,
-  provideHttpClient,
-  withInterceptors,
-} from '@angular/common/http';
+import { provideHttpClient, withInterceptors, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main/main.component';
@@ -51,62 +47,56 @@ import { privateMessageReducer } from './redux/reducers/private-message-reducer'
 import { PrivateMessageEffects } from './redux/effects/private-message.effect';
 import { ConversationDeleteDialogComponent } from './main/conversation-delete-dialog/conversation-delete-dialog.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
-@NgModule({
-  declarations: [
-    AppComponent,
-    RegistrationComponent,
-    LoginComponent,
-    MainComponent,
-    ProfileComponent,
-    HeaderComponent,
-    HeaderMainPageComponent,
-    HeaderProfilePageComponent,
-    GroupDeleteDialogComponent,
-    GroupDialogComponent,
-    ConversationComponent,
-    UserNamePipe,
-    ConversationDeleteDialogComponent,
-    ErrorPageComponent,
-  ],
-  imports: [
-    MatDialogModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatInputModule,
-    MatIconModule,
-    MatFormFieldModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatSnackBarModule,
-    StoreModule.forRoot({
-      profile: profileReducer,
-      group: groupReducer,
-      user: userReducer,
-      conversation: conversationReducer,
-      groupMessage: groupMessageReducer,
-      privateMessage: privateMessageReducer,
-    }),
-    EffectsModule.forRoot([
-      ProfileEffects,
-      GroupEffects,
-      UserEffects,
-      ConversationEffects,
-      GroupMessageEffects,
-      PrivateMessageEffects,
-    ]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() , connectInZone: true}),
-  ],
-  providers: [
-    provideHttpClient(withInterceptors([AuthInterceptor])),
-    { provide: ErrorStateMatcher, useClass: DirtyErrorStateMatcher },
-    { provide: DEFAULT_DIALOG_CONFIG, useValue: { hasBackdrop: false } },
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        RegistrationComponent,
+        LoginComponent,
+        MainComponent,
+        ProfileComponent,
+        HeaderComponent,
+        HeaderMainPageComponent,
+        HeaderProfilePageComponent,
+        GroupDeleteDialogComponent,
+        GroupDialogComponent,
+        ConversationComponent,
+        UserNamePipe,
+        ConversationDeleteDialogComponent,
+        ErrorPageComponent,
+    ],
+    bootstrap: [AppComponent], imports: [MatDialogModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatInputModule,
+        MatIconModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        StoreModule.forRoot({
+            profile: profileReducer,
+            group: groupReducer,
+            user: userReducer,
+            conversation: conversationReducer,
+            groupMessage: groupMessageReducer,
+            privateMessage: privateMessageReducer,
+        }),
+        EffectsModule.forRoot([
+            ProfileEffects,
+            GroupEffects,
+            UserEffects,
+            ConversationEffects,
+            GroupMessageEffects,
+            PrivateMessageEffects,
+        ]),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode(), connectInZone: true })], providers: [
+        provideHttpClient(withInterceptors([AuthInterceptor])),
+        { provide: ErrorStateMatcher, useClass: DirtyErrorStateMatcher },
+        { provide: DEFAULT_DIALOG_CONFIG, useValue: { hasBackdrop: false } },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}
